@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="RelatedDAO">
+
+	<resultMap type="related" id="relatedResultSet">
+		<id property="relatedNum" column="R_NO" />
+		<result property="originalBoardNum" column="O_B_NO" />
+		<result property="relatedBoardNum" column="R_B_NO" />
+		<result property="relatedRepetition" column="R_REPETITION" />
+		<result property="relatedImportance" column="R_IMPORTANCE" />
+	</resultMap>
+	<resultMap type="board" id="boardResultSet">
+		<id property="boardNum" column="B_NO" />
+		<result property="boardDate" column="B_DATE" />
+		<result property="boardTitle" column="B_TITLE" />
+		<result property="boardContent" column="B_CONTENT" />
+	</resultMap>
+	
+
+	<!-- 연관 데이터 생성 -->
+	<insert id="insertRelated">
+		INSERT INTO RELATED (O_B_NO, R_B_NO, R_REPETITION, R_IMPORTANCE)
+		VALUES(#{originalBoardNum}, #{relatedBoardNum}, #{relatedRepetition}, #{relatedImportance})
+	</insert>
+
+	<!-- 연관 게시글 목록 가져오기 : INNER JOIN -->
+	<select id="selectAllRelated" resultMap="boardResultSet">
+		SELECT B.B_NO, B.B_DATE, B.B_TITLE
+		FROM BOARD AS B
+		INNER JOIN (
+		SELECT R.R_B_NO
+    	FROM RELATED AS R
+    	INNER JOIN BOARD AS B ON R.R_B_NO = B.B_NO
+    	WHERE R.O_B_NO = #{originalBoardNum}
+    	ORDER BY R.R_REPETITION DESC, R.R_IMPORTANCE ASC
+		) AS R ON B.B_NO = R.R_B_NO;
+	</select>
+
+</mapper>
