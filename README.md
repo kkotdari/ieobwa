@@ -12,6 +12,7 @@
   - DBMS : MySQL
 5. 주요 기능
   - 크롤링 : 게시판 최초 접속시 IT 뉴스 기사 10건을 크롤링하여 샘플데이터 생성
+    - 개발 환경이 다른 경우 크롤링을 해제하시는 것을 추천드립니다.
     - 크롤링 해제 : com.kim.board.controller.BoardController.java 클래스의 47-55행을 주석처리하시면 됩니다.
     - 크롤링하는 기사의 수량 조절 : com.kim.board.biz.common.Crawling.java 클래스의 20행 상수 BOARD의 값을 변경하시면 됩니다. (범위 5~100)
   - 새 게시글 작성하기
