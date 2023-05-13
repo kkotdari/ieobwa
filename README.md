@@ -5,7 +5,7 @@
 4. 개발 환경
   - 운영체제 : Windows 11
   - IDE : Eclipse
-  - Language : JAVA 11, JSP
+  - Language : JAVA 11, JavaScript, HTML, CSS, JSP
   - Framework : Spring 3, MyBatis
   - Library : selenium
   - DBMS : MySQL
