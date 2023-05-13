@@ -7,7 +7,8 @@
   - IDE : Eclipse
   - Language : JAVA 11, JavaScript, AJAX, HTML, CSS, JSP
   - Framework : Spring 3, MyBatis
-  - Library : selenium
+  - Library : selenium 4.9.1
+  - chromedriver : chrome 113버전용
   - DBMS : MySQL
 5. 주요 기능
   - 크롤링 : 게시판 최초 접속시 IT 뉴스 기사 10건을 크롤링하여 샘플데이터 생성
