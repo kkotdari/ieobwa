@@ -9,8 +9,7 @@
   - Framework : Spring 3, MyBatis
   - DBMS : MySQL 
 5. 주요 기능
-  - 게시판 최초 접속시 샘플데이터 생성을 위해 IT 뉴스 기사 100건에 대한 클롤링을 수행
-    - 컴퓨터 사양에 따라 20분 내외 소요
+  - 게시판 최초 접속시 샘플데이터 생성을 위해 IT 뉴스 기사 35건에 대한 클롤링을 수행함
     - 크롤링 해제 : com.kim.board.controller.BoardController.java 클래스의 47-55행을 주석처리
     - 크롤링하는 기사의 수량 조절 : com.kim.board.biz.common.Crawling.java 클래스의 20행 MAX 상수 값(범위 1~20)을 변경
   - 새 글 쓰기 기능
