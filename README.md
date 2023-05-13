@@ -5,9 +5,10 @@
 4. 개발 환경
   - 운영체제 : Windows 11
   - IDE : Eclipse
-  - Language : JAVA 11
+  - Language : JAVA 11, JSP
   - Framework : Spring 3, MyBatis
-  - DBMS : MySQL 
+  - Library : selenium
+  - DBMS : MySQL
 5. 주요 기능
   - 게시판 최초 접속시 샘플데이터 생성을 위해 IT 뉴스 기사 35건에 대한 클롤링을 수행함
     - 크롤링 해제 : com.kim.board.controller.BoardController.java 클래스의 47-55행을 주석처리
