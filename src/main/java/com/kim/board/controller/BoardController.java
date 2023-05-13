@@ -89,137 +89,52 @@ public class BoardController {
 		System.out.println("저장한 게시글 preBvo: " + preBvo);
 		int preNum = preBvo.getBoardNum();
 		// 연관 게시물 탐색
-			// 1-2. 게시글 내용을 공백으로 구분하여 wordArray 배열에 담기
-			System.out.println("inserBoard.do step 1-2");
-			String[] wordArray = bvo.getBoardContent().split(" ");
-			// 1-3. wordArray를 WORD 테이블에 갱신하기 위해 중복 제거하기
-			System.out.println("inserBoard.do step 1-3");
-			// 중복 제거를 위해 HashSet 사용
-	        HashSet<String> uniqueWords = new HashSet<String>(Arrays.asList(wordArray));
-	        // 중복 제거된 문자열 배열 생성
-	        String[] uniqueArray = uniqueWords.toArray(new String[uniqueWords.size()]);
-	        // 문자열의 끝에서 조사와 문장 부호를 제거하기
-	        for(int n=0; n<uniqueArray.length; n++) {
-	            // 세 글면 마지막 글자 가져와서 처리
-	            if(uniqueArray[n].length() == 3) {
-	            	String lastChar = uniqueArray[n].substring(uniqueArray[n].length() - 1);
-	            	if(lastChar.matches("은|는|이|가|을|를|에|로|의|\\,|\\.|\\!|\\?|\\:")) {
-	            		uniqueArray[n] = uniqueArray[n].substring(0, uniqueArray[n].length() - 1);
-	            	}
-	            }
-	            // 네 글자 이상이면 마지막 두 글자 가져와서 처리
-	            else if(uniqueArray[n].length() > 3) {
-		        	String lastChar = uniqueArray[n].substring(uniqueArray[n].length() - 1);
-		        	String lastTwoChars = uniqueArray[n].substring(uniqueArray[n].length() - 2);
-	            	if(lastChar.matches("은|는|이|가|을|를|에|로|의|\\,|\\.|\\!|\\?|\\:")) {
-	            		uniqueArray[n] = uniqueArray[n].substring(0, uniqueArray[n].length() - 1);
-	            	}
-	            	else if(lastTwoChars.matches("에서|으로|부터|라고|까지|하고|하여|하지|")) {
-	            		uniqueArray[n] = uniqueArray[n].substring(0, uniqueArray[n].length() - 2);
-	            	}
-	            }
-	        }
-			// 순회하며 word.update 수행(w_found, w_ratio ++)
+			
+			// 게시글 내용을 공백으로 구분하여 wordArray 배열에 담기
+			String[] wordArray = makeWordArray(bvo);
+			
+			// 문자열의 끝에서 조사와 문장 부호를 제거하기
+			wordArray = removePostPosition(wordArray);
+			
+			// 배열에서 중복 제거하기
+			String[] uniqueArray = removeDuplication(wordArray);
+			
+			// WORD 테이블 UPDATE 수행
 			WordVO wvo = new WordVO();
 			for(String v : uniqueArray) {
 				wvo.setWordWord(v);
 				wordService.update(wvo);
 			}
-			// 1-4. wordArray 배열을 순회하며 해당 단어가 몇 번 나오는지 알아내기
-			System.out.println("inserBoard.do step 1-4");
-			ArrayList<WordVO> preWordVOList = new ArrayList<WordVO>();
-			for(int i=0; i<wordArray.length; i++) {
-				int wordFound=0;
-				// preWordVOList에 아직 없는 단어라면
-				boolean foundFlag = false;
-				for(WordVO v : preWordVOList) {
-					if(wordArray[i].equals(v.getWordWord())){
-						foundFlag = true;
-					}
-				}
-				if(!foundFlag) {
-					WordVO wvo2 = new WordVO();
-					for(int a=0; a<wordArray.length; a++) {
-						wvo2.setWordWord(wordArray[i]);
-						if(wordArray[i].equals(wordArray[a])) {
-							wordFound++;
-							System.out.println("pre 내부 일치하는 단어 발견");
-						}
-					}
-					// 1-5. 단어별로 w_percentage < 40 면 단어, 횟수, 비중을 wordVO에 담기 -> preWordVOList에 담기
-					System.out.println("inserBoard.do step 1-5");
-					if(wordService.selectOne(wvo2) == null || wordService.selectOne(wvo2).getWordRatio() < 40) {
-						wvo2.setWordFound(wordFound);
-						wvo2.setWordRatio(wordFound/wordArray.length*100);
-						preWordVOList.add(wvo2);
-						System.out.println("단어 발견 빈도 40% 미만. preWordVOList에 추가함");
-					}
-				}
-			}
-			// 1-6. count 기준으로 내림차순 정렬
-			System.out.println("inserBoard.do step 1-6");
-			bubbleSort(preWordVOList);
-			System.out.println("preWrdVOList 정렬 완료");
-			// 7. 비교작업 시작
-			System.out.println("inserBoard.do step 1-7");
+			
+			// uniqueArray 배열을 preWordVOList 배열리스트로 변경하기(발견도 40 이상 단어 제외)
+			ArrayList<WordVO> wordVOList = makeWordList(uniqueArray);
+			
+			// 게시글 내의 사용 빈도 기준으로 내림차순 정렬
+			bubbleSort(wordVOList);
+
+			// 비교작업 시작
+			System.out.println("inserBoard.do step 비교작업");
 			for(int j=0; j<allBoardList.size(); j++) {
-			// 비교 게시글 2, 4, 5, 6 작업 수행
-				// 게시글 내용을 공백으로 구분하여 wordArray 배열에 담기
-				System.out.println("inserBoard.do step 1-7-" + (j + 1));
+			// 비교 게시글도 작업 수행
+				System.out.println("inserBoard.do step 비교작업-" + (j + 1));
 				BoardVO bvo2 = new BoardVO();
-				System.out.println("allBoardList.get(" + j + ").getBoardContent(): " + allBoardList.get(j).getBoardContent());
-				String[] wordArray2 = allBoardList.get(j).getBoardContent().split(" ");
-				// wordArray 배열을 순회하며 해당 단어가 몇 번 나오는지 알아내기
-				ArrayList<WordVO> compareWordVOList = new ArrayList<WordVO>();
-				for(int i=0; i<wordArray2.length; i++) {
-					int wordFound=0;
-					// compareWordVOList에 아직 없는 단어라면
-					boolean foundFlag = false;
-					for(WordVO v : compareWordVOList) {
-						if(wordArray2[i].equals(v.getWordWord())){
-							foundFlag = true;
-						}
-					}
-					if(!foundFlag) {
-						WordVO wvo2 = new WordVO();
-						for(int a=0; a<wordArray2.length; a++) {
-							wvo2.setWordWord(wordArray2[i]);
-							if(wordArray2[i].equals(wordArray2[a])) {
-								wordFound++;
-								System.out.println("compare 내부 일치하는 단어 발견");
-							}
-						}
-						// 단어별로 w_percentage < 40 면 단어, 횟수, 비중을 wordVO에 담기 -> compareWordVOList에 담기
-						if(wordService.selectOne(wvo2) == null || wordService.selectOne(wvo2).getWordRatio() < 40) {
-							wvo2.setWordFound(wordFound);
-							wvo2.setWordRatio(wordFound/wordArray2.length*100);
-							compareWordVOList.add(wvo2);
-							System.out.println("단어 발견 빈도 40% 미만. compareWordVOList에 추가함");
-						}
-					}
-				}
-				// 6. count 기준으로 내림차순 정렬
-				for(WordVO v : compareWordVOList) {
-					System.out.println(v.getWordWord() + " / " + v.getWordFound());
-				}
-				System.out.println("↓");
-				bubbleSort(compareWordVOList);
-				System.out.println("compareWrdVOList 정렬 완료");
-				for(WordVO v : compareWordVOList) {
-					System.out.println(v.getWordWord() + " / " + v.getWordFound());
-				}
+				bvo2.setBoardContent(allBoardList.get(j).getBoardContent());
+				String[] uniqueArray2 = makeWordArray(bvo2);
+				ArrayList<WordVO> wordVOList2 = makeWordList(uniqueArray2);
+				bubbleSort(wordVOList2);
+				
 				// preWordVOList와 compareWordVOList를 비교하기 시작
 				int repetition = 0;
 				int totalWord = 0;
 				int foundWordCount = 0;
-				for(int b=0; b<compareWordVOList.size(); b++) {
+				for(int b=0; b<wordVOList2.size(); b++) {
 					boolean foundFlag = false;
-					totalWord += compareWordVOList.get(b).getWordFound(); // 모든 단어의 개수의 합을 구함
-					for(int a=0; a<preWordVOList.size(); a++) {
+					totalWord += wordVOList2.get(b).getWordFound(); // 모든 단어의 개수의 합을 구함
+					for(int a=0; a<wordVOList.size(); a++) {
 						// 같은 단어를 발견하면
-						if(compareWordVOList.get(b).getWordWord()
-								.equals(preWordVOList.get(a).getWordWord())) {
-							repetition += compareWordVOList.get(b).getWordFound();
+						if(wordVOList2.get(b).getWordWord()
+								.equals(wordVOList.get(a).getWordWord())) {
+							repetition += wordVOList2.get(b).getWordFound();
 							foundFlag = true;
 							System.out.println("pre-compare 일치하는 단어 발견");
 						}
@@ -257,7 +172,6 @@ public class BoardController {
 		List boardList = null;
 		BoardVO bvo = new BoardVO();
 		boardList = boardService.selectAll(bvo); // 전체 게시글 목록
-		System.out.println(boardList);
 		JsonArray data = new Gson().toJsonTree(boardList).getAsJsonArray(); // JsonArry로 변경하여 반환
 		return data;
 	}
@@ -271,18 +185,110 @@ public class BoardController {
 		// JsonArray를 전달
 		List relatedList = null;
 		relatedList = relatedService.selectAll(rvo); // 전체 게시글 목록
-		System.out.println(relatedList);
 		JsonArray data = new Gson().toJsonTree(relatedList).getAsJsonArray(); // JsonArry로 변경하여 반환
 		return data;
 	}
+	
+	
+	////////////////////////////////////// 메서드 모듈화 부분 //////////////////////////////////////
 		
+	// ------------------------------- 게시글 내용 배열화 파트 시작 -------------------------------
+	public String[] makeWordArray(BoardVO bvo) {
+		// 게시글 내용을 공백으로 구분하여 wordArray 배열에 담기
+		System.out.println("inserBoard.do step 단어 나누기");
+		String[] wordArray = bvo.getBoardContent().split(" ");
+
+	    return wordArray;
+	}
+	// ------------------------------- 게시글 내용 배열화 파트 끝 -------------------------------
+	
+	// ------------------------------- 단어에서 조사와 문장부호 제거 파트 시작 -------------------------------
+	public String[] removePostPosition(String[] wordArray) {
+		System.out.println("inserBoard.do step 단어 다듬기");
+		for(int n=0; n<wordArray.length; n++) {
+	        // 세 글면 마지막 글자 가져와서 처리
+	        if(wordArray[n].length() == 3) {
+	        	String lastChar = wordArray[n].substring(wordArray[n].length() - 1);
+	        	if(lastChar.matches("은|는|이|가|을|를|에|로|의|\\,|\\.|\\!|\\?|\\:")) {
+	        		wordArray[n] = wordArray[n].substring(0, wordArray[n].length() - 1);
+	        	}
+	        }
+	        // 네 글자 이상이면 마지막 두 글자 가져와서 처리
+	        else if(wordArray[n].length() > 3) {
+	        	String lastChar = wordArray[n].substring(wordArray[n].length() - 1);
+	        	String lastTwoChars = wordArray[n].substring(wordArray[n].length() - 2);
+	        	if(lastChar.matches("은|는|이|가|을|를|에|로|의|\\,|\\.|\\!|\\?|\\:")) {
+	        		wordArray[n] = wordArray[n].substring(0, wordArray[n].length() - 1);
+	        	}
+	        	else if(lastTwoChars.matches("에서|으로|부터|라고|까지|하고|하여|하지|")) {
+	        		wordArray[n] = wordArray[n].substring(0, wordArray[n].length() - 2);
+	        	}
+	        }
+	    }
+		return wordArray;
+	}
+	// ------------------------------- 단어에서 조사와 문장부호 제거 파트 시작 -------------------------------
+	
+	
+	// ------------------------------- 중복 단어 제거한 단어 배열 생성 파트 시작 -------------------------------
+	public String[] removeDuplication(String[] wordArray) {
+		// wordArray를 WORD 테이블에 갱신하기 위해 중복 제거하기
+		System.out.println("inserBoard.do step 중복 제거");
+		// 중복 제거를 위해 HashSet 사용
+	    HashSet<String> uniqueWords = new HashSet<String>(Arrays.asList(wordArray));
+	    // 중복 제거된 문자열 배열 생성
+	    String[] uniqueArray = uniqueWords.toArray(new String[uniqueWords.size()]);
+		return uniqueArray;
+	}
+	// ------------------------------- 중복 단어 제거한 단어 배열 생성 파트 끝 -------------------------------
+	
+	
+	// ------------------------------- 연관도 비교를 단어 배열리스트 생성 시작 -------------------------------
+	public ArrayList<WordVO> makeWordList(String[] uniqueArray){
+		// 1-4. uniqueArray 배열을 순회하며 해당 단어가 몇 번 나오는지 알아내기
+		System.out.println("inserBoard.do step 단어 사용수 조사");
+		ArrayList<WordVO> wordVOList = new ArrayList<WordVO>();
+		for(int i=0; i<uniqueArray.length; i++) {
+			int wordFound=0;
+			// preWordVOList에 아직 없는 단어라면
+			boolean foundFlag = false;
+			for(WordVO v : wordVOList) {
+				if(uniqueArray[i].equals(v.getWordWord())){
+					foundFlag = true;
+				}
+			}
+			if(!foundFlag) {
+				WordVO wvo2 = new WordVO();
+				for(int a=0; a<uniqueArray.length; a++) {
+					wvo2.setWordWord(uniqueArray[i]);
+					if(uniqueArray[i].equals(uniqueArray[a])) {
+						wordFound++;
+						System.out.println("pre 내부 일치하는 단어 발견");
+					}
+				}
+				// 1-5. 단어별로 w_percentage < 40 면 단어, 횟수, 비중을 wordVO에 담기 -> wordVOList에 담기
+				System.out.println("inserBoard.do step 배열리스트 생성");
+				if(wordService.selectOne(wvo2) == null || wordService.selectOne(wvo2).getWordRatio() < 40) {
+					wvo2.setWordFound(wordFound);
+					wvo2.setWordRatio(wordFound/uniqueArray.length*100);
+					wordVOList.add(wvo2);
+					System.out.println("단어 발견 빈도 40% 미만. preWordVOList에 추가함");
+				}
+			}
+		}
+		return wordVOList;
+	}
+	// ------------------------------- 연관도 비교를 단어 배열리스트 생성 끝 -------------------------------
+	
+	// ------------------------------- 버블 정렬 파트 시작 -------------------------------
 	// 버블정렬 가동
-	public static void bubbleSort(ArrayList<WordVO> data) {
+	public void bubbleSort(ArrayList<WordVO> data) {
+		System.out.println("inserBoard.do step 배열리스트 정렬");
 		bubbleSort(data, data.size());
 	}
 	
 	// 버블정렬 실행
-	private static void bubbleSort(ArrayList<WordVO> data, int size) {
+	private void bubbleSort(ArrayList<WordVO> data, int size) {
 		// round는 배열 크기 - 1 만큼 진행됨 
 		for(int i = 1; i < size; i++) {
 			// 각 라운드별 비교횟수는 배열 크기의 현재 라운드를 뺀 만큼 비교함
@@ -299,9 +305,10 @@ public class BoardController {
 	}
 	
 	// 치환 로직
-	private static void swap(ArrayList<WordVO> data, int i, int j) {
+	private void swap(ArrayList<WordVO> data, int i, int j) {
 		WordVO tmp = data.get(i);
 		data.set(i, data.get(j));
 		data.set(j, tmp);
 	}
+	// ------------------------------- 버블 정렬 파트 끝 -------------------------------
 }
