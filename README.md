@@ -5,9 +5,8 @@
 4. 개발 환경
   - 운영체제 : Windows 11
   - IDE : Eclipse
-  - Language : JAVA 11, JavaScript, AJAX, HTML, CSS, JSTL, JSP
+  - Language & Library : JAVA 11, JavaScript, AJAX, HTML, CSS, JSTL, JSP, selenium 4.9.1
   - Framework : Spring 3, MyBatis
-  - Library : selenium 4.9.1
   - chromedriver : chrome 113버전용
   - DBMS : MySQL
 5. 주요 기능
