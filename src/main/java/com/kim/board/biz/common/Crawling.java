@@ -16,8 +16,8 @@ import com.kim.board.biz.board.BoardVO;
 
 @Component
 public class Crawling {
-
-	final int MAX = 7; // ※※※※※※※※※ 카테고리별 크롤링할 상품 개수 (기본값 : 16)
+	final int BOARD = 10; // ※※※※※※※※※ 크롤링할 게시물 개수 (최소값은 5이며 클수록 시간이 가파르게 늘어나므로 50이하로 하는 것을 추천!)
+	private int max = BOARD / 5 * 2;
 	List<BoardVO> datas = new ArrayList<BoardVO>(); // 크롤링 데이터 저장 배열리스트
 
 	public List<BoardVO> sample(HttpServletRequest request) {
@@ -163,7 +163,7 @@ public class Crawling {
 			List<WebElement> el1 = driver.findElements(By.xpath("html/body/div/div/div/div/div/div/a"));
 			
 			// 카테고리별 MAX만큼 datas에 추가
-			for (int i = 0; i < MAX; i++) {
+			for (int i = 0; i < max; i++) {
 				
 				if(i % 2 == 0) { // 중복 크롤링 제거
 					System.out.println("▶ " + count + "번 sampleStep01 시작!");
