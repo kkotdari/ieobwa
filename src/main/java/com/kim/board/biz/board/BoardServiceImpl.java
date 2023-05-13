@@ -17,6 +17,16 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
+	public boolean update(BoardVO vo) {
+		return boardDAO.update(vo);
+	}
+	
+	@Override
+	public boolean delete(BoardVO vo) {
+		return boardDAO.delete(vo);
+	}
+	
+	@Override
 	public List<BoardVO> selectAll(BoardVO vo) {
 		return boardDAO.selectAll(vo);
 	}

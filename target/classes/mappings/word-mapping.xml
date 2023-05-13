@@ -9,16 +9,28 @@
 		<result property="wordRatio" column="W_RATIO" />
 	</resultMap>
 
-	<!-- 단어 등록 또는 업데이트-->
+	<!-- 단어 등록-->
 	<insert id="insertWord">
 		INSERT INTO WORD (W_WORD, W_FOUND, W_RATIO)
 		VALUES(#{wordWord}, 1, 1 / (SELECT COUNT(*) FROM (SELECT * FROM BOARD) AS b2) * 100)
 	</insert>
-	<update id="updateWord">
-		UPDATE WORD
-		SET W_FOUND = COALESCE((SELECT w2.W_FOUND FROM (SELECT W_FOUND FROM WORD WHERE W_WORD = #{wordWord}) AS w2), 0) + 1,
-		    W_RATIO = (COALESCE((SELECT w2.W_FOUND FROM (SELECT W_FOUND FROM WORD WHERE W_WORD = #{wordWord}) AS w2), 0) + 1) / (SELECT COUNT(*) FROM (SELECT * FROM BOARD) AS b2) * 100
-		WHERE W_WORD = #{wordWord};
+	
+	<!-- 단어 업데이트-->
+	<update id="updateWord" parameterType="java.util.Map">
+		<choose>
+			<when test="searchCondition == 'insert'">
+				UPDATE WORD
+				SET W_FOUND = COALESCE((SELECT w2.W_FOUND FROM (SELECT W_FOUND FROM WORD WHERE W_WORD = #{wordWord}) AS w2), 0) + 1,
+					W_RATIO = (COALESCE((SELECT w2.W_FOUND FROM (SELECT W_FOUND FROM WORD WHERE W_WORD = #{wordWord}) AS w2), 0) + 1) / (SELECT COUNT(*) FROM (SELECT * FROM BOARD) AS b2) * 100
+				WHERE W_WORD = #{wordWord};
+			</when>
+			<when test="searchCondition == 'delete'">
+				UPDATE WORD
+				SET W_FOUND = COALESCE((SELECT w2.W_FOUND FROM (SELECT W_FOUND FROM WORD WHERE W_WORD = #{wordWord}) AS w2), 0) - 1,
+					W_RATIO = (COALESCE((SELECT w2.W_FOUND FROM (SELECT W_FOUND FROM WORD WHERE W_WORD = #{wordWord}) AS w2), 0) - 1) / ((SELECT COUNT(*) FROM (SELECT * FROM BOARD) AS b2) - 1) * 100
+				WHERE W_WORD = #{wordWord};
+			</when>
+		</choose>
 	</update>
 	
 	<!-- 단어 정보 가져오기 -->

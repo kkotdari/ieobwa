@@ -14,6 +14,18 @@
 		INSERT INTO BOARD (B_TITLE, B_CONTENT)
 		VALUES(#{boardTitle}, #{boardContent})
 	</insert>
+	
+	<!-- 글 수정 -->
+	<insert id="updateBoard">
+		UPDATE BOARD SET B_TITLE = #{boardTitle}, B_CONTENT= #{boardContent}
+		WHERE B_NO = #{boardNum}
+	</insert>
+	
+	<!-- 글 삭제 -->
+	<insert id="deleteBoard">
+		DELETE FROM BOARD
+		WHERE B_NO = #{boardNum}
+	</insert>
 
 	<select id="selectAllBoard" resultMap="boardResultSet">
 		<!-- 게시글 전체 목록 -->

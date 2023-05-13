@@ -6,5 +6,6 @@ import com.kim.board.biz.board.BoardVO;
 
 public interface RelatedService {
 	public boolean insert(RelatedVO vo);
+	public boolean delete(RelatedVO vo);
 	public List<BoardVO> selectAll(RelatedVO vo);
 }

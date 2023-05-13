@@ -19,6 +19,22 @@ public class BoardDAO {
 		}
 		return true;
 	}
+	
+	public boolean update(BoardVO vo) {
+		int res = myBatis.update("BoardDAO.updateBoard", vo);
+		if (res < 1) {
+			return false;
+		}
+		return true;
+	}
+	
+	public boolean delete(BoardVO vo) {
+		int res = myBatis.delete("BoardDAO.deleteBoard", vo);
+		if (res < 1) {
+			return false;
+		}
+		return true;
+	}
 
 	public BoardVO selectOne(BoardVO vo) {
 		if(vo.getBoardSearchCondition() != null) { // 검색 조건으로 분기 작업

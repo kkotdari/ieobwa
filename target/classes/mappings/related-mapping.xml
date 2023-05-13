@@ -23,6 +23,12 @@
 		VALUES(#{originalBoardNum}, #{relatedBoardNum}, #{relatedRepetition}, #{relatedImportance})
 	</insert>
 
+	<!-- 연관 데이터 삭제 -->
+	<insert id="deleteRelated">
+		DELETE FROM RELATED
+		WHERE O_B_NO = #{originalBoardNum} OR R_B_NO = #{originalBoardNum} 
+	</insert>
+
 	<!-- 연관 게시글 목록 가져오기 : INNER JOIN -->
 	<select id="selectAllRelated" resultMap="boardResultSet">
 		SELECT B.B_NO, B.B_DATE, B.B_TITLE

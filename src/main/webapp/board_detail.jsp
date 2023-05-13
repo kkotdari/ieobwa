@@ -108,6 +108,8 @@
 	
 	<!-- 버튼 -->
 	<div class=" mb-4" align="center">
+		<input type="button" onclick="location.href='updateBoardView.do?boardNum=' + ${board.boardNum}" class="button-purple" value="수정하기">
+		<input type="button" onclick="location.href='deleteBoard.do?boardNum=' + ${board.boardNum}" class="button-purple" value="삭제하기">
 		<input type="button" onclick="location.href='boardView.do'" class="button-purple" value="목록으로">
 	</div>
 	

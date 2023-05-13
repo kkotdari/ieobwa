@@ -18,6 +18,11 @@ public class RelatedServiceImpl implements RelatedService {
 	}
 	
 	@Override
+	public boolean delete(RelatedVO vo) {
+		return relatedDAO.delete(vo);
+	}
+	
+	@Override
 	public List<BoardVO> selectAll(RelatedVO vo) {
 		return relatedDAO.selectAll(vo);
 	}

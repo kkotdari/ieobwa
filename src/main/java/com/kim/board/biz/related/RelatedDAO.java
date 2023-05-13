@@ -20,6 +20,14 @@ public class RelatedDAO {
 		}
 		return true;
 	}
+	
+	public boolean delete(RelatedVO vo) {
+		int res = myBatis.delete("RelatedDAO.deleteRelated", vo);
+		if (res < 1) {
+			return false;
+		}
+		return true;
+	}
 
 	public List<BoardVO> selectAll(RelatedVO vo) {
 		return myBatis.selectList("RelatedDAO.selectAllRelated", vo);

@@ -19,7 +19,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-<title>게시글 작성하기</title>
+<title>게시글 수정하기</title>
 <style>
 .button-purple {
 	/* width:100%;
@@ -68,25 +68,32 @@
 
 <body>
 	<div class="container-xxl flex-grow-1 container-p-y">
-		<h4 class="fw-bold py-3 mb-4">게시글 작성하기</h4>
+		<h4 class="fw-bold py-3 mb-4">게시글 수정하기</h4>
 	
-		<form action="insertBoard.do" method="POST">
+		<form action="updateBoard.do" method="POST">
 			<div class="row">
 				<!-- HTML5 Inputs -->
 				<div class="card mb-4">
 					<div class="card-body">
+						<!-- 글번호 -->
+						<div class="mb-3 row">
+							<label for="html5-text-input" class="col-md-1 col-form-label">글번호</label>
+							<div class="col-md-11">
+								<input class="form-control" type="text" name="boardNum" value="${board.boardNum}" id="html5-text-input" readonly/>
+							</div>
+						</div>
 						<!-- 제목 -->
 						<div class="mb-3 row">
 							<label for="html5-text-input" class="col-md-12 col-form-label">제목</label>
 							<div class="col-md-12">
-								<input class="form-control" type="text" name="boardTitle" placeholder="제목을 입력하세요" id="html5-text-input" required/>
+								<input class="form-control" type="text" name="boardTitle" value="${board.boardTitle}" id="html5-text-input" required/>
 							</div>
 						</div>
 						<!-- 내용 -->
 						<div class="mb-3 row">
 							<label for="html5-number-input" class="col-md-12 col-form-label">내용</label>
 							<div class="col-md-12">
-								<textarea class="form-control" aria-label="With textarea" name="boardContent" placeholder="내용을 입력하세요" style="height: 200px; resize: none;" required></textarea>
+								<textarea class="form-control" aria-label="With textarea" name="boardContent" style="height: 200px; resize: none;" required>${board.boardContent}</textarea>
 							</div>
 						</div>
 					</div>
@@ -95,8 +102,8 @@
 			
 			<!-- 버튼 -->
 			<div class=" mb-4" align="center">
-				<input type="submit" class="button-purple" value="확인">
-				<input type="button" onclick="location.href='boardView.do'" class="button-purple" value="취소">
+				<input type="submit" class="button-purple" value="수정">
+				<input type="button" onclick="location.href='boardDetailView.do?boardNum=' + ${board.boardNum}" class="button-purple" value="취소">
 			</div>
 
 		</form>

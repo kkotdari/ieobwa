@@ -80,7 +80,7 @@ public class BoardController {
 	public String insertBoard(BoardVO bvo, Model model) {
 		System.out.println("insertBoard.do 진입");
 		System.out.println("bvo: " + bvo);
-		// 1. 전체 게시글 목록 가져오고 새 게시글 저장
+		// 전체 게시글 목록 가져오고 새 게시글 저장
 		System.out.println("inserBoard.do step 1-1");
 		List<BoardVO> allBoardList = boardService.selectAll(bvo);
 		boardService.insert(bvo);
@@ -101,6 +101,7 @@ public class BoardController {
 			
 			// WORD 테이블 UPDATE 수행
 			WordVO wvo = new WordVO();
+			wvo.setSearchCondition("insert");
 			for(String v : uniqueArray) {
 				wvo.setWordWord(v);
 				wordService.update(wvo);
@@ -168,6 +169,156 @@ public class BoardController {
 		
 		// 가장 최근 게시글 B_NO 전달하기
 		return "boardDetailView.do?boardNum=" + preNum;
+	}
+	
+	// 게시글 상세보기 페이지 진입
+	@RequestMapping(value = "/updateBoardView.do")
+	public String updateBoardView(BoardVO bvo, Model model) {
+		System.out.println("boardDetailView.do 진입");
+		System.out.println("bvo.boardNum: " + bvo.getBoardNum());
+		BoardVO preBvo = boardService.selectOne(bvo);
+		model.addAttribute("board", preBvo);
+		return "board_modify.jsp";
+	}
+	
+	@RequestMapping(value = "/updateBoard.do")
+	public String updateBoard(BoardVO bvo, Model model) {
+		// WORD 테이블에 저장된 현재 boardNum 게시글의 word에 대하여 W_COUNT, W_RATIO 재계산
+		// 현재 boardNum의 데이터 가져오기
+		String newContent = bvo.getBoardContent(); // 수정한 글 내용을 임시 저장
+		String preContent = boardService.selectOne(bvo).getBoardContent(); // 원래 글 내용을 가져오기
+		bvo.setBoardContent(preContent); // bvo의 내용을 원래 내용으로 변경
+		String[] wordArray = makeWordArray(bvo); // bvo의 내용을 배열로 만들기
+		// 문자열의 끝에서 조사와 문장 부호를 제거하기
+		wordArray = removePostPosition(wordArray);
+		// 배열에서 중복 제거하기
+		String[] uniqueArray = removeDuplication(wordArray);
+		// WORD 테이블 UPDATE 수행
+		WordVO wvo = new WordVO();
+		wvo.setSearchCondition("delete");
+		for(String v : uniqueArray) {
+			wvo.setWordWord(v);
+			wordService.update(wvo);
+		}		
+		// RELATED 테이블에서 현재 글 번호가 들어간 데이터를 삭제
+		RelatedVO rvo = new RelatedVO();
+		rvo.setOriginalBoardNum(bvo.getBoardNum());
+		relatedService.delete(rvo);
+		
+		bvo.setBoardContent(newContent); // bvo의 내용을 새 내용으로 변경
+		
+		// 전체 게시글 목록 가져오고 새 게시글 저장
+		System.out.println("inserBoard.do step 1-1");
+		List<BoardVO> allBoardList = boardService.selectAll(bvo);
+		boardService.update(bvo);
+		int preNum = bvo.getBoardNum();
+		// 연관 게시물 탐색
+			
+			// 게시글 내용을 공백으로 구분하여 wordArray 배열에 담기
+			wordArray = makeWordArray(bvo);
+			
+			// 문자열의 끝에서 조사와 문장 부호를 제거하기
+			wordArray = removePostPosition(wordArray);
+			
+			// 배열에서 중복 제거하기
+			uniqueArray = removeDuplication(wordArray);
+			
+			// WORD 테이블 UPDATE 수행
+			wvo = new WordVO();
+			wvo.setSearchCondition("insert");
+			for(String v : uniqueArray) {
+				wvo.setWordWord(v);
+				wordService.update(wvo);
+			}
+			
+			// uniqueArray 배열을 preWordVOList 배열리스트로 변경하기(발견도 40 이상 단어 제외)
+			ArrayList<WordVO> wordVOList = makeWordList(uniqueArray);
+			
+			// 게시글 내의 사용 빈도 기준으로 내림차순 정렬
+			bubbleSort(wordVOList);
+
+			// 비교작업 시작
+			System.out.println("inserBoard.do step 비교작업");
+			for(int j=0; j<allBoardList.size(); j++) {
+			// 비교 게시글도 작업 수행
+				System.out.println("inserBoard.do step 비교작업-" + (j + 1));
+				BoardVO bvo2 = new BoardVO();
+				bvo2.setBoardContent(allBoardList.get(j).getBoardContent());
+				String[] uniqueArray2 = makeWordArray(bvo2);
+				ArrayList<WordVO> wordVOList2 = makeWordList(uniqueArray2);
+				bubbleSort(wordVOList2);
+				
+				// preWordVOList와 compareWordVOList를 비교하기 시작
+				int repetition = 0;
+				int totalWord = 0;
+				int foundWordCount = 0;
+				for(int b=0; b<wordVOList2.size(); b++) {
+					boolean foundFlag = false;
+					totalWord += wordVOList2.get(b).getWordFound(); // 모든 단어의 개수의 합을 구함
+					for(int a=0; a<wordVOList.size(); a++) {
+						// 같은 단어를 발견하면
+						if(wordVOList2.get(b).getWordWord()
+								.equals(wordVOList.get(a).getWordWord())) {
+							repetition += wordVOList2.get(b).getWordFound();
+							foundFlag = true;
+							System.out.println("pre-compare 일치하는 단어 발견");
+						}
+					}
+					if(foundFlag) {
+						System.out.println("같은 단어 발견됨");
+						foundWordCount ++;
+					}
+				}
+				if(foundWordCount >= 2) {
+					// RELATED 테이블에 INSERT : repetition은 클수록, importance는 작을수록 연관도 높음)
+					// 이전의 게시물에 대해 연관이 생긴다면 이전게시물이 메인인 정보도 이 때 함께 만들어줘야 함
+					int relatedNum = allBoardList.get(j).getBoardNum();
+					rvo.setOriginalBoardNum(preNum);
+					rvo.setRelatedBoardNum(relatedNum);
+					if(preNum != relatedNum) {
+						rvo.setRelatedRepetition(repetition); // 중복 발견되므로 나누기 2
+						rvo.setRelatedImportance((int)Math.round((repetition * 1.0) / (totalWord * 1.0) * 100)); // 전체중의 연관 단어 비율
+						System.out.println("foundWordCount: " + foundWordCount + " / INSERTING rvo: " + rvo);
+						relatedService.insert(rvo);
+						// 원본 게시물 번호와 연관 게시물 번호 서로 바꿔서 생성해주기
+						rvo.setOriginalBoardNum(relatedNum);
+						rvo.setRelatedBoardNum(preNum);
+						relatedService.insert(rvo);
+					}
+				}
+			}
+			// 전체 게시글에 대해 1-7 작업을 끝내면 종료
+		
+		// 가장 최근 게시글 B_NO 전달하기
+		return "boardDetailView.do?boardNum=" + preNum;
+		
+	}
+	
+	@RequestMapping(value = "/deleteBoard.do")
+	public String deleteBoard(BoardVO bvo, Model model) {
+		// WORD 테이블에 저장된 현재 boardNum 게시글의 word에 대하여 W_COUNT, W_RATIO 재계산
+		// 현재 boardNum의 데이터 가져오기
+		String preContent = boardService.selectOne(bvo).getBoardContent(); // 원래 글 내용을 가져오기
+		bvo.setBoardContent(preContent); // bvo의 내용을 원래 내용으로 변경
+		String[] wordArray = makeWordArray(bvo); // bvo의 내용을 배열로 만들기
+		// 문자열의 끝에서 조사와 문장 부호를 제거하기
+		wordArray = removePostPosition(wordArray);
+		// 배열에서 중복 제거하기
+		String[] uniqueArray = removeDuplication(wordArray);
+		// WORD 테이블 UPDATE 수행
+		WordVO wvo = new WordVO();
+		wvo.setSearchCondition("delete");
+		for(String v : uniqueArray) {
+			wvo.setWordWord(v);
+			wordService.update(wvo);
+		}		
+		// RELATED 테이블에서 현재 글 번호가 들어간 데이터를 삭제
+		RelatedVO rvo = new RelatedVO();
+		rvo.setOriginalBoardNum(bvo.getBoardNum());
+		relatedService.delete(rvo);
+		// BORAD 테이블의 데이터 삭제
+		boardService.delete(bvo);
+		return "boardView.do";
 	}
 	
 	// 게시글 목록 불러오기
