@@ -44,7 +44,7 @@ public class BoardController {
 		System.out.println();
 		System.out.println("-----------------------------------------------------");
 		System.out.println("게시글 개수: " + datas.size()); // 상품 개수 로그
-		if (datas.size() < 10) { // 현재 게시글이 25개 미만이면
+		if (datas.size() < 5) { // 현재 게시글이 25개 미만이면
 			datas = crawling.sample(request); // 크롤링을 하고
 			for(BoardVO v: datas) {
 				insertBoard(v, model); // 크롤링한 데이터로 게시글 작성하기 과정을 수행
@@ -146,15 +146,22 @@ public class BoardController {
 				}
 				if(foundWordCount >= 2) {
 					// RELATED 테이블에 INSERT : repetition은 클수록, importance는 작을수록 연관도 높음)
+					// 이전의 게시물에 대해 연관이 생긴다면 이전게시물이 메인인 정보도 이 때 함께 만들어줘야 함
 					RelatedVO rvo = new RelatedVO();
+					int relatedNum = allBoardList.get(j).getBoardNum();
 					rvo.setOriginalBoardNum(preNum);
-					rvo.setRelatedBoardNum(allBoardList.get(j).getBoardNum());
+					rvo.setRelatedBoardNum(relatedNum);
 					System.out.println("repetition: " + repetition);
 					System.out.println("totalWord: " + totalWord);
 					rvo.setRelatedRepetition(repetition); // 중복 발견되므로 나누기 2
 					rvo.setRelatedImportance((int)Math.round((repetition * 1.0) / (totalWord * 1.0) * 100)); // 전체중의 연관 단어 비율
 					System.out.println("foundWordCount: " + foundWordCount + " / INSERTING rvo: " + rvo);
 					relatedService.insert(rvo);
+					// 원본 게시물 번호와 연관 게시물 번호 서로 바꿔서 생성해주기
+					rvo.setOriginalBoardNum(relatedNum);
+					rvo.setRelatedBoardNum(preNum);
+					relatedService.insert(rvo);
+					
 				}
 			}
 			// 전체 게시글에 대해 1-7 작업을 끝내면 종료
