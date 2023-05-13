@@ -9,7 +9,7 @@
 		
 	<context:component-scan
 		base-package="com.kim.board.biz" />
-
+		
 	<!-- Conn객체를 확보하는것이 어떤 JDBC에서든지 중요한 포인트이다! -->
 	<!-- 스프링 JDBC에서는 Conn객체를 확보하는 역할을 담당하는 친구이름이 "DataSource" -->
 	<bean id="dataSource"
@@ -39,4 +39,6 @@
 		<constructor-arg ref="sqlSession" />
 	</bean>
 
+	<!-- aop 호출 -->
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 </beans>

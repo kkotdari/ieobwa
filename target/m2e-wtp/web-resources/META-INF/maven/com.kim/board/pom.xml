@@ -52,7 +52,15 @@
 			<artifactId>spring-jdbc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-
+		
+		<!-- 크롤링 -->
+		<!-- selenium -->
+		<dependency>
+		    <groupId>org.seleniumhq.selenium</groupId>
+		    <artifactId>selenium-java</artifactId>
+		    <version>4.9.1</version>
+		</dependency>
+		
 		<!-- JSON 관련, SMS 관련 -->
 		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>

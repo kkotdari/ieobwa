@@ -22,7 +22,8 @@ public class BoardDAO {
 
 	public BoardVO selectOne(BoardVO vo) {
 		if(vo.getBoardSearchCondition() != null) { // 검색 조건으로 분기 작업
-			if(vo.getBoardSearchCondition().equals("new")) {
+			if(vo.getBoardSearchCondition().equals("last")) {
+				System.out.println("	로그: 최신글 조회 진입");
 				try {
 					return myBatis.selectOne("BoardDAO.selectOneBoardLast", vo);
 				} catch (EmptyResultDataAccessException e) {

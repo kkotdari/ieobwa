@@ -10,7 +10,7 @@ let totalPage; //총 페이지 수 결정
 let selectPage; // 보고싶은 페이지(실제로 사용자가 보고 싶은 페이지)
 let originalBoardNum; // 목록 요청 매개변수(글번호)
 
-function list(selectPage, originalBoardNum) {
+function list(selectPage, originalBoardNumIn) {
 	
 	// 페이징 시작번호와 끝번호 세팅하기
 	last=first+pageCount-1;
@@ -23,6 +23,7 @@ function list(selectPage, originalBoardNum) {
 		last+=pageCount;
 	}
 	
+	originalBoardNum=originalBoardNumIn;
  	console.log("originalBoardNum: "+originalBoardNum);
  	console.log("selectPage: "+selectPage);
  	
@@ -43,7 +44,7 @@ function list(selectPage, originalBoardNum) {
 			
 			// 글 목록 표시 호출 (테이블 생성)
 			console.log(dataList);
-			displayData(selectPage, originalBoardNum); // 현재페이지인데 바뀌어서 나옴
+			displayData(selectPage); // 현재페이지인데 바뀌어서 나옴
 			 
 			// 페이징 표시 호출
 			paging(selectPage); // 그래서 저장해논 값을 넣어줌
@@ -77,8 +78,10 @@ function displayData(selectPage) {
 
 
 // 페이지네이션 표시 함수
-function paging(currentPage, originalBoardNum) {
+function paging(currentPage) {
   if(totalData!=0){ // dataList에 데이터(상품||리뷰)가 있을 때 페이징 띄우기
+	  
+	  console.log("paging.originalBoardNum: "+originalBoardNum);
 	  
 	  // 지정한 페이징 숫자보다 실제 페이지가 적을 경우 
 	  if(totalPage<pageCount){
