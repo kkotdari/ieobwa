@@ -429,7 +429,7 @@ public class BoardController {
 				}
 				// 1-5. 단어별로 w_percentage < 40 면 단어, 횟수, 비중을 wordVO에 담기 -> wordVOList에 담기
 				System.out.println("inserBoard.do step 배열리스트 생성");
-				if(wordService.selectOne(wvo2) == null || wordService.selectOne(wvo2).getWordRatio() < 40) {
+				if(wordService.selectOne(wvo2) == null || wordService.selectOne(wvo2).getWordRatio() <= 40) {
 					wvo2.setWordFound(wordFound);
 					wvo2.setWordRatio(wordFound/uniqueArray.length*100);
 					wordVOList.add(wvo2);
