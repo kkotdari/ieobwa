@@ -19,7 +19,7 @@
   - 추가 구현 기능
     - 크롤링 : 게시판 최초 접속시 IT 뉴스 기사 10건을 크롤링하여 샘플데이터 생성
       - 크롤링 기능은 Chrome browser 113버전에서 개발되었습니다.
-      - 크롤링 작동 설정 : com.kim.board.controller.BoardController.java 클래스의 44-58행을 주석을 해제하시면 됩니다.
+      - 크롤링 작동 설정 : com.kim.board.controller.BoardController.java 클래스의 44-58행의 주석을 해제하시면 됩니다.
       - 크롤링하는 기사의 수량 조절 : com.kim.board.biz.common.Crawling.java 클래스의 20행 상수 BOARD의 값을 변경하시면 됩니다. (범위 5~100)
     - 게시글 수정하기
     - 게시글 삭제하기
