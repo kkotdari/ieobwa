@@ -66,7 +66,7 @@
 	<div class="content-wrapper">
 	
 		<div class="container-xxl flex-grow-1 container-p-y">
-			<h4 class="fw-bold py-3 mb-4">한국글로벌널리지네트워크 교육 게시판</h4>
+			<h4 class="fw-bold py-3 mb-4">글로벌널리지네트워크 강의 정보 게시판</h4>
 	      	
 			<!-- 전체 게시글 목록 -->
 			<div class="card">
