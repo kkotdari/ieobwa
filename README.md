@@ -1,15 +1,16 @@
 # KDH_Board
 1. 프로젝트명 : 한국글로벌널리지네트워크 입사 과제
-2. 개발자 : 김대현 지원자
-3. 개발기간 : 2023-05-11 ~ 2023-05-14
-4. 개발 환경
+2. 프로젝트 Notion 페이지 : https://kotddari.notion.site/Mini-Project-Spring-MyBatis-MySQL-Crawling-4fb0aa6564e4465c9b919a19d7a183b2
+3. 개발자 : 김대현 지원자
+4. 개발기간 : 2023-05-11 ~ 2023-05-14
+5. 개발 환경
   - 운영체제 : Windows 11
   - IDE : Eclipse
   - Language & Library : JAVA 11, JavaScript, AJAX, HTML, CSS, JSTL, JSP, selenium 4.9.1
   - Framework : Spring 3, MyBatis
   - chromedriver : chrome 113버전용
   - DBMS : MySQL
-5. 주요 기능
+6. 주요 기능
   - 과제 요구 사항
     - 새 게시글 작성하기
     - 새 게시글 작성시 단어별 데이터베이스 등록 및 연관 게시글 데이터 생성
