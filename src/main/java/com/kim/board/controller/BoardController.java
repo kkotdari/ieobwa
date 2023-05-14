@@ -40,6 +40,8 @@ public class BoardController {
 	@RequestMapping(value = "/boardView.do")
 	public String boardView(BoardVO bvo, Model model, HttpServletRequest request) {
 		System.out.println("boardView.do 진입");
+		
+//		----- 크롤링 부분 : 주석처리 해제하면 크롤링을 수행합니다. -----
 //		List<BoardVO> datas = boardService.selectAll(bvo);
 //		System.out.println();
 //		System.out.println("-----------------------------------------------------");
@@ -53,6 +55,8 @@ public class BoardController {
 //		else {
 //			System.out.println("게시물 이미 생성됨");
 //		}
+//		----- 크롤링 부분 끝 -----
+		
 		model.addAttribute("boardNum", bvo.getBoardNum());
 		return "board.jsp";
 	}
@@ -125,17 +129,16 @@ public class BoardController {
 				bubbleSort(wordVOList2);
 				
 				// preWordVOList와 compareWordVOList를 비교하기 시작
-				int repetition = 0;
-				int totalWord = 0;
+				int repetition = 0; // 게시글에 쓰인 연관 단어의 수
+				int totalWord = 0; // 게시글에 쓰인 전체 단어의 수
 				int foundWordCount = 0;
 				for(int b=0; b<wordVOList2.size(); b++) {
 					boolean foundFlag = false;
-					totalWord += wordVOList2.get(b).getWordFound(); // 모든 단어의 개수의 합을 구함
+					totalWord += wordVOList2.get(b).getWordFound(); // 전체 단어의 수 누적
 					for(int a=0; a<wordVOList.size(); a++) {
 						// 같은 단어를 발견하면
-						if(wordVOList2.get(b).getWordWord()
-								.equals(wordVOList.get(a).getWordWord())) {
-							repetition += wordVOList2.get(b).getWordFound();
+						if(wordVOList2.get(b).getWordWord().equals(wordVOList.get(a).getWordWord())) {
+							repetition += wordVOList2.get(b).getWordFound(); // 연관 단어의 수 누적
 							foundFlag = true;
 							System.out.println("pre-compare 일치하는 단어 발견");
 						}
@@ -149,14 +152,11 @@ public class BoardController {
 					// RELATED 테이블에 INSERT : repetition은 클수록, importance는 작을수록 연관도 높음)
 					// 이전의 게시물에 대해 연관이 생긴다면 이전게시물이 메인인 정보도 이 때 함께 만들어줘야 함
 					RelatedVO rvo = new RelatedVO();
-					int relatedNum = allBoardList.get(j).getBoardNum();
+					int relatedNum = allBoardList.get(j).getBoardNum(); // 연관 게시글의 게시글 번호
 					rvo.setOriginalBoardNum(preNum);
 					rvo.setRelatedBoardNum(relatedNum);
-					System.out.println("repetition: " + repetition);
-					System.out.println("totalWord: " + totalWord);
-					rvo.setRelatedRepetition(repetition); // 중복 발견되므로 나누기 2
-					rvo.setRelatedImportance((int)Math.round((repetition * 1.0) / (totalWord * 1.0) * 100)); // 전체중의 연관 단어 비율
-					System.out.println("foundWordCount: " + foundWordCount + " / INSERTING rvo: " + rvo);
+					rvo.setRelatedRepetition(repetition);
+					rvo.setRelatedImportance((int)Math.round((repetition * 1.0) / (totalWord * 1.0) * 100)); // 게시글에 쓰인 전체 단어에 대한 연관 단어 비율
 					relatedService.insert(rvo);
 					// 원본 게시물 번호와 연관 게시물 번호 서로 바꿔서 생성해주기
 					rvo.setOriginalBoardNum(relatedNum);
@@ -183,6 +183,7 @@ public class BoardController {
 	
 	@RequestMapping(value = "/updateBoard.do")
 	public String updateBoard(BoardVO bvo, Model model) {
+		System.out.println("updateBoard.do 진입");
 		// WORD 테이블에 저장된 현재 boardNum 게시글의 word에 대하여 W_COUNT, W_RATIO 재계산
 		// 현재 boardNum의 데이터 가져오기
 		String newContent = bvo.getBoardContent(); // 수정한 글 내용을 임시 저장
@@ -296,6 +297,7 @@ public class BoardController {
 	
 	@RequestMapping(value = "/deleteBoard.do")
 	public String deleteBoard(BoardVO bvo, Model model) {
+		System.out.println("deleteBoard.do 진입");
 		// WORD 테이블에 저장된 현재 boardNum 게시글의 word에 대하여 W_COUNT, W_RATIO 재계산
 		// 현재 boardNum의 데이터 가져오기
 		String preContent = boardService.selectOne(bvo).getBoardContent(); // 원래 글 내용을 가져오기
