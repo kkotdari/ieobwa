@@ -1,6 +1,5 @@
-DROP table BOARD;
-DROP table RELATED;
-DROP table WORD;
+DROP TABLE BOARD;
+DROP TABLE WORD;
 
 /*
  * 게시판 테이블
@@ -13,22 +12,12 @@ CREATE TABLE BOARD (
 ) COMMENT '게시판';
 
  /*
- * 연관 게시글 테이블
- */
-CREATE TABLE RELATED (
-	R_NO INT PRIMARY KEY AUTO_INCREMENT COMMENT '연관 발생 번호',
-	O_B_NO INT NOT NULL COMMENT '원본 게시글 번호',
-	R_B_NO INT NOT NULL COMMENT '연관 게시글 번호',
-	R_REPETITION INT NOT NULL COMMENT '연관 횟수',
-	R_IMPORTANCE INT NOT NULL COMMENT '연관 중요도'
-) COMMENT '연관 게시글';
-
- /*
  * 전체 단어 테이블
  */
 CREATE TABLE WORD (
-	W_NO INT PRIMARY KEY AUTO_INCREMENT COMMENT '등록 단어 번호',
+	W_NO INT PRIMARY KEY AUTO_INCREMENT COMMENT '단어 등록 번호',
+	B_NO INT NOT NULL COMMENT '단어가 쓰인 게시글 번호',
 	W_WORD VARCHAR(60) NOT NULL COMMENT '단어',
-	W_FOUND INT NOT NULL COMMENT '전체 게시글에서 해당 단어가 발견된 게시글의 수',
-	W_RATIO INT NOT NULL COMMENT '전체 게시글에서 해당 단어가 발견된 게시글의 비율'
-) COMMENT '연관 단어';
+	W_FOUND INT NOT NULL COMMENT '해당 게시글에서 해당 단어가 쓰인 횟수',
+	W_RATIO INT NOT NULL COMMENT '해당 게시글에서 전체 단어 중 해당 단어의 비율'
+) COMMENT '단어';
