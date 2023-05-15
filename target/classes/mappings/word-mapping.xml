@@ -4,38 +4,83 @@
 
 	<resultMap type="word" id="wordResultSet">
 		<id property="wordNum" column="W_NO" />
+		<result property="boardNum" column="B_NO" />
 		<result property="wordWord" column="W_WORD" />
 		<result property="wordFound" column="W_FOUND" />
 		<result property="wordRatio" column="W_RATIO" />
 	</resultMap>
+	
+	<resultMap type="board" id="boardResultSet">
+		<id property="boardNum" column="B_NO" />
+		<result property="boardDate" column="B_DATE" />
+		<result property="boardTitle" column="B_TITLE" />
+		<result property="boardContent" column="B_CONTENT" />
+	</resultMap>
 
 	<!-- 단어 등록-->
 	<insert id="insertWord">
-		INSERT INTO WORD (W_WORD, W_FOUND, W_RATIO)
-		VALUES(#{wordWord}, 1, 1 / (SELECT COUNT(*) FROM (SELECT * FROM BOARD) AS b2) * 100)
+		INSERT INTO WORD (B_NO, W_WORD, W_FOUND, W_RATIO)
+		VALUES(#{boardNum}, #{wordWord}, #{wordFound}, #{wordRatio})
 	</insert>
 	
-	<!-- 단어 업데이트-->
-	<update id="updateWord" parameterType="java.util.Map">
-		<choose>
-			<when test="searchCondition == 'insert'">
-				UPDATE WORD
-				SET W_FOUND = COALESCE((SELECT w2.W_FOUND FROM (SELECT W_FOUND FROM WORD WHERE W_WORD = #{wordWord}) AS w2), 0) + 1,
-					W_RATIO = (COALESCE((SELECT w2.W_FOUND FROM (SELECT W_FOUND FROM WORD WHERE W_WORD = #{wordWord}) AS w2), 0) + 1) / (SELECT COUNT(*) FROM (SELECT * FROM BOARD) AS b2) * 100
-				WHERE W_WORD = #{wordWord};
-			</when>
-			<when test="searchCondition == 'delete'">
-				UPDATE WORD
-				SET W_FOUND = COALESCE((SELECT w2.W_FOUND FROM (SELECT W_FOUND FROM WORD WHERE W_WORD = #{wordWord}) AS w2), 0) - 1,
-					W_RATIO = (COALESCE((SELECT w2.W_FOUND FROM (SELECT W_FOUND FROM WORD WHERE W_WORD = #{wordWord}) AS w2), 0) - 1) / ((SELECT COUNT(*) FROM (SELECT * FROM BOARD) AS b2) - 1) * 100
-				WHERE W_WORD = #{wordWord};
-			</when>
-		</choose>
-	</update>
+	<!-- 단어 삭제 -->
+	<delete id="deleteWord">
+		DELETE FROM WORD WHERE B_NO = #{boardNum}
+	</delete>
 	
-	<!-- 단어 정보 가져오기 -->
-	<select id="selectOneWord" resultMap="wordResultSet">
-		SELECT * FROM WORD WHERE W_WORD = #{wordWord};
+	<!-- 연관 게시글 목록 -->
+	<select id="selectAllWord" resultMap="boardResultSet">
+		<!-- 1. BOARD 테이블의 전체 행의 개수를 가져와서 'TOTAL_ROW'로 저장 -->
+		WITH TOTAL_ROW AS (
+			SELECT COUNT(*) AS TOTAL_ROW
+			FROM BOARD
+		),
+		<!-- 2. B_NO가 #{boardNum}인 그룹의 W_WORD들을 포함하는 모든 데이터를 조회하여 'BASE_WORD' CTE 생성 -->
+		BASE_WORD AS (
+			SELECT *
+			FROM WORD
+			WHERE W_WORD IN (SELECT W_WORD FROM WORD WHERE B_NO = #{boardNum})
+		),
+		<!-- 3. BASE_WORD CTE를 B_NO로 그룹화하여 모든 데이터를 가져와 'GROUPED_WORD' 생성 -->
+		GROUPED_WORD AS (
+			SELECT B_NO, W_WORD, W_FOUND, W_RATIO
+			FROM BASE_WORD
+			GROUP BY B_NO, W_WORD, W_FOUND, W_RATIO
+		),
+		<!-- 4. GROUPED_WORD의 W_FOUND들에 대해 검사하여 TOTAL_ROW의 40%를 초과하지 않는 경우에만 그 행을 FILTERED_WORD CTE 생성 -->
+		FILTERED_WORD AS (
+			SELECT *
+			FROM GROUPED_WORD
+			WHERE B_NO IN (
+				SELECT B_NO
+				FROM GROUPED_WORD
+				GROUP BY B_NO
+    			<![CDATA[HAVING COUNT(DISTINCT W_WORD) <= 0.4 * (SELECT TOTAL_ROW FROM TOTAL_ROW)]]>
+			)
+		),
+		<!-- 5. FILTERED_WORD의 B_NO들 중에서 2개 이상의 행을 갖는 B_NO들만 남겨 FINAL_WORD CTE 생성 -->
+		FINAL_WORD AS (
+			SELECT B_NO, SUM(W_FOUND) AS TOTAL_FOUND, AVG(W_RATIO) AS AVG_RATIO
+			FROM FILTERED_WORD
+			GROUP BY B_NO
+			HAVING COUNT(*) >= 2
+		),
+		<!-- 6. FINAL_WORD를 B_NO으로 그룹화하여 B_NO별로 W_FOUND의 합을 구하는 테이블 생성 -->
+		SUMMED_DATA AS (
+			SELECT B_NO, TOTAL_FOUND, AVG_RATIO
+			FROM FINAL_WORD
+			GROUP BY B_NO
+		),
+		<!-- 7. B_NO별로 W_FOUND 합이 작은 순서대로 B_NO와 W_FOUND 합을 반환 -->
+		LAST_DATA as (
+			SELECT B_NO, TOTAL_FOUND, AVG_RATIO
+			FROM SUMMED_DATA
+			<![CDATA[WHERE B_NO <> #{boardNum}]]>
+		)
+		SELECT B.*
+		FROM BOARD B
+		JOIN LAST_DATA L ON B.B_NO = L.B_NO
+		ORDER BY L.TOTAL_FOUND DESC, L.AVG_RATIO DESC;
 	</select>
 
 </mapper>
