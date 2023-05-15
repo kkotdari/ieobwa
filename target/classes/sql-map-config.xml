@@ -4,13 +4,11 @@
 	<!-- 1. 별칭 설정 -->
 	<typeAliases>
 		<typeAlias type="com.kim.board.biz.board.BoardVO" alias="board"/>
-		<typeAlias type="com.kim.board.biz.related.RelatedVO" alias="related"/>
 		<typeAlias type="com.kim.board.biz.word.WordVO" alias="word"/>
 	</typeAliases>
 	<!-- 2. SQL Mapper 설정 -->
 	<mappers>
 		<mapper resource="mappings/board-mapping.xml"/>
-		<mapper resource="mappings/related-mapping.xml"/>
 		<mapper resource="mappings/word-mapping.xml"/>
 	</mappers>
 </configuration>
