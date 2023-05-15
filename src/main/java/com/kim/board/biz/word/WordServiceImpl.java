@@ -1,7 +1,11 @@
 package com.kim.board.biz.word;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.kim.board.biz.board.BoardVO;
 
 @Service("wordService")
 public class WordServiceImpl implements WordService {
@@ -9,12 +13,17 @@ public class WordServiceImpl implements WordService {
 	private WordDAO wordDAO;
 
 	@Override
-	public boolean update(WordVO vo) {
-		return wordDAO.update(vo);
+	public boolean insert(WordVO vo) {
+		return wordDAO.insert(vo);
 	}
 	
 	@Override
-	public WordVO selectOne(WordVO vo) {
-		return wordDAO.selectOne(vo);
+	public boolean delete(WordVO vo) {
+		return wordDAO.delete(vo);
+	}
+	
+	@Override
+	public List<BoardVO> selectAll(WordVO vo) {
+		return wordDAO.selectAll(vo);
 	}
 }
