@@ -8,9 +8,9 @@ let totalData; // 총 데이터 수
 let dataList; // 표시하려하는 데이터 리스트
 let totalPage; //총 페이지 수 결정
 let selectPage; // 보고싶은 페이지(실제로 사용자가 보고 싶은 페이지)
-let originalBoardNum; // 목록 요청 매개변수(글번호)
+let boardNum; // 목록 요청 매개변수(글번호)
 
-function list(selectPage, originalBoardNumIn) {
+function list(selectPage, boardNumIn) {
 	
 	// 페이징 시작번호와 끝번호 세팅하기
 	last=first+pageCount-1;
@@ -23,14 +23,14 @@ function list(selectPage, originalBoardNumIn) {
 		last+=pageCount;
 	}
 	
-	originalBoardNum=originalBoardNumIn;
- 	console.log("originalBoardNum: "+originalBoardNum);
+	boardNum=boardNumIn;
+ 	console.log("boardNum: "+boardNum);
  	console.log("selectPage: "+selectPage);
  	
 	$.ajax({ // ajax로 데이터 가져오기
 		type: 'POST',
 		url: 'getRelatedList.do',
-		data: {originalBoardNum:originalBoardNum}, // category, sort 담아서 ListController Servlet에 걸리게!
+		data: {boardNum:boardNum}, // category, sort 담아서 ListController Servlet에 걸리게!
 		dataType: 'json',
 		traditional: 'true',
 		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
@@ -81,7 +81,7 @@ function displayData(selectPage) {
 function paging(currentPage) {
   if(totalData!=0){ // dataList에 데이터(상품||리뷰)가 있을 때 페이징 띄우기
 	  
-	  console.log("paging.originalBoardNum: "+originalBoardNum);
+	  console.log("paging.boardNum: "+boardNum);
 	  
 	  // 지정한 페이징 숫자보다 실제 페이지가 적을 경우 
 	  if(totalPage<pageCount){
@@ -98,21 +98,21 @@ function paging(currentPage) {
 	  let pageHtml = "";
 	
 	  if (first > 1) {
-	    pageHtml += "<a href='javascript:list("+(first-1)+", "+originalBoardNum+")' id='prev'><li> ◀ </li></a>";
+	    pageHtml += "<a href='javascript:list("+(first-1)+", "+boardNum+")' id='prev'><li> ◀ </li></a>";
 	  }
 	
 	 //페이징 번호 표시 
 	  for (var i = first; i <= last; i++) {
 	    if (currentPage == i) {
 	      pageHtml +=
-	        "<a href='javascript:list("+i+", "+originalBoardNum+")' id='" + i + "'><li class='on'>" + i + "</li></a>";
+	        "<a href='javascript:list("+i+", "+boardNum+")' id='" + i + "'><li class='on'>" + i + "</li></a>";
 	    } else {
-	      pageHtml += "<a href='javascript:list("+i+", "+originalBoardNum+")' id='" + i + "'><li>" + i + "</li></a>";
+	      pageHtml += "<a href='javascript:list("+i+", "+boardNum+")' id='" + i + "'><li>" + i + "</li></a>";
 	    }
 	  }
 	
 	  if (last < totalPage) {
-	    pageHtml += "<a href='javascript:list("+(last+1)+", "+originalBoardNum+")' id='next'><li> ▶ </li></a>";
+	    pageHtml += "<a href='javascript:list("+(last+1)+", "+boardNum+")' id='next'><li> ▶ </li></a>";
 	  }
 	  
 	  pageHtml+="<br><br>";
