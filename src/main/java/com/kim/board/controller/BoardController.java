@@ -1,8 +1,6 @@
 package com.kim.board.controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,8 +18,6 @@ import com.google.gson.JsonArray;
 import com.kim.board.biz.board.BoardService;
 import com.kim.board.biz.board.BoardVO;
 import com.kim.board.biz.common.Crawling;
-import com.kim.board.biz.related.RelatedService;
-import com.kim.board.biz.related.RelatedVO;
 import com.kim.board.biz.word.WordService;
 import com.kim.board.biz.word.WordVO;
 
@@ -29,8 +25,6 @@ import com.kim.board.biz.word.WordVO;
 public class BoardController {
 	@Autowired
 	private BoardService boardService;
-	@Autowired
-	private RelatedService relatedService;
 	@Autowired
 	private WordService wordService;
 	@Autowired
@@ -40,7 +34,6 @@ public class BoardController {
 	@RequestMapping(value = "/boardView.do")
 	public String boardView(BoardVO bvo, Model model, HttpServletRequest request) {
 		System.out.println("boardView.do 진입");
-		
 //		// ----- 크롤링 부분 : 주석처리 해제하면 크롤링을 수행합니다. -----
 //		List<BoardVO> datas = boardService.selectAll(bvo);
 //		System.out.println();
@@ -56,7 +49,6 @@ public class BoardController {
 //			System.out.println("게시물 이미 생성됨");
 //		}
 //		// ----- 크롤링 부분 끝 -----
-		
 		model.addAttribute("boardNum", bvo.getBoardNum());
 		return "board.jsp";
 	}
@@ -83,90 +75,26 @@ public class BoardController {
 	@RequestMapping(value = "/insertBoard.do")
 	public String insertBoard(BoardVO bvo, Model model) {
 		System.out.println("insertBoard.do 진입");
-		System.out.println("bvo: " + bvo);
-		// 전체 게시글 목록 가져오고 새 게시글 저장
-		System.out.println("inserBoard.do step 1-1");
-		List<BoardVO> allBoardList = boardService.selectAll(bvo);
+		// 새 게시글 저장
 		boardService.insert(bvo);
+		// 최근 게시물 가져오기(게시글 번호를 가져오기 위해)
 		bvo.setBoardSearchCondition("last");
+		// 현재 게시글 번호 저장
 		BoardVO preBvo = boardService.selectOne(bvo);
-		System.out.println("저장한 게시글 preBvo: " + preBvo);
 		int preNum = preBvo.getBoardNum();
-		// 연관 게시물 탐색
-			
-			// 게시글 내용을 공백으로 구분하여 wordArray 배열에 담기
-			String[] wordArray = makeWordArray(bvo);
-			
-			// 문자열의 끝에서 조사와 문장 부호를 제거하기
-			wordArray = removePostPosition(wordArray);
-			
-			// 배열에서 중복 제거하기
-			String[] uniqueArray = removeDuplication(wordArray);
-			
-			// WORD 테이블 UPDATE 수행
-			WordVO wvo = new WordVO();
-			wvo.setSearchCondition("insert");
-			for(String v : uniqueArray) {
-				wvo.setWordWord(v);
-				wordService.update(wvo);
-			}
-			
-			// uniqueArray 배열을 preWordVOList 배열리스트로 변경하기(발견도 40 이상 단어 제외)
-			ArrayList<WordVO> wordVOList = makeWordList(uniqueArray);
-			
-			// 게시글 내의 사용 빈도 기준으로 내림차순 정렬
-			bubbleSort(wordVOList);
-
-			// 비교작업 시작
-			System.out.println("inserBoard.do step 비교작업");
-			for(int j=0; j<allBoardList.size(); j++) {
-			// 비교 게시글도 작업 수행
-				System.out.println("inserBoard.do step 비교작업-" + (j + 1));
-				BoardVO bvo2 = new BoardVO();
-				bvo2.setBoardContent(allBoardList.get(j).getBoardContent());
-				String[] uniqueArray2 = makeWordArray(bvo2);
-				ArrayList<WordVO> wordVOList2 = makeWordList(uniqueArray2);
-				bubbleSort(wordVOList2);
-				
-				// preWordVOList와 compareWordVOList를 비교하기 시작
-				int repetition = 0; // 게시글에 쓰인 연관 단어의 수
-				int totalWord = 0; // 게시글에 쓰인 전체 단어의 수
-				int foundWordCount = 0;
-				for(int b=0; b<wordVOList2.size(); b++) {
-					boolean foundFlag = false;
-					totalWord += wordVOList2.get(b).getWordFound(); // 전체 단어의 수 누적
-					for(int a=0; a<wordVOList.size(); a++) {
-						// 같은 단어를 발견하면
-						if(wordVOList2.get(b).getWordWord().equals(wordVOList.get(a).getWordWord())) {
-							repetition += wordVOList2.get(b).getWordFound(); // 연관 단어의 수 누적
-							foundFlag = true;
-							System.out.println("pre-compare 일치하는 단어 발견");
-						}
-					}
-					if(foundFlag) {
-						System.out.println("같은 단어 발견됨");
-						foundWordCount ++;
-					}
-				}
-				if(foundWordCount >= 2) {
-					// RELATED 테이블에 INSERT : repetition은 클수록, importance는 작을수록 연관도 높음)
-					// 이전의 게시물에 대해 연관이 생긴다면 이전게시물이 메인인 정보도 이 때 함께 만들어줘야 함
-					RelatedVO rvo = new RelatedVO();
-					int relatedNum = allBoardList.get(j).getBoardNum(); // 연관 게시글의 게시글 번호
-					rvo.setOriginalBoardNum(preNum);
-					rvo.setRelatedBoardNum(relatedNum);
-					rvo.setRelatedRepetition(repetition);
-					rvo.setRelatedImportance((int)Math.round((repetition * 1.0) / (totalWord * 1.0) * 100)); // 게시글에 쓰인 전체 단어에 대한 연관 단어 비율
-					relatedService.insert(rvo);
-					// 원본 게시물 번호와 연관 게시물 번호 서로 바꿔서 생성해주기
-					rvo.setOriginalBoardNum(relatedNum);
-					rvo.setRelatedBoardNum(preNum);
-					relatedService.insert(rvo);
-					
-				}
-			}
-			// 전체 게시글에 대해 1-7 작업을 끝내면 종료
-		
+		System.out.println(preNum + "번 게시글 저장!");
+		// 게시글 내용을 공백으로 구분하여 wordArray 배열에 담기
+		String[] wordArray = makeWordArray(bvo);
+		// 문자열의 끝에서 조사와 문장 부호를 제거하기
+		wordArray = removePostPosition(wordArray);
+		// 배열에서 중복 제거하기
+		ArrayList<WordVO> wordList = removeDuplication(wordArray);
+		// WORD 테이블 UPDATE 수행
+		for(WordVO v : wordList) {
+			v.setBoardNum(preNum);
+			v.setSearchCondition("insert");
+			wordService.insert(v);
+		}
 		// 가장 최근 게시글 B_NO 전달하기
 		return "boardDetailView.do?boardNum=" + preNum;
 	}
@@ -184,140 +112,37 @@ public class BoardController {
 	@RequestMapping(value = "/updateBoard.do")
 	public String updateBoard(BoardVO bvo, Model model) {
 		System.out.println("updateBoard.do 진입");
-		// WORD 테이블에 저장된 현재 boardNum 게시글의 word에 대하여 W_COUNT, W_RATIO 재계산
-		// 현재 boardNum의 데이터 가져오기
-		String newContent = bvo.getBoardContent(); // 수정한 글 내용을 임시 저장
-		String preContent = boardService.selectOne(bvo).getBoardContent(); // 원래 글 내용을 가져오기
-		bvo.setBoardContent(preContent); // bvo의 내용을 원래 내용으로 변경
-		String[] wordArray = makeWordArray(bvo); // bvo의 내용을 배열로 만들기
+		// WORD 테이블 DELETE 수행
+		WordVO wvo = new WordVO();
+		int preNum = bvo.getBoardNum();
+		wvo.setBoardNum(preNum);
+		wordService.delete(wvo);
+		// BORAD 테이블의 데이터 갱신
+		boardService.update(bvo);
+		System.out.println(preNum + "번 게시글 갱신!");
+		// 게시글 내용을 공백으로 구분하여 wordArray 배열에 담기
+		String[] wordArray = makeWordArray(bvo);
 		// 문자열의 끝에서 조사와 문장 부호를 제거하기
 		wordArray = removePostPosition(wordArray);
 		// 배열에서 중복 제거하기
-		String[] uniqueArray = removeDuplication(wordArray);
+		ArrayList<WordVO> wordList = removeDuplication(wordArray);
 		// WORD 테이블 UPDATE 수행
-		WordVO wvo = new WordVO();
-		wvo.setSearchCondition("delete");
-		for(String v : uniqueArray) {
-			wvo.setWordWord(v);
-			wordService.update(wvo);
-		}		
-		// RELATED 테이블에서 현재 글 번호가 들어간 데이터를 삭제
-		RelatedVO rvo = new RelatedVO();
-		rvo.setOriginalBoardNum(bvo.getBoardNum());
-		relatedService.delete(rvo);
-		
-		bvo.setBoardContent(newContent); // bvo의 내용을 새 내용으로 변경
-		
-		// 전체 게시글 목록 가져오고 새 게시글 저장
-		System.out.println("inserBoard.do step 1-1");
-		List<BoardVO> allBoardList = boardService.selectAll(bvo);
-		boardService.update(bvo);
-		int preNum = bvo.getBoardNum();
-		// 연관 게시물 탐색
-			
-			// 게시글 내용을 공백으로 구분하여 wordArray 배열에 담기
-			wordArray = makeWordArray(bvo);
-			
-			// 문자열의 끝에서 조사와 문장 부호를 제거하기
-			wordArray = removePostPosition(wordArray);
-			
-			// 배열에서 중복 제거하기
-			uniqueArray = removeDuplication(wordArray);
-			
-			// WORD 테이블 UPDATE 수행
-			wvo = new WordVO();
-			wvo.setSearchCondition("insert");
-			for(String v : uniqueArray) {
-				wvo.setWordWord(v);
-				wordService.update(wvo);
-			}
-			
-			// uniqueArray 배열을 preWordVOList 배열리스트로 변경하기(발견도 40 이상 단어 제외)
-			ArrayList<WordVO> wordVOList = makeWordList(uniqueArray);
-			
-			// 게시글 내의 사용 빈도 기준으로 내림차순 정렬
-			bubbleSort(wordVOList);
-
-			// 비교작업 시작
-			System.out.println("inserBoard.do step 비교작업");
-			for(int j=0; j<allBoardList.size(); j++) {
-			// 비교 게시글도 작업 수행
-				System.out.println("inserBoard.do step 비교작업-" + (j + 1));
-				BoardVO bvo2 = new BoardVO();
-				bvo2.setBoardContent(allBoardList.get(j).getBoardContent());
-				String[] uniqueArray2 = makeWordArray(bvo2);
-				ArrayList<WordVO> wordVOList2 = makeWordList(uniqueArray2);
-				bubbleSort(wordVOList2);
-				
-				// preWordVOList와 compareWordVOList를 비교하기 시작
-				int repetition = 0;
-				int totalWord = 0;
-				int foundWordCount = 0;
-				for(int b=0; b<wordVOList2.size(); b++) {
-					boolean foundFlag = false;
-					totalWord += wordVOList2.get(b).getWordFound(); // 모든 단어의 개수의 합을 구함
-					for(int a=0; a<wordVOList.size(); a++) {
-						// 같은 단어를 발견하면
-						if(wordVOList2.get(b).getWordWord()
-								.equals(wordVOList.get(a).getWordWord())) {
-							repetition += wordVOList2.get(b).getWordFound();
-							foundFlag = true;
-							System.out.println("pre-compare 일치하는 단어 발견");
-						}
-					}
-					if(foundFlag) {
-						System.out.println("같은 단어 발견됨");
-						foundWordCount ++;
-					}
-				}
-				if(foundWordCount >= 2) {
-					// RELATED 테이블에 INSERT : repetition은 클수록, importance는 작을수록 연관도 높음)
-					// 이전의 게시물에 대해 연관이 생긴다면 이전게시물이 메인인 정보도 이 때 함께 만들어줘야 함
-					int relatedNum = allBoardList.get(j).getBoardNum();
-					rvo.setOriginalBoardNum(preNum);
-					rvo.setRelatedBoardNum(relatedNum);
-					if(preNum != relatedNum) {
-						rvo.setRelatedRepetition(repetition); // 중복 발견되므로 나누기 2
-						rvo.setRelatedImportance((int)Math.round((repetition * 1.0) / (totalWord * 1.0) * 100)); // 전체중의 연관 단어 비율
-						System.out.println("foundWordCount: " + foundWordCount + " / INSERTING rvo: " + rvo);
-						relatedService.insert(rvo);
-						// 원본 게시물 번호와 연관 게시물 번호 서로 바꿔서 생성해주기
-						rvo.setOriginalBoardNum(relatedNum);
-						rvo.setRelatedBoardNum(preNum);
-						relatedService.insert(rvo);
-					}
-				}
-			}
-			// 전체 게시글에 대해 1-7 작업을 끝내면 종료
-		
-		// 가장 최근 게시글 B_NO 전달하기
+		for(WordVO v : wordList) {
+			v.setBoardNum(preNum);
+			v.setSearchCondition("insert");
+			wordService.insert(v);
+		}
+		// 게시글 B_NO 전달하기
 		return "boardDetailView.do?boardNum=" + preNum;
-		
 	}
 	
 	@RequestMapping(value = "/deleteBoard.do")
 	public String deleteBoard(BoardVO bvo, Model model) {
 		System.out.println("deleteBoard.do 진입");
-		// WORD 테이블에 저장된 현재 boardNum 게시글의 word에 대하여 W_COUNT, W_RATIO 재계산
-		// 현재 boardNum의 데이터 가져오기
-		String preContent = boardService.selectOne(bvo).getBoardContent(); // 원래 글 내용을 가져오기
-		bvo.setBoardContent(preContent); // bvo의 내용을 원래 내용으로 변경
-		String[] wordArray = makeWordArray(bvo); // bvo의 내용을 배열로 만들기
-		// 문자열의 끝에서 조사와 문장 부호를 제거하기
-		wordArray = removePostPosition(wordArray);
-		// 배열에서 중복 제거하기
-		String[] uniqueArray = removeDuplication(wordArray);
-		// WORD 테이블 UPDATE 수행
+		// WORD 테이블 DELETE 수행
 		WordVO wvo = new WordVO();
-		wvo.setSearchCondition("delete");
-		for(String v : uniqueArray) {
-			wvo.setWordWord(v);
-			wordService.update(wvo);
-		}		
-		// RELATED 테이블에서 현재 글 번호가 들어간 데이터를 삭제
-		RelatedVO rvo = new RelatedVO();
-		rvo.setOriginalBoardNum(bvo.getBoardNum());
-		relatedService.delete(rvo);
+		wvo.setBoardNum(bvo.getBoardNum());
+		wordService.delete(wvo);
 		// BORAD 테이블의 데이터 삭제
 		boardService.delete(bvo);
 		return "boardView.do";
@@ -339,12 +164,12 @@ public class BoardController {
 	// 관련 게시글 목록 불러오기
 	@ResponseBody
 	@RequestMapping(value = "/getRelatedList.do")
-	public JsonArray sendRelatedList(RelatedVO rvo) {
+	public JsonArray sendRelatedList(WordVO wvo) {
 		System.out.println("getRelatedList.do 진입");
-		System.out.println("originalBoardNum: " + rvo.getOriginalBoardNum());
+		System.out.println("boardNum: " + wvo.getBoardNum());
 		// JsonArray를 전달
 		List relatedList = null;
-		relatedList = relatedService.selectAll(rvo); // 전체 게시글 목록
+		relatedList = wordService.selectAll(wvo); // 전체 게시글 목록
 		JsonArray data = new Gson().toJsonTree(relatedList).getAsJsonArray(); // JsonArry로 변경하여 반환
 		return data;
 	}
@@ -392,54 +217,41 @@ public class BoardController {
 	
 	
 	// ------------------------------- 중복 단어 제거한 단어 배열 생성 파트 시작 -------------------------------
-	public String[] removeDuplication(String[] wordArray) {
-		// wordArray를 WORD 테이블에 갱신하기 위해 중복 제거하기
+	public ArrayList<WordVO> removeDuplication(String[] wordArray) {
+		// wordArray를 WORD 테이블에 갱신하기 데이터 만들기
 		System.out.println("inserBoard.do step 중복 제거");
-		// 중복 제거를 위해 HashSet 사용
-	    HashSet<String> uniqueWords = new HashSet<String>(Arrays.asList(wordArray));
-	    // 중복 제거된 문자열 배열 생성
-	    String[] uniqueArray = uniqueWords.toArray(new String[uniqueWords.size()]);
-		return uniqueArray;
-	}
-	// ------------------------------- 중복 단어 제거한 단어 배열 생성 파트 끝 -------------------------------
-	
-	
-	// ------------------------------- 연관도 비교를 단어 배열리스트 생성 시작 -------------------------------
-	public ArrayList<WordVO> makeWordList(String[] uniqueArray){
-		// 1-4. uniqueArray 배열을 순회하며 해당 단어가 몇 번 나오는지 알아내기
-		System.out.println("inserBoard.do step 단어 사용수 조사");
-		ArrayList<WordVO> wordVOList = new ArrayList<WordVO>();
-		for(int i=0; i<uniqueArray.length; i++) {
-			int wordFound=0;
-			// preWordVOList에 아직 없는 단어라면
+		ArrayList<WordVO> wordList = new ArrayList<WordVO>(); // 최종 리스트
+		for(int i=0; i<wordArray.length; i++) {
+			// wordArray[i] : 현재 중복을 체크하는 word
+			// wordList의 단어가 wordList2(중복을 제거한 리스트)에 이미 있는지 체크
 			boolean foundFlag = false;
-			for(WordVO v : wordVOList) {
-				if(uniqueArray[i].equals(v.getWordWord())){
+			for(WordVO v : wordList) {
+				if(wordArray[i].equals(v.getWordWord())){
 					foundFlag = true;
+					break;
 				}
 			}
 			if(!foundFlag) {
-				WordVO wvo2 = new WordVO();
-				for(int a=0; a<uniqueArray.length; a++) {
-					wvo2.setWordWord(uniqueArray[i]);
-					if(uniqueArray[i].equals(uniqueArray[a])) {
-						wordFound++;
-						System.out.println("pre 내부 일치하는 단어 발견");
+				// wordList2(중복을 제거한 리스트)에 아직 없는 단어라면
+				WordVO wvo = new WordVO();
+				int wordFound=0;
+				wvo.setWordWord(wordArray[i]);
+				for(int a=0; a<wordArray.length; a++) {
+					if(wordArray[i].equals(wordArray[a])) { // 글 내부에서 같은 단어 발견
+						wordFound ++; // 단어 수 카운트
+						System.out.println("게시글 내부 일치하는 단어 발견");
 					}
 				}
-				// 1-5. 단어별로 w_percentage < 40 면 단어, 횟수, 비중을 wordVO에 담기 -> wordVOList에 담기
-				System.out.println("inserBoard.do step 배열리스트 생성");
-				if(wordService.selectOne(wvo2) == null || wordService.selectOne(wvo2).getWordRatio() <= 40) {
-					wvo2.setWordFound(wordFound);
-					wvo2.setWordRatio(wordFound/uniqueArray.length*100);
-					wordVOList.add(wvo2);
-					System.out.println("단어 발견 빈도 40% 미만. preWordVOList에 추가함");
-				}
+				
+				wvo.setWordFound(wordFound);
+				wvo.setWordRatio((int)Math.round((wordFound * 1.0) / (wordArray.length * 1.0) * 100));
+				wordList.add(wvo); // 고유한 wvo를 추가함
 			}
 		}
-		return wordVOList;
+		return wordList;
 	}
-	// ------------------------------- 연관도 비교를 단어 배열리스트 생성 끝 -------------------------------
+	// ------------------------------- 중복 단어 제거한 단어 배열 생성 파트 끝 -------------------------------
+	
 	
 	// ------------------------------- 버블 정렬 파트 시작 -------------------------------
 	// 버블정렬 가동
