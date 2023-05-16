@@ -67,9 +67,9 @@ function displayData(selectPage) {
   	if(totalData!=0){
 		  	for (var i = (selectPage - 1) * dataPerPage ; i < (totalData < (selectPage * dataPerPage) ? totalData : (selectPage * dataPerPage)) ; i++) {
 				chartHtml+="<tr>"
-                         +"<td style='text-align:right;'>"+dataList[i].boardNum+"</td>"
-                         +"<td style='text-align:center;'>"+dataList[i].boardDate.substr(0, 10)+"</td>"
-                         +"<td style='text-align:left;'><a href='boardDetailView.do?boardNum="+dataList[i].boardNum+"'>"+dataList[i].boardTitle+"</a></td>"
+                        +"<td style='text-align:center; overflow:hidden; white-space:nowrap;'>"+dataList[i].boardNum+"</td>"
+                         +"<td style='text-align:center; overflow:hidden; white-space:nowrap;'>"+dataList[i].boardDate.substr(0, 10)+"</td>"
+                         +"<td style='text-align:center; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;'><a href='boardDetailView.do?boardNum="+dataList[i].boardNum+"'>"+dataList[i].boardTitle+"</a></td>"
 						 +"</tr>";
 			}
 			$("#dataTableBody").html(chartHtml);
@@ -98,7 +98,7 @@ function paging(currentPage) {
 	  let pageHtml = "";
 	
 	  if (first > 1) {
-	    pageHtml += "<a href='javascript:list("+(first-1)+", "+boardNum+")' id='prev'><li> ◀ </li></a>";
+	    pageHtml += "<a style='border:none; href='javascript:list("+(first-1)+", "+boardNum+")' id='prev'><li> ◀ </li></a>";
 	  }
 	
 	 //페이징 번호 표시 
@@ -112,7 +112,7 @@ function paging(currentPage) {
 	  }
 	
 	  if (last < totalPage) {
-	    pageHtml += "<a href='javascript:list("+(last+1)+", "+boardNum+")' id='next'><li> ▶ </li></a>";
+	    pageHtml += "<a style='border:none; href='javascript:list("+(last+1)+", "+boardNum+")' id='next'><li> ▶ </li></a>";
 	  }
 	  
 	  pageHtml+="<br><br>";
