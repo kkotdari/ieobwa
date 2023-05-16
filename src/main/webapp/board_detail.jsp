@@ -105,14 +105,14 @@
 		<div class="card">
 		   <h5 class="card-header">연관 게시글 목록</h5>
 		   <div class="table-responsive text-nowrap">
-		      <table class="table table-hover">
-		         <thead>
-		            <tr>
-		               <th width="10%" style="text-right:center;">글번호</th>
-		               <th width="20%" style="text-align:center;">작성일</th>
-		               <th width="40%" style="text-align:left;">제목</th>
-		            </tr>
-		         </thead>
+			      <table class="table table-hover" style="table-layout:fixed; overflow:hidden; white-space:nowrap;">
+			         <thead>
+			            <tr>
+			               <th width="15%" style="text-align:center;">글번호</th>
+			               <th width="25%" style="text-align:center;">작성일</th>
+			               <th width="40%" style="text-align:center;">제목</th>
+			            </tr>
+			         </thead>
 		         <!-- 목록 출력부분 -->
 		         <tbody class="table-border-bottom-0" id="dataTableBody">
 		         </tbody>
