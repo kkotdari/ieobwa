@@ -20,20 +20,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
 <title>게시글 수정하기</title>
-<style>
-.button-purple {
-	/* width:100%;
-   height : 100%;
-   display: inherit; */
-	align-items: inherit;
-	justify-content: inherit;
-	background-color: #6667AB;
-	color: white;
-	padding: 10px 30px 10px 30px;
-	border-radius: 10px;
-	border-style: none;
-}
-</style>
 
 <meta name="description" content="" />
 
