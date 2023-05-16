@@ -53,18 +53,18 @@
 	<div class="content-wrapper">
 	
 		<div class="container-xxl flex-grow-1 container-p-y">
-			<h4 class="fw-bold py-3 mb-4">글로벌널리지네트워크 강의 정보 게시판</h4>
+			<h4 class="fw-bold py-3 mb-4">강의 정보 게시판</h4>
 	      	
 			<!-- 전체 게시글 목록 -->
 			<div class="card">
 			   <h5 class="card-header">글 목록</h5>
 			   <div class="table-responsive text-nowrap">
-			      <table class="table table-hover">
+			      <table class="table table-hover" style="table-layout:fixed; overflow:hidden; white-space:nowrap;">
 			         <thead>
 			            <tr>
-			               <th width="10%" style="text-align:right;">글번호</th>
-			               <th width="20%" style="text-align:center;">작성일</th>
-			               <th width="40%" style="text-align:left;">제목</th>
+			               <th width="15%" style="text-align:center;">글번호</th>
+			               <th width="25%" style="text-align:center;">작성일</th>
+			               <th width="40%" style="text-align:center;">제목</th>
 			            </tr>
 			         </thead>
 			         <!-- 목록 출력부분 -->
