@@ -35,9 +35,16 @@
 			SELECT COUNT(*) AS TOTAL_ROW
 			FROM BOARD
 		),
-		<!-- 2. B_NO가 #{boardNum}인 그룹의 W_WORD들을 포함하는 모든 데이터를 조회하여 'BASE_WORD' CTE 생성 -->
+		<!-- 2-1. WORD 테이블의 모든 데이터를 B_NO으로 그룹화하여 ALL_WORD CTE 생성 -->
+		ALL_WORD AS (
+			SELECT B_NO, W_WORD, W_FOUND, W_RATIO
+			FROM WORD
+			GROUP BY B_NO, W_WORD, W_FOUND, W_RATIO
+		),
+		<!-- 2-2. B_NO가 #{boardNum}인 그룹의 W_WORD들을 포함하는 모든 데이터를 조회하여
+			 'BASE_WORD' CTE 생성 -->
 		BASE_WORD AS (
-			SELECT *
+			SELECT B_NO, W_WORD, W_FOUND, W_RATIO
 			FROM WORD
 			WHERE W_WORD IN (SELECT W_WORD FROM WORD WHERE B_NO = #{boardNum})
 		),
@@ -47,15 +54,17 @@
 			FROM BASE_WORD
 			GROUP BY B_NO, W_WORD, W_FOUND, W_RATIO
 		),
-		<!-- 4. GROUPED_WORD의 W_FOUND들에 대해 검사하여 TOTAL_ROW의 40%를 초과하지 않는 경우에만 그 행을 FILTERED_WORD CTE 생성 -->
+		<!-- 4. GROUPED_WORD의 모든 W_WORD들에 대하여 
+			 해당 W_WORD들이 ALL_WORD CTE의 그룹 중에 몇개의 그룹에 들어있는지 조회하여
+			 그 수가 TOTAL_ROW의 40%를 초과하지 않는 경우의 데이터들로 FILTERED_WORD CTE 생성 -->
 		FILTERED_WORD AS (
-			SELECT *
+			SELECT B_NO, W_WORD, W_FOUND, W_RATIO
 			FROM GROUPED_WORD
-			WHERE B_NO IN (
-				SELECT B_NO
-				FROM GROUPED_WORD
-				GROUP BY B_NO
-    			<![CDATA[HAVING COUNT(DISTINCT W_WORD) <= 0.4 * (SELECT TOTAL_ROW FROM TOTAL_ROW)]]>
+			WHERE W_WORD IN (
+				SELECT W_WORD
+				FROM ALL_WORD
+				GROUP BY W_WORD
+				<![CDATA[HAVING COUNT(DISTINCT B_NO) <= 0.4 * (SELECT TOTAL_ROW FROM TOTAL_ROW)]]>
 			)
 		),
 		<!-- 5. FILTERED_WORD의 B_NO들 중에서 2개 이상의 행을 갖는 B_NO들만 남겨 FINAL_WORD CTE 생성 -->
@@ -71,7 +80,8 @@
 			FROM FINAL_WORD
 			GROUP BY B_NO
 		),
-		<!-- 7. B_NO별로 W_FOUND 합이 작은 순서대로 B_NO와 W_FOUND 합을 반환 -->
+		<!-- 7. B_NO별로 기준은 TOTAL_FOUND 오름차순 -> AVG_RATIO 오름차순으로 정렬하여
+			 B_NO와 W_FOUND 합을 반환 -->
 		LAST_DATA as (
 			SELECT B_NO, TOTAL_FOUND, AVG_RATIO
 			FROM SUMMED_DATA
