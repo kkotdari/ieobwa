@@ -67,9 +67,9 @@ function displayData(selectPage) {
   	if(totalData!=0){
 		  	for (var i = (selectPage - 1) * dataPerPage ; i < (totalData < (selectPage * dataPerPage) ? totalData : (selectPage * dataPerPage)) ; i++) {
 				chartHtml+="<tr>"
-                         +"<td style='text-align:center;'>"+dataList[i].boardNum+"</td>"
-                         +"<td style='text-align:center;'>"+dataList[i].boardDate+"</td>"
-                         +"<td style='text-align:center;'><a href='boardDetailView.do?boardNum="+dataList[i].boardNum+"'>"+dataList[i].boardTitle+"</a></td>"
+                         +"<td style='text-align:right;'>"+dataList[i].boardNum+"</td>"
+                         +"<td style='text-align:center;'>"+dataList[i].boardDate.substr(0, 10)+"</td>"
+                         +"<td style='text-align:left;'><a href='boardDetailView.do?boardNum="+dataList[i].boardNum+"'>"+dataList[i].boardTitle+"</a></td>"
 						 +"</tr>";
 			}
 			$("#dataTableBody").html(chartHtml);
