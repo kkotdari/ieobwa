@@ -21,20 +21,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
 <title>게시판</title>
-<style>
-.button-purple {
-	/* width:100%;
-   height : 100%;
-   display: inherit; */
-	align-items: inherit;
-	justify-content: inherit;
-	background-color: #6667AB;
-	color: white;
-	padding: 10px 30px 10px 30px;
-	border-radius: 10px;
-	border-style: none;
-}
-</style>
+
 <meta name="description" content="" />
 
 <!-- Fonts -->
@@ -75,9 +62,9 @@
 			      <table class="table table-hover">
 			         <thead>
 			            <tr>
-			               <th width="10%" style="text-align:center;">글번호</th>
-			               <th width="10%" style="text-align:center;">작성일</th>
-			               <th width="60%" style="text-align:center;">제목</th>
+			               <th width="10%" style="text-align:right;">글번호</th>
+			               <th width="20%" style="text-align:center;">작성일</th>
+			               <th width="40%" style="text-align:left;">제목</th>
 			            </tr>
 			         </thead>
 			         <!-- 목록 출력부분 -->
@@ -86,8 +73,8 @@
 			      </table>
 			      <!-- 페이지네이션 부분 -->
 			      <div class="product__pagination"><ul id="pagingul"></ul>
+					</div>
 					<!-- 버튼 -->
-			   </div>
 					<div class=" mb-4" align="right">
 						<input type="button" onclick="location.href='insertBoardView.do'" class="button-purple" value="글쓰기">
 						&nbsp;&nbsp;
