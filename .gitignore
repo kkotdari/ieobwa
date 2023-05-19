@@ -125,3 +125,4 @@ $RECYCLE.BIN/
 *.class
 *.properties
 *.MF
+/target/
