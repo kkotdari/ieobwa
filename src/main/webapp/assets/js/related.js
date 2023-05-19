@@ -98,7 +98,7 @@ function paging(currentPage) {
 	  let pageHtml = "";
 	
 	  if (first > 1) {
-	    pageHtml += "<a style='border:none; href='javascript:list("+(first-1)+", "+boardNum+")' id='prev'><li> ◀ </li></a>";
+	    pageHtml += "<a href='javascript:list("+(first-1)+", "+boardNum+")' id='prev'><li> ◀ </li></a>";
 	  }
 	
 	 //페이징 번호 표시 
@@ -112,7 +112,7 @@ function paging(currentPage) {
 	  }
 	
 	  if (last < totalPage) {
-	    pageHtml += "<a style='border:none; href='javascript:list("+(last+1)+", "+boardNum+")' id='next'><li> ▶ </li></a>";
+	    pageHtml += "<a href='javascript:list("+(last+1)+", "+boardNum+")' id='next'><li> ▶ </li></a>";
 	  }
 	  
 	  pageHtml+="<br><br>";
