@@ -1,4 +1,4 @@
-package com.kim.board.biz.board;
+package com.kim.iobwa.biz.board;
 
 import java.util.List;
 

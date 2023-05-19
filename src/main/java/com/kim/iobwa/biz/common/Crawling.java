@@ -1,4 +1,4 @@
-package com.kim.board.biz.common;
+package com.kim.iobwa.biz.common;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +12,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.stereotype.Component;
 
-import com.kim.board.biz.board.BoardVO;
+import com.kim.iobwa.biz.board.BoardVO;
 
 @Component
 public class Crawling {

@@ -1,8 +1,8 @@
-package com.kim.board.biz.word;
+package com.kim.iobwa.biz.word;
 
 import java.util.List;
 
-import com.kim.board.biz.board.BoardVO;
+import com.kim.iobwa.biz.board.BoardVO;
 
 public interface WordService {
 	public boolean insert(WordVO vo);

@@ -1,4 +1,4 @@
-package com.kim.board.controller;
+package com.kim.iobwa.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.kim.board.biz.board.BoardService;
-import com.kim.board.biz.board.BoardVO;
-import com.kim.board.biz.common.Crawling;
-import com.kim.board.biz.word.WordService;
-import com.kim.board.biz.word.WordVO;
+import com.kim.iobwa.biz.board.BoardService;
+import com.kim.iobwa.biz.board.BoardVO;
+import com.kim.iobwa.biz.common.Crawling;
+import com.kim.iobwa.biz.word.WordService;
+import com.kim.iobwa.biz.word.WordVO;
 
 @Controller
 public class BoardController {

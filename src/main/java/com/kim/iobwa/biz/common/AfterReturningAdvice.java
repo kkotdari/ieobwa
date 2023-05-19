@@ -1,4 +1,4 @@
-package com.kim.board.biz.common;
+package com.kim.iobwa.biz.common;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
