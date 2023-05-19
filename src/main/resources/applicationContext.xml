@@ -15,7 +15,7 @@
 	<bean id="dataSource"
 		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://kotddari-aws-rdb.co6edjcq06f2.ap-southeast-2.rds.amazonaws.com:3306/kdh_board" />
+		<property name="url" value="jdbc:mysql://kotddari-aws-rdb.co6edjcq06f2.ap-southeast-2.rds.amazonaws.com:3306/relationboard" />
 		<property name="username" value="admin" />
 		<property name="password" value="kotddari" />
 	</bean>
