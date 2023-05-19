@@ -3,9 +3,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.kim</groupId>
 	<artifactId>board</artifactId>
-	<name>KDH_Board</name>
+	<name>relationoard</name>
 	<packaging>war</packaging>
-	<version>1.0.0-BUILD-SNAPSHOT</version>
+	<version>ROOT</version>
 	<properties>
 		<java-version>11</java-version>
 		<org.springframework-version>4.2.4.RELEASE</org.springframework-version>
