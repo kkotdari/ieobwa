@@ -26,12 +26,7 @@ public class Crawling {
 		System.out.println();
 
 		final String WEB_DRIVER_ID = "webdriver.chrome.driver"; // 드라이버 ID
-
-		String projectPath = request.getSession().getServletContext().getRealPath("/"); // 파일 경로 ".../webapp/" 까지
-		projectPath = projectPath.substring(0, projectPath.indexOf(".metadata"));
-		System.out.println("projectPath: " + projectPath);
-		System.out.println();
-		final String WEB_DRIVER_PATH = projectPath + "KDH_Board/src/main/webapp/Source/chromedriver.exe"; // 드라이버
+		final String WEB_DRIVER_PATH = "F:/Dev/kotddari/workspace/relationboard/src/main/webapp/Source/chromedriver.exe"; // 드라이버
 
 		List<BoardVO> datas = sampleStep01(request); // 반환받은 url 배열리스트
 
@@ -126,11 +121,7 @@ public class Crawling {
 		System.out.println();
 
 		final String WEB_DRIVER_ID = "webdriver.chrome.driver"; // 드라이버 ID
-		String projectPath = request.getSession().getServletContext().getRealPath("/");
-		projectPath = projectPath.substring(0, projectPath.indexOf(".metadata"));
-		System.out.println("projectPath: " + projectPath);
-		System.out.println();
-		final String WEB_DRIVER_PATH = projectPath + "KDH_Board/src/main/webapp/Source/chromedriver.exe"; // 드라이버
+		final String WEB_DRIVER_PATH = "F:/Dev/kotddari/workspace/relationboard/src/main/webapp/Source/chromedriver.exe"; // 드라이버
 
 		try {
 			System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
