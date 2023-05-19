@@ -34,7 +34,6 @@ public class BoardController {
 	@RequestMapping(value = "/boardView.do")
 	public String boardView(BoardVO bvo, Model model, HttpServletRequest request) {
 		System.out.println("boardView.do 진입");
-		// ----- 크롤링 부분 : 주석처리 해제하면 크롤링을 수행합니다. -----
 		List<BoardVO> datas = boardService.selectAll(bvo);
 		System.out.println();
 		System.out.println("-----------------------------------------------------");
@@ -48,7 +47,6 @@ public class BoardController {
 		else {
 			System.out.println("게시물 이미 생성됨");
 		}
-		// ----- 크롤링 부분 끝 -----
 		model.addAttribute("boardNum", bvo.getBoardNum());
 		return "board.jsp";
 	}
