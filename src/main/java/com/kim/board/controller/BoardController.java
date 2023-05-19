@@ -55,9 +55,7 @@ public class BoardController {
 	@RequestMapping(value = "/boardDetailView.do")
 	public String boardDetailView(BoardVO bvo, Model model) {
 		System.out.println("boardDetailView.do 진입");
-		System.out.println("bvo.boardNum: " + bvo.getBoardNum());
-		BoardVO preBvo = boardService.selectOne(bvo);
-		model.addAttribute("board", preBvo);
+		model.addAttribute("board", boardService.findPreBoard(bvo));
 		return "board_detail.jsp";
 	}
 
