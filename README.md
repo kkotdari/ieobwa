@@ -1,4 +1,4 @@
-# relationboard
+# 이어봐 게시판
 1. 프로젝트명 : Spring Framework를 적용한 연관 게시글이 있는 게시판 만들기
 2. 프로젝트 웹 주소 : https://52.63.231.77:8080
 3. 프로젝트 Notion 페이지 : https://t.ly/ZxQk
