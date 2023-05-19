@@ -35,5 +35,10 @@ public class BoardServiceImpl implements BoardService {
 	public BoardVO selectOne(BoardVO vo) {
 		return boardDAO.selectOne(vo);
 	}
+	
+	@Override
+	public BoardVO findPreBoard(BoardVO vo) {
+		return boardDAO.selectOne(vo);
+	}
 
 }
