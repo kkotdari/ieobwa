@@ -16,7 +16,7 @@ import com.kim.board.biz.board.BoardVO;
 
 @Component
 public class Crawling {
-	final int BOARD = 10; // ※※※※※※※※※ 크롤링할 게시물 개수 (범위는 5~100이며 클수록 시간이 가파르게 늘어나므로 30이하로 하는 것을 추천!)
+	final int BOARD = 100; // ※※※※※※※※※ 크롤링할 게시물 개수 (범위는 5~100이며 클수록 시간이 가파르게 늘어나므로 30이하로 하는 것을 추천!)
 	private int max = BOARD / 5 * 2;
 	List<BoardVO> datas = new ArrayList<BoardVO>(); // 크롤링 데이터 저장 배열리스트
 
