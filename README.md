@@ -1,5 +1,5 @@
-# KDH_Board
-1. 프로젝트명 : Spring Framework를 적용한 연관 게시글이 있는 게시판 만들기(KDH_Board)
+# relationboard
+1. 프로젝트명 : Spring Framework를 적용한 연관 게시글이 있는 게시판 만들기
 2. 프로젝트 Notion 페이지 : https://t.ly/ZxQk
 3. 개발기간 : 2023-05-11 ~ 2023-05-14 (이후 업데이트 중)
 4. 개발 환경
