@@ -8,4 +8,5 @@ public interface BoardService {
 	public boolean delete(BoardVO vo);
 	public List<BoardVO> selectAll(BoardVO vo);
 	public BoardVO selectOne(BoardVO vo);
+	public BoardVO findPreBoard(BoardVO vo);
 }
