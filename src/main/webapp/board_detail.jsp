@@ -196,6 +196,7 @@
 	<!-- 댓글 추가 -->
 	function insertReply(){
 		var replyContent = $("#replyContent").val();
+		document.getElementById('replyContent').value = null;
 		console.log('replyContent: ' + replyContent)
 				
 		$.ajax({
