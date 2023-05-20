@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 
@@ -59,41 +60,34 @@
 			<!-- HTML5 Inputs -->
 			<div class="card mb-4">
 				<div class="card-body">
-					<!-- 글번호 -->
-					<div class="mb-3 row">
-						<label for="html5-text-input" class="col-md-2 col-sm-4 col-form-label">글번호</label>
-						<div class="col-md-10 col-sm-8">
-							${board.boardNum}
+						<!-- 글번호 -->
+						<div class="mb-3 row">
+							<label for="html5-text-input" class="col-md-2 col-sm-3 col-form-label">글번호</label>
+							<div class="col-md-10 col-sm-9">
+								<input class="form-control" type="text" style="background-color:white;" name="boardNum" value="${board.boardNum}" readonly/>
+							</div>
 						</div>
-					</div>
-					<!-- 작성일 -->
-					<div class="mb-3 row">
-						<label for="html5-text-input" class="col-md-2 col-sm-4 col-form-label">작성일</label>
-						<div class="col-md-10 col-sm-8">
-							${board.boardDate}
+						<!-- 작성자 / 패스워드 -->
+						<div class="mb-3 row">
+							<label for="html5-text-input" class="col-md-2 col-sm-3 col-form-label">작성자</label>
+							<div class="col-md-10 col-sm-9">
+								<input class="form-control" type="text" style="background-color:white;" name="boardWriter" value="${board.boardWriter}" readonly/>
+							</div>
 						</div>
-					</div>
-					<!-- 작성자 -->
-					<div class="mb-3 row">
-						<label for="html5-text-input" class="col-md-2 col-sm-4 col-form-label">작성자</label>
-						<div class="col-md-10 col-sm-8">
-							${board.boardWriter}
+						<!-- 제목 -->
+						<div class="mb-3 row">
+							<label for="html5-text-input" class="col-md-2 col-sm-3 col-form-label">제목</label>
+							<div class="col-md-10 col-sm-9">
+								<input class="form-control" type="text" style="background-color:white;" name="boardTitle" value="${board.boardTitle}" readonly/>
+							</div>
 						</div>
-					</div>
-					<!-- 제목 -->
-					<div class="mb-3 row">
-						<label for="html5-text-input" class="col-md-2 col-sm-4 col-form-label">제목</label>
-						<div class="col-md-10 col-sm-8">
-							${board.boardTitle}
+						<!-- 내용 -->
+						<div class="mb-3 row">
+							<label for="html5-number-input" class="col-md-2 col-sm-3 col-form-label">내용</label>
+							<div class="col-md-10 col-sm-9">
+								<textarea class="form-control" aria-label="With textarea" style="background-color:white; vertical-aligh:top; height:200px" id="boardContent" name="boardContent" readonly><c:out value="${board.boardContent}" /></textarea>
+							</div>
 						</div>
-					</div>
-					<!-- 내용 -->
-					<div class="mb-3 row">
-						<label for="html5-number-input" class="col-md-2 col-sm-4 col-form-label">내용</label>
-						<div class="col-md-10 col-sm-8">
-                            ${board.boardContent}
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
