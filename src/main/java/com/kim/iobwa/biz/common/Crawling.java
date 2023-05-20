@@ -16,17 +16,23 @@ import com.kim.iobwa.biz.board.BoardVO;
 
 @Component
 public class Crawling {
-	final int BOARD = 100; // ※※※※※※※※※ 크롤링할 게시물 개수 (범위는 5~100이며 클수록 시간이 가파르게 늘어나므로 30이하로 하는 것을 추천!)
+	final String SWITCH = "Y"; // ※ 크롤링 여부 (Y/N)
+	final String WEB_DRIVER_ID = "webdriver.chrome.driver"; // 드라이버 ID
+	final String WEB_DRIVER_PATH = "C:/Dev/kotddari/workspace/iobwa/src/main/webapp/Source/chromedriver.exe"; // 드라이버
+	final int BOARD = 50; // ※ 크롤링할 게시물 개수 (범위는 5~100이며 클수록 시간이 늘어나므로 30이하로 하는 것을 추천!)
+	
 	private int max = BOARD / 5 * 2;
 	List<BoardVO> datas = new ArrayList<BoardVO>(); // 크롤링 데이터 저장 배열리스트
 
 	public List<BoardVO> sample(HttpServletRequest request) {
+		if(SWITCH.equals("N")) {
+			System.out.println("크롤링 실행 안함");
+			return null;
+		}
 
 		System.out.println("로그: Crawling.sample 시작");
 		System.out.println();
 
-		final String WEB_DRIVER_ID = "webdriver.chrome.driver"; // 드라이버 ID
-		final String WEB_DRIVER_PATH = "F:/Dev/kotddari/workspace/relationboard/src/main/webapp/Source/chromedriver.exe"; // 드라이버
 
 		List<BoardVO> datas = sampleStep01(request); // 반환받은 url 배열리스트
 
@@ -120,9 +126,6 @@ public class Crawling {
 		System.out.println("sampleStep01 시작");
 		System.out.println();
 
-		final String WEB_DRIVER_ID = "webdriver.chrome.driver"; // 드라이버 ID
-		final String WEB_DRIVER_PATH = "F:/Dev/kotddari/workspace/relationboard/src/main/webapp/Source/chromedriver.exe"; // 드라이버
-
 		try {
 			System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
 		} catch (Exception e) {
@@ -132,8 +135,8 @@ public class Crawling {
 		// 크롬 설정을 담은 객체 생성
 		ChromeOptions options = new ChromeOptions();
 
-		options.addArguments("headless"); // 브라우저 안 띄움
 		options.addArguments("--remote-allow-origins=*");
+		options.addArguments("headless"); // 브라우저 안 띄움
 
 		// WebDriver객체가 곧 하나의 브라우저 창이라 생각한다.
 		WebDriver driver = new ChromeDriver(options);

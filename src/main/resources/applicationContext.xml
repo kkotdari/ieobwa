@@ -8,15 +8,15 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
 		
 	<context:component-scan
-		base-package="com.kim.board.biz" />
+		base-package="com.kim.iobwa.biz" />
 		
 	<!-- Conn객체를 확보하는것이 어떤 JDBC에서든지 중요한 포인트이다! -->
 	<!-- 스프링 JDBC에서는 Conn객체를 확보하는 역할을 담당하는 친구이름이 "DataSource" -->
 	<bean id="dataSource"
 		class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://kotddari-aws-rdb.co6edjcq06f2.ap-southeast-2.rds.amazonaws.com:3306/relationboard" />
-		<property name="username" value="admin" />
+		<property name="url" value="jdbc:mysql://aws-rds-mysql.cjbmt6hcptej.ap-northeast-2.rds.amazonaws.com:3306/iobwa" />
+		<property name="username" value="root" />
 		<property name="password" value="kotddari" />
 	</bean>
 

@@ -3,8 +3,8 @@
 <configuration>
 	<!-- 1. 별칭 설정 -->
 	<typeAliases>
-		<typeAlias type="com.kim.board.biz.board.BoardVO" alias="board"/>
-		<typeAlias type="com.kim.board.biz.word.WordVO" alias="word"/>
+		<typeAlias type="com.kim.iobwa.biz.board.BoardVO" alias="board"/>
+		<typeAlias type="com.kim.iobwa.biz.word.WordVO" alias="word"/>
 	</typeAliases>
 	<!-- 2. SQL Mapper 설정 -->
 	<mappers>

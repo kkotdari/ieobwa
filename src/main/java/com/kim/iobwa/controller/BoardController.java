@@ -34,19 +34,18 @@ public class BoardController {
 	@RequestMapping(value = "/boardView.do")
 	public String boardView(BoardVO bvo, Model model, HttpServletRequest request) {
 		System.out.println("boardView.do 진입");
-//		List<BoardVO> datas = boardService.selectAll(bvo);
-//		System.out.println();
-//		System.out.println("-----------------------------------------------------");
-//		System.out.println("게시글 개수: " + datas.size()); // 상품 개수 로그
-//		if (datas.size() < 5) { // 현재 게시글이 5개 미만이면
-//			datas = crawling.sample(request); // 크롤링을 하고
-//			for(BoardVO v: datas) {
-//				insertBoard(v, model); // 크롤링한 데이터로 게시글 작성하기 과정을 수행
-//			}
-//		}
-//		else {
-//			System.out.println("게시물 이미 생성됨");
-//		}
+		List<BoardVO> datas = boardService.selectAll(bvo);
+		System.out.println();
+		System.out.println("-----------------------------------------------------");
+		System.out.println("게시글 개수: " + datas.size());
+		if (datas.size() < 5) { // 현재 게시글이 5개 미만이면
+			datas = crawling.sample(request); // 크롤링
+			if(datas != null) {
+				for(BoardVO v: datas) {
+					insertBoard(v, model);
+				}
+			}
+		}
 		model.addAttribute("boardNum", bvo.getBoardNum());
 		return "board.jsp";
 	}
