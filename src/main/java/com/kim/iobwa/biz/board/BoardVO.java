@@ -4,6 +4,8 @@ public class BoardVO {
 	// 멤버변수(DB 테이블에 존재)
 	private int boardNum; // 글 번호
 	private String boardDate; // 글 작성일
+	private String boardWriter; // 작성자
+	private String boardPassword; // 암호
 	private String boardTitle; // 글 제목
 	private String boardContent; // 글 내용
 	// 멤버변수(VO에만 존재)
@@ -23,6 +25,22 @@ public class BoardVO {
 
 	public void setBoardDate(String boardDate) {
 		this.boardDate = boardDate;
+	}
+
+	public String getBoardWriter() {
+		return boardWriter;
+	}
+
+	public void setBoardWriter(String boardWriter) {
+		this.boardWriter = boardWriter;
+	}
+
+	public String getBoardPassword() {
+		return boardPassword;
+	}
+
+	public void setBoardPassword(String boardPassword) {
+		this.boardPassword = boardPassword;
 	}
 
 	public String getBoardTitle() {
@@ -49,9 +67,11 @@ public class BoardVO {
 		this.boardSearchCondition = boardSearchCondition;
 	}
 	// toString 오버라이드
+
 	@Override
 	public String toString() {
-		return "BoardVO [boardNum=" + boardNum + ", boardDate=" + boardDate + ", boardTitle=" + boardTitle
-				+ ", boardContent=" + boardContent + ", boardSearchCondition=" + boardSearchCondition + "]";
+		return "BoardVO [boardNum=" + boardNum + ", boardDate=" + boardDate + ", boardWriter=" + boardWriter
+				+ ", boardPassword=" + boardPassword + ", boardTitle=" + boardTitle + ", boardContent=" + boardContent
+				+ ", boardSearchCondition=" + boardSearchCondition + "]";
 	}
 }

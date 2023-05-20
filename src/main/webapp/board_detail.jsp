@@ -61,29 +61,36 @@
 				<div class="card-body">
 					<!-- 글번호 -->
 					<div class="mb-3 row">
-						<label for="html5-text-input" class="col-md-1 col-form-label">글번호</label>
-						<div class="col-md-11">
+						<label for="html5-text-input" class="col-md-2 col-sm-4 col-form-label">글번호</label>
+						<div class="col-md-10 col-sm-8">
 							${board.boardNum}
 						</div>
 					</div>
 					<!-- 작성일 -->
 					<div class="mb-3 row">
-						<label for="html5-text-input" class="col-md-1 col-form-label">작성일</label>
-						<div class="col-md-11">
+						<label for="html5-text-input" class="col-md-2 col-sm-4 col-form-label">작성일</label>
+						<div class="col-md-10 col-sm-8">
 							${board.boardDate}
+						</div>
+					</div>
+					<!-- 작성자 -->
+					<div class="mb-3 row">
+						<label for="html5-text-input" class="col-md-2 col-sm-4 col-form-label">작성자</label>
+						<div class="col-md-10 col-sm-8">
+							${board.boardWriter}
 						</div>
 					</div>
 					<!-- 제목 -->
 					<div class="mb-3 row">
-						<label for="html5-text-input" class="col-md-1 col-form-label">제목</label>
-						<div class="col-md-11">
+						<label for="html5-text-input" class="col-md-2 col-sm-4 col-form-label">제목</label>
+						<div class="col-md-10 col-sm-8">
 							${board.boardTitle}
 						</div>
 					</div>
 					<!-- 내용 -->
 					<div class="mb-3 row">
-						<label for="html5-number-input" class="col-md-1 col-form-label">내용</label>
-						<div class="col-md-11">
+						<label for="html5-number-input" class="col-md-2 col-sm-4 col-form-label">내용</label>
+						<div class="col-md-10 col-sm-8">
                             ${board.boardContent}
 						</div>
 					</div>
@@ -110,6 +117,7 @@
 			            <tr>
 			               <th width="15%" style="text-align:center;">글번호</th>
 			               <th width="25%" style="text-align:center;">작성일</th>
+			               <th width="20%" style="text-align:center;">작성자</th>
 			               <th width="40%" style="text-align:center;">제목</th>
 			            </tr>
 			         </thead>

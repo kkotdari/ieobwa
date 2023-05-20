@@ -5,14 +5,16 @@
 	<resultMap type="board" id="boardResultSet">
 		<id property="boardNum" column="B_NO" />
 		<result property="boardDate" column="B_DATE" />
+		<result property="boardWriter" column="B_WRITER" />
+		<result property="boardPassword" column="B_PASSWORD" />
 		<result property="boardTitle" column="B_TITLE" />
 		<result property="boardContent" column="B_CONTENT" />
 	</resultMap>
 
 	<!-- 글 작성 -->
 	<insert id="insertBoard">
-		INSERT INTO BOARD (B_TITLE, B_CONTENT)
-		VALUES(#{boardTitle}, #{boardContent})
+		INSERT INTO BOARD (B_WRITER, B_PASSWORD, B_TITLE, B_CONTENT)
+		VALUES(#{boardWriter}, #{boardPassword}, #{boardTitle}, #{boardContent})
 	</insert>
 	
 	<!-- 글 수정 -->

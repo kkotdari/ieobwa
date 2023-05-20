@@ -63,22 +63,33 @@
 					<div class="card-body">
 						<!-- 글번호 -->
 						<div class="mb-3 row">
-							<label for="html5-text-input" class="col-md-1 col-form-label">글번호</label>
-							<div class="col-md-11">
+							<label for="html5-text-input" class="col-md-2 col-sm-3 col-form-label">글번호</label>
+							<div class="col-md-10 col-sm-9">
 								<input class="form-control" type="text" name="boardNum" value="${board.boardNum}" id="html5-text-input" readonly/>
+							</div>
+						</div>
+						<!-- 작성자 / 패스워드 -->
+						<div class="mb-3 row">
+							<label for="html5-text-input" class="col-md-2 col-sm-3 col-form-label">작성자</label>
+							<div class="col-md-4 col-sm-3">
+								<input class="form-control" type="text" name="boardWriter" placeholder="${board.boardWriter}" id="html5-text-input" readonly/>
+							</div>
+							<label for="html5-text-input" class="col-md-2 col-sm-3 col-form-label">암호</label>
+							<div class="col-md-4 col-sm-3">
+								<input class="form-control" type="password" name="boardPassword" placeholder="${board.boardPassword}" id="html5-text-input" required/>
 							</div>
 						</div>
 						<!-- 제목 -->
 						<div class="mb-3 row">
-							<label for="html5-text-input" class="col-md-12 col-form-label">제목</label>
-							<div class="col-md-12">
+							<label for="html5-text-input" class="col-md-2 col-sm-3 col-form-label">제목</label>
+							<div class="col-md-10 col-sm-9">
 								<input class="form-control" type="text" name="boardTitle" value="${board.boardTitle}" id="html5-text-input" required/>
 							</div>
 						</div>
 						<!-- 내용 -->
 						<div class="mb-3 row">
-							<label for="html5-number-input" class="col-md-12 col-form-label">내용</label>
-							<div class="col-md-12">
+							<label for="html5-number-input" class="col-md-2 col-sm-3 col-form-label">내용</label>
+							<div class="col-md-10 col-sm-9">
 								<textarea class="form-control" aria-label="With textarea" name="boardContent" style="height: 200px; resize: none;" required>${board.boardContent}</textarea>
 							</div>
 						</div>
