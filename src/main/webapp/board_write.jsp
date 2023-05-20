@@ -83,7 +83,7 @@
 						<div class="mb-3 row">
 							<label for="html5-number-input" class="col-md-2 col-sm-3 col-form-label">내용</label>
 							<div class="col-md-10 col-sm-9">
-								<textarea class="form-control" aria-label="With textarea" style="background-color:white; vertical-aligh:top; resize:none" id="boardContent" name="boardContent" placeholder="내용을 입력하세요" required></textarea>
+								<textarea class="form-control" aria-label="With textarea" style="background-color:white; vertical-aligh:top; height:200px" id="boardContent" name="boardContent" placeholder="내용을 입력하세요" required></textarea>
 							</div>
 						</div>
 					</div>
@@ -118,12 +118,5 @@
 
 	<!--  Place this tag in your head or just before your close body tag.  -->
 	<script async defer src="https://buttons.github.io/buttons.js"></script>
-	<script>
-		$("#boardContent").on("propertychange change keyup paste input",function(){
-			$(this)[0].style.height='auto';
-			$(this).height( $(this).prop('scrollHeight'));     
-		});
-	</script>
-
 </body>
 </html>
