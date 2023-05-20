@@ -56,7 +56,7 @@
 	<div class="container-xxl flex-grow-1 container-p-y">
 		<h4 class="fw-bold py-3 mb-4">게시글 수정하기</h4>
 	
-		<form action="updateBoard.do" method="POST">
+		<form action="updateBoard.do?selectPage=${board.selectPage}" method="POST">
 			<div class="row">
 				<!-- HTML5 Inputs -->
 				<div class="card mb-4">

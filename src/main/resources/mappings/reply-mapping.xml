@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ReplyDAO">
+
+	<resultMap type="reply" id="replyResultSet">
+		<id property="replyNum" column="R_NO" />
+		<result property="boardNum" column="B_NO" />
+		<result property="parentNum" column="P_NO" />
+		<result property="replyStep" column="R_STEP" />
+		<result property="replyDate" column="R_DATE" />
+		<result property="replyContent" column="R_CONTENT" />
+	</resultMap>
+
+	<!-- 글 작성 -->
+	<insert id="insertReply">
+		INSERT INTO REPLY (B_NO, P_NO, R_STEP, R_CONTENT)
+		VALUES(#{boardNum}, #{parentNum}, #{replyStep}, #{replyContent})
+	</insert>
+	
+	<!-- 글 삭제 -->
+	<insert id="deleteReply">
+		DELETE FROM BOARD
+		WHERE R_NO = #{replyNum}
+	</insert>
+
+	<!-- 게시글 전체 목록 -->
+	<select id="selectAllReply" resultMap="replyResultSet">
+		SELECT * FROM REPLY WHERE B_NO = #{boardNum} ORDER BY R_NO ASC
+	</select>
+
+</mapper>

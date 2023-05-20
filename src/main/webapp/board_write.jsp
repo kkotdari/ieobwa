@@ -56,7 +56,7 @@
 	<div class="container-xxl flex-grow-1 container-p-y">
 		<h4 class="fw-bold py-3 mb-4">게시글 작성하기</h4>
 	
-		<form action="insertBoard.do" method="POST">
+		<form action="insertBoard.do?selectPage=${board.selectPage}" method="POST">
 			<div class="row">
 				<!-- HTML5 Inputs -->
 				<div class="card mb-4">
@@ -93,7 +93,7 @@
 			<!-- 버튼 -->
 			<div class=" mb-4" align="center">
 				<input type="submit" class="button-purple" value="확인">
-				<input type="button" onclick="location.href='boardView.do'" class="button-purple" value="취소">
+				<input type="button" onclick="location.href='boardView.do?selectPage='+${board.selectPage}" class="button-purple" value="취소">
 			</div>
 
 		</form>

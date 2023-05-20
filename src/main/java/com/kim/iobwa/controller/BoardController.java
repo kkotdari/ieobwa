@@ -18,6 +18,8 @@ import com.google.gson.JsonArray;
 import com.kim.iobwa.biz.board.BoardService;
 import com.kim.iobwa.biz.board.BoardVO;
 import com.kim.iobwa.biz.common.Crawling;
+import com.kim.iobwa.biz.reply.ReplyService;
+import com.kim.iobwa.biz.reply.ReplyVO;
 import com.kim.iobwa.biz.word.WordService;
 import com.kim.iobwa.biz.word.WordVO;
 
@@ -27,6 +29,8 @@ public class BoardController {
 	private BoardService boardService;
 	@Autowired
 	private WordService wordService;
+	@Autowired
+	private ReplyService replyService;
 	@Autowired
 	private Crawling crawling;
 
@@ -46,7 +50,8 @@ public class BoardController {
 				}
 			}
 		}
-		model.addAttribute("boardNum", bvo.getBoardNum());
+		System.out.println("selectPage: " + bvo.getSelectPage());
+		model.addAttribute("board", bvo);
 		return "board.jsp";
 	}
 
@@ -54,14 +59,17 @@ public class BoardController {
 	@RequestMapping(value = "/boardDetailView.do")
 	public String boardDetailView(BoardVO bvo, Model model) {
 		System.out.println("boardDetailView.do 진입");
-		model.addAttribute("board", boardService.findPreBoard(bvo));
+		BoardVO selectBvo = boardService.findPreBoard(bvo);
+		selectBvo.setSelectPage(bvo.getSelectPage());
+		model.addAttribute("board", selectBvo);
 		return "board_detail.jsp";
 	}
 
 	// 게시글 작성하기 페이지 진입
 	@RequestMapping(value = "/insertBoardView.do")
-	public String insertBoardView(HttpSession session, HttpServletResponse response) {
+	public String insertBoardView(BoardVO bvo, Model model) {
 		System.out.println("insertBoardView.do 진입");
+		model.addAttribute("board", bvo);
 		return "board_write.jsp";
 	}
 
@@ -94,12 +102,14 @@ public class BoardController {
 		return "boardDetailView.do?boardNum=" + preNum;
 	}
 	
-	// 게시글 상세보기 페이지 진입
+	// 게시글 수정하기 페이지 진입
 	@RequestMapping(value = "/updateBoardView.do")
 	public String updateBoardView(BoardVO bvo, Model model) {
-		System.out.println("boardDetailView.do 진입");
+		System.out.println("updateBoardView.do 진입");
 		System.out.println("bvo.boardNum: " + bvo.getBoardNum());
+		System.out.println("bvo.selectPage: " + bvo.getSelectPage());
 		BoardVO preBvo = boardService.selectOne(bvo);
+		preBvo.setSelectPage(bvo.getSelectPage());
 		model.addAttribute("board", preBvo);
 		return "board_modify.jsp";
 	}
@@ -128,7 +138,7 @@ public class BoardController {
 			wordService.insert(v);
 		}
 		// 게시글 B_NO 전달하기
-		return "boardDetailView.do?boardNum=" + preNum;
+		return "boardDetailView.do?boardNum=" + preNum +"&selectPage=" + bvo.getSelectPage();
 	}
 	
 	@RequestMapping(value = "/deleteBoard.do")
@@ -140,7 +150,7 @@ public class BoardController {
 		wordService.delete(wvo);
 		// BORAD 테이블의 데이터 삭제
 		boardService.delete(bvo);
-		return "boardView.do";
+		return "boardView.do?selectPage=" + bvo.getSelectPage();
 	}
 	
 	// 게시글 목록 불러오기
@@ -169,6 +179,37 @@ public class BoardController {
 		return data;
 	}
 	
+	// 댓글 삽입
+	@ResponseBody
+	@RequestMapping(value = "/insertReply.do")
+	public JsonArray insertReply(ReplyVO rvo) {
+		System.out.println("insertReply.do 진입");
+		replyService.insert(rvo);
+		List replyList = null;
+		replyList = replyService.selectAll(rvo);
+		JsonArray data = new Gson().toJsonTree(replyList).getAsJsonArray();
+		return data;
+	}
+	
+	// 댓글 삭제
+	@ResponseBody
+	@RequestMapping(value = "/deleteReply.do")
+	public void deleteReply(ReplyVO rvo) {
+		System.out.println("deleteReply.do 진입");
+		replyService.delete(rvo);
+	}
+	
+	// 댓글 목록 불러오기
+	@ResponseBody
+	@RequestMapping(value = "/selectAllReply.do")
+	public JsonArray selectAllReply(ReplyVO rvo) {
+		System.out.println("selectAllReply.do 진입");
+		System.out.println("rvo.boardNum: " + rvo.getBoardNum());
+		List replyList = null;
+		replyList = replyService.selectAll(rvo);
+		JsonArray data = new Gson().toJsonTree(replyList).getAsJsonArray(); 
+		return data;
+	}
 	
 	////////////////////////////////////// 메서드 모듈화 부분 //////////////////////////////////////
 		

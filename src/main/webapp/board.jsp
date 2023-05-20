@@ -77,7 +77,7 @@
 					</div>
 					<!-- 버튼 -->
 					<div class=" mb-4" align="right">
-						<input type="button" onclick="location.href='insertBoardView.do'" class="button-purple" value="글쓰기">
+						<input type="button" onclick="location.href='insertBoardView.do?selectPage='+${board.selectPage}" class="button-purple" value="글쓰기">
 						&nbsp;&nbsp;
 					</div></div>
 			</div>
@@ -114,9 +114,10 @@
    
 	<!-- 리스트세팅 -->
     <script>
-      $(document).ready(function() {
-        list(1);
-      });
+		$(document).ready(function() {
+			var selectPage = "${board.selectPage}";
+			list(selectPage);
+		});
     </script>
     
 </body>

@@ -9,69 +9,62 @@ public class BoardVO {
 	private String boardTitle; // 글 제목
 	private String boardContent; // 글 내용
 	// 멤버변수(VO에만 존재)
+	private int selectPage; // 페이지 번호
 	private String boardSearchCondition; // 글 조회 조건
 	// getter, setter
 	public int getBoardNum() {
 		return boardNum;
 	}
-
 	public void setBoardNum(int boardNum) {
 		this.boardNum = boardNum;
 	}
-
 	public String getBoardDate() {
 		return boardDate;
 	}
-
 	public void setBoardDate(String boardDate) {
 		this.boardDate = boardDate;
 	}
-
 	public String getBoardWriter() {
 		return boardWriter;
 	}
-
 	public void setBoardWriter(String boardWriter) {
 		this.boardWriter = boardWriter;
 	}
-
 	public String getBoardPassword() {
 		return boardPassword;
 	}
-
 	public void setBoardPassword(String boardPassword) {
 		this.boardPassword = boardPassword;
 	}
-
 	public String getBoardTitle() {
 		return boardTitle;
 	}
-
 	public void setBoardTitle(String boardTitle) {
 		this.boardTitle = boardTitle;
 	}
-
 	public String getBoardContent() {
 		return boardContent;
 	}
-
 	public void setBoardContent(String boardContent) {
 		this.boardContent = boardContent;
 	}
-
+	public int getSelectPage() {
+		return selectPage;
+	}
+	public void setSelectPage(int selectPage) {
+		this.selectPage = selectPage;
+	}
 	public String getBoardSearchCondition() {
 		return boardSearchCondition;
 	}
-
 	public void setBoardSearchCondition(String boardSearchCondition) {
 		this.boardSearchCondition = boardSearchCondition;
 	}
 	// toString 오버라이드
-
 	@Override
 	public String toString() {
 		return "BoardVO [boardNum=" + boardNum + ", boardDate=" + boardDate + ", boardWriter=" + boardWriter
 				+ ", boardPassword=" + boardPassword + ", boardTitle=" + boardTitle + ", boardContent=" + boardContent
-				+ ", boardSearchCondition=" + boardSearchCondition + "]";
+				+ ", selectPage=" + selectPage + ", boardSearchCondition=" + boardSearchCondition + "]";
 	}
 }

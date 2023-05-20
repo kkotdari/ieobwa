@@ -95,9 +95,9 @@
 	
 	<!-- 버튼 -->
 	<div class=" mb-4" align="center">
-		<input type="button" onclick="location.href='updateBoardView.do?boardNum=' + ${board.boardNum}" class="button-purple" value="수정하기">
-		<input type="button" onclick="location.href='deleteBoard.do?boardNum=' + ${board.boardNum}" class="button-purple" value="삭제하기">
-		<input type="button" onclick="location.href='boardView.do'" class="button-purple" value="목록으로">
+		<input type="button" onclick="location.href='updateBoardView.do?boardNum='+${board.boardNum}+'&selectPage='+${board.selectPage}" class="button-purple" value="수정하기">
+		<input type="button" onclick="location.href='deleteBoard.do?boardNum='+${board.boardNum}+'&selectPage='+${board.selectPage}" class="button-purple" value="삭제하기">
+		<input type="button" onclick="location.href='boardView.do?selectPage='+${board.selectPage}" class="button-purple" value="목록으로">
 	</div>
 	<div class="container-xxl flex-grow-1 container-p-y">
 		<div class="row">
@@ -105,18 +105,18 @@
 			<div class="card mb-4">
 				<div class="card-body">
 					<div class="showReply">
-						<div id="showReply" onclick="showReply()">
-							댓글 ▼
-						</div>
-						<div id="reply" style="display: block;">
-							<nss:list sort="reply" />
+						<div id="showReply">댓글</div>
+						<div id="reply" style="padding-left:30px;">
+							<!-- 댓글 출력 부분 -->
 						</div>
 					</div>
-					<div id="replywrite" style="display:flex;">
-						<div class="col-md-10 col-sm-9">
-							<input id="0replyContent" class="replyContent" type="text" name="replyContent" style="width:100%; height:40px; border-radius: 5px; border: 1.7px solid #6667ab6b;" placeholder="댓글을 작성하세요" required />
+					<div class="mb-3 row" style="margin-left:20px;">
+						<div class="col-md-10 col-sm-12" style="padding-left:0; padding-right:0; margin-top:10px;">
+							<input id="replyContent" class="replyContent" type="text" name="replyContent" style="width:100%; height:40px; border-radius: 5px; border: 1.7px solid #6667ab6b;" placeholder="댓글을 작성하세요" required />
 						</div>
-						<input type="button" onclick="insertReply(0)" class="button-purple col-md-2 col-sm-3" value="댓글 작성">
+						<div class="col-md-2 col-sm-12" align="center">
+							<input type="button" style="width:100%; height:40px;" onclick="insertReply()" class="button-purple" value="작성">
+						</div>
 					</div>
 				</div>
 			</div>
@@ -172,42 +172,55 @@
     <script>
       $(document).ready(function() {
         list(1, ${board.boardNum});
+        $.ajax({
+			type : 'POST',
+			url : 'selectAllReply.do',
+			data : {
+				boardNum: '${board.boardNum}',
+			},
+			success : function(data) {
+				var replyHtml ="";
+				for (var i = 0; i < data.length; i++) {
+					replyHtml+="<div id='replyContent'>"
+	                         +"<div style='display=flex;'>"
+	                         +"<ul>"
+	                         +"<li><font size=3>"+data[i].replyContent+"</font> <font size=2>("+data[i].replyDate+")</font></li></ul>";
+				}
+				$("#reply").html(replyHtml);
+			},
+			error : function() {
+				alert('error');
+			}
+		})
       });
     
-<!-- 댓글 추가 -->
-function insertReply(parentNum){
-var replyContent = $('input[id='+parentNum+'replyContent]').val();
-if(loginCheck()){
-if(replyContent==''){
-swal({
-text : "내용을 입력하세요.",
-button : "확인"
-});
-}else{
-$.ajax({
-type : 'POST',
-url : 'insertReply.do',
-data : {
-boardNum: '${board.boardNum}',
-userId : '${memberId}',
-replyContent : replyContent,
-parentNum : parentNum
-},
-success : function() {
-$('.showReply').load(location.href + ' .showReply');
-$('.fixcomment').load(location.href + ' .fixcomment');
-$('#0replyContent').val('');
-setTimeout(function() {
-$('#reply').css('display', 'block');
-},100);
-},
-error : function() {
-alert('error');
-}
-})
-}
-}
-}
+	<!-- 댓글 추가 -->
+	function insertReply(){
+		var replyContent = $("#replyContent").val();
+		console.log('replyContent: ' + replyContent)
+				
+		$.ajax({
+			type : 'POST',
+			url : 'insertReply.do',
+			data : {
+				boardNum: '${board.boardNum}',
+				replyContent : replyContent,
+			},
+			success : function(data) {
+				var replyHtml ="";
+				for (var i = 0; i < data.length; i++) {
+					replyHtml+="<div id='replyContent'>"
+	                         +"<div style='display=flex;'>"
+	                         +"<ul>"
+	                         +"<li><font size=3>"+data[i].replyContent+"</font> <font size=2>("+data[i].replyDate+")</font></li></ul>";
+				}
+				$("#reply").html(replyHtml);
+			},
+			error : function() {
+				alert('error');
+			}
+		})
+	}
     </script>
     
     
