@@ -112,7 +112,7 @@
 					</div>
 					<div class="mb-3 row" style="margin-left:20px;">
 						<div class="col-md-10 col-sm-12" style="padding-left:0; padding-right:0; margin-top:10px;">
-							<input id="replyContent" class="replyContent" type="text" name="replyContent" style="width:100%; height:40px; border-radius: 5px; border: 1.7px solid #6667ab6b;" placeholder="댓글을 작성하세요" required />
+							<input id="replyContent" type="text" name="replyContent" style="width:100%; height:40px; border-radius: 5px; border: 1.7px solid #6667ab6b;" placeholder="댓글을 작성하세요" required />
 						</div>
 						<div class="col-md-2 col-sm-12" align="center">
 							<input type="button" style="width:100%; height:40px;" onclick="insertReply()" class="button-purple" value="작성">
@@ -181,10 +181,9 @@
 			success : function(data) {
 				var replyHtml ="";
 				for (var i = 0; i < data.length; i++) {
-					replyHtml+="<div id='replyContent'>"
-	                         +"<div style='display=flex;'>"
-	                         +"<ul>"
-	                         +"<li><font size=3>"+data[i].replyContent+"</font> <font size=2>("+data[i].replyDate+")</font></li></ul>";
+					replyHtml+="<div style='display=flex;'>"
+					+"<ul>"
+					+"<li><font size=3>"+data[i].replyContent+"</font> <font size=2>("+data[i].replyDate+")</font></li></ul></div>";
 				}
 				$("#reply").html(replyHtml);
 			},
@@ -209,10 +208,9 @@
 			success : function(data) {
 				var replyHtml ="";
 				for (var i = 0; i < data.length; i++) {
-					replyHtml+="<div id='replyContent'>"
-	                         +"<div style='display=flex;'>"
-	                         +"<ul>"
-	                         +"<li><font size=3>"+data[i].replyContent+"</font> <font size=2>("+data[i].replyDate+")</font></li></ul>";
+					replyHtml+="<div style='display=flex;'>"
+					+"<ul>"
+					+"<li><font size=3>"+data[i].replyContent+"</font> <font size=2>("+data[i].replyDate+")</font></li></ul></div>";
 				}
 				$("#reply").html(replyHtml);
 			},
