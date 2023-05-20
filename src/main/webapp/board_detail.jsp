@@ -114,7 +114,7 @@
 					</div>
 					<div id="replywrite" style="display:flex;">
 						<div class="col-md-10 col-sm-9">
-							<input id="0replyContent" class="replyContent" type="text" name="replyContent" style="width:97%; height:40px; border-radius: 5px; border: 1.7px solid #6667ab6b;" placeholder="댓글을 작성하세요" required />
+							<input id="0replyContent" class="replyContent" type="text" name="replyContent" style="width:100%; height:40px; border-radius: 5px; border: 1.7px solid #6667ab6b;" placeholder="댓글을 작성하세요" required />
 						</div>
 						<input type="button" onclick="insertReply(0)" class="button-purple col-md-2 col-sm-3" value="댓글 작성">
 					</div>
