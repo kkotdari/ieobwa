@@ -65,25 +65,25 @@
 						<div class="mb-3 row">
 							<label for="html5-text-input" class="col-md-2 col-sm-3 col-form-label">작성자</label>
 							<div class="col-md-4 col-sm-3">
-								<input class="form-control" type="text" name="boardWriter" placeholder="작성자" id="html5-text-input" required/>
+								<input class="form-control" type="text" name="boardWriter" placeholder="작성자" required/>
 							</div>
 							<label for="html5-text-input" class="col-md-2 col-sm-3 col-form-label">암호</label>
 							<div class="col-md-4 col-sm-3">
-								<input class="form-control" type="password" name="boardPassword" placeholder="암호" id="html5-text-input" required/>
+								<input class="form-control" type="password" name="boardPassword" placeholder="암호" required/>
 							</div>
 						</div>
 						<!-- 제목 -->
 						<div class="mb-3 row">
 							<label for="html5-text-input" class="col-md-2 col-sm-3 col-form-label">제목</label>
 							<div class="col-md-10 col-sm-9">
-								<input class="form-control" type="text" name="boardTitle" placeholder="제목을 입력하세요" id="html5-text-input" required/>
+								<input class="form-control" type="text" name="boardTitle" placeholder="제목을 입력하세요" required/>
 							</div>
 						</div>
 						<!-- 내용 -->
 						<div class="mb-3 row">
 							<label for="html5-number-input" class="col-md-2 col-sm-3 col-form-label">내용</label>
 							<div class="col-md-10 col-sm-9">
-								<textarea class="form-control" aria-label="With textarea" name="boardContent" placeholder="내용을 입력하세요" style="height: 200px; resize: none;" required></textarea>
+								<textarea class="form-control" aria-label="With textarea" style="background-color:white; vertical-aligh:top; resize:none" id="boardContent" name="boardContent" placeholder="내용을 입력하세요" required></textarea>
 							</div>
 						</div>
 					</div>
@@ -118,6 +118,12 @@
 
 	<!--  Place this tag in your head or just before your close body tag.  -->
 	<script async defer src="https://buttons.github.io/buttons.js"></script>
+	<script>
+		$("#boardContent").on("propertychange change keyup paste input",function(){
+			$(this)[0].style.height='auto';
+			$(this).height( $(this).prop('scrollHeight'));     
+		});
+	</script>
 
 </body>
 </html>
