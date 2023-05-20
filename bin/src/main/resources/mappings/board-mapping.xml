@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BoardDAO">
+
+	<resultMap type="board" id="boardResultSet">
+		<id property="boardNum" column="B_NO" />
+		<result property="boardDate" column="B_DATE" />
+		<result property="boardTitle" column="B_TITLE" />
+		<result property="boardContent" column="B_CONTENT" />
+	</resultMap>
+
+	<!-- 글 작성 -->
+	<insert id="insertBoard">
+		INSERT INTO BOARD (B_TITLE, B_CONTENT)
+		VALUES(#{boardTitle}, #{boardContent})
+	</insert>
+	
+	<!-- 글 수정 -->
+	<insert id="updateBoard">
+		UPDATE BOARD SET B_TITLE = #{boardTitle}, B_CONTENT= #{boardContent}
+		WHERE B_NO = #{boardNum}
+	</insert>
+	
+	<!-- 글 삭제 -->
+	<insert id="deleteBoard">
+		DELETE FROM BOARD
+		WHERE B_NO = #{boardNum}
+	</insert>
+
+	<!-- 게시글 전체 목록 -->
+	<select id="selectAllBoard" resultMap="boardResultSet">
+		SELECT * FROM BOARD ORDER BY B_NO DESC
+	</select>
+	
+	<!-- 게시글 상세 보기 -->
+	<select id="selectOneBoard" resultMap="boardResultSet">
+		SELECT * FROM BOARD WHERE B_NO = #{boardNum}
+	</select>
+	
+	<!-- 마지막 게시글 조회 -->
+	<select id="selectOneBoardLast" resultMap="boardResultSet">
+		SELECT * FROM BOARD WHERE B_NO = (SELECT MAX(B_NO) FROM BOARD)
+	</select>
+
+</mapper>

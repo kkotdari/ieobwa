@@ -234,7 +234,6 @@ public class BoardController {
 				for(int a=0; a<wordArray.length; a++) {
 					if(wordArray[i].equals(wordArray[a])) { // 글 내부에서 같은 단어 발견
 						wordFound ++; // 단어 수 카운트
-						System.out.println("게시글 내부 일치하는 단어 발견");
 					}
 				}
 				

@@ -16,9 +16,9 @@ import com.kim.iobwa.biz.board.BoardVO;
 
 @Component
 public class Crawling {
-	final String SWITCH = "Y"; // ※ 크롤링 여부 (Y/N)
+	final String SWITCH = "N"; // ※ 크롤링 여부 (Y/N)
 	final String WEB_DRIVER_ID = "webdriver.chrome.driver"; // 드라이버 ID
-	final String WEB_DRIVER_PATH = "C:/Dev/kotddari/workspace/iobwa/src/main/webapp/Source/chromedriver.exe"; // 드라이버
+	final String WEB_DRIVER_PATH = "F:/Dev/kotddari/workspace/iobwa/src/main/webapp/Source/chromedriver.exe"; // 드라이버
 	final int BOARD = 50; // ※ 크롤링할 게시물 개수 (범위는 5~100이며 클수록 시간이 늘어나므로 30이하로 하는 것을 추천!)
 	
 	private int max = BOARD / 5 * 2;
