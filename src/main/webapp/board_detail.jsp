@@ -99,9 +99,31 @@
 		<input type="button" onclick="location.href='deleteBoard.do?boardNum=' + ${board.boardNum}" class="button-purple" value="삭제하기">
 		<input type="button" onclick="location.href='boardView.do'" class="button-purple" value="목록으로">
 	</div>
+	<div class="container-xxl flex-grow-1 container-p-y">
+		<div class="row">
+			<!-- HTML5 Inputs -->
+			<div class="card mb-4">
+				<div class="card-body">
+					<div class="showReply">
+						<div id="showReply" onclick="showReply()">
+							댓글 ▼
+						</div>
+						<div id="reply" style="display: block;">
+							<nss:list sort="reply" />
+						</div>
+					</div>
+					<div id="replywrite" style="display:flex;">
+						<div class="col-md-10 col-sm-9">
+							<input id="0replyContent" class="replyContent" type="text" name="replyContent" style="width:97%; height:40px; border-radius: 5px; border: 1.7px solid #6667ab6b;" placeholder="댓글을 작성하세요" required />
+						</div>
+						<input type="button" onclick="insertReply(0)" class="button-purple col-md-2 col-sm-3" value="댓글 작성">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	
 	<div class="container-xxl flex-grow-1 container-p-y">	
-		
 		<!-- 연관 게시물 목록 -->
 		<div class="card">
 		   <h5 class="card-header">연관 게시글 목록</h5>
@@ -151,7 +173,44 @@
       $(document).ready(function() {
         list(1, ${board.boardNum});
       });
+    
+<!-- 댓글 추가 -->
+function insertReply(parentNum){
+var replyContent = $('input[id='+parentNum+'replyContent]').val();
+if(loginCheck()){
+if(replyContent==''){
+swal({
+text : "내용을 입력하세요.",
+button : "확인"
+});
+}else{
+$.ajax({
+type : 'POST',
+url : 'insertReply.do',
+data : {
+boardNum: '${board.boardNum}',
+userId : '${memberId}',
+replyContent : replyContent,
+parentNum : parentNum
+},
+success : function() {
+$('.showReply').load(location.href + ' .showReply');
+$('.fixcomment').load(location.href + ' .fixcomment');
+$('#0replyContent').val('');
+setTimeout(function() {
+$('#reply').css('display', 'block');
+},100);
+},
+error : function() {
+alert('error');
+}
+})
+}
+}
+}
     </script>
+    
+    
     
 </body>
 </html>
