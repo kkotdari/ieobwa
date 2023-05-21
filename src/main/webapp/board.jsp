@@ -63,9 +63,9 @@
 			         <thead>
 			            <tr>
 			               <th width="15%" style="text-align:center;">글번호</th>
-			               <th width="25%" style="text-align:center;">작성일</th>
+			               <th width="15%" style="text-align:center;">작성일</th>
 			               <th width="20%" style="text-align:center;">작성자</th>
-			               <th width="40%" style="text-align:center;">제목</th>
+			               <th width="50%" style="text-align:center;">제목</th>
 			            </tr>
 			         </thead>
 			         <!-- 목록 출력부분 -->
