@@ -125,24 +125,27 @@
 		<div class="card">
 		   <h5 class="card-header">연관 게시글 목록</h5>
 		   <div class="table-responsive text-nowrap">
-			      <table class="table table-hover" style="table-layout:fixed; overflow:hidden; white-space:nowrap;">
-			         <thead>
-			            <tr>
+				<table class="table table-hover" style="table-layout:fixed; overflow:hidden; white-space:nowrap;">
+					<thead>
+						<tr>
 			               <th width="15%" style="text-align:center;">글번호</th>
 			               <th width="15%" style="text-align:center;">작성일</th>
 			               <th width="15%" style="text-align:center;">작성자</th>
 			               <th width="40%" style="text-align:center;">제목</th>
 			               <th width="15%" style="text-align:center;">댓글</th>
 			            </tr>
-			         </thead>
-		         <!-- 목록 출력부분 -->
-		         <tbody class="table-border-bottom-0" id="dataTableBody">
-		         </tbody>
-		      </table>
-		      <!-- 페이지네이션 부분 -->
-		      <div class="product__pagination"><ul id="pagingul"></ul>
+					</thead>
+					<!-- 목록 출력부분 -->
+					<tbody class="table-border-bottom-0" id="dataTableBody">
+					</tbody>
+				</table>
+	      		<!-- 페이지네이션 부분 -->
+				<div class="product__pagination">
+					<ul id="pagingul" 
+						style="align-items: center; justify-content: center; margin:0px 0px 10px 0px; padding:0px 0px 0px 18px;">
+					</ul>
+				</div>
 			</div>
-		</div>
 		</div>
 	</div>
 
