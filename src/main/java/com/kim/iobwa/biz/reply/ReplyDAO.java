@@ -20,6 +20,14 @@ public class ReplyDAO {
 		return true;
 	}
 	
+	public boolean update(ReplyVO vo) {
+		int res = myBatis.update("ReplyDAO.updateReply", vo);
+		if (res < 1) {
+			return false;
+		}
+		return true;
+	}
+	
 	public boolean delete(ReplyVO vo) {
 		int res = myBatis.delete("ReplyDAO.deleteReply", vo);
 		if (res < 1) {
@@ -30,6 +38,10 @@ public class ReplyDAO {
 
 	public List<ReplyVO> selectAll(ReplyVO vo) {
 		return myBatis.selectList("ReplyDAO.selectAllReply", vo);
+	}
+	
+	public ReplyVO selectOne(ReplyVO vo) {
+		return myBatis.selectOne("ReplyDAO.selectOneReply", vo);
 	}
 }
 
