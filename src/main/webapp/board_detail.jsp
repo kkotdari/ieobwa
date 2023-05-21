@@ -141,7 +141,7 @@
 			               <th width="15%" style="text-align:center;">작성일</th>
 			               <th width="15%" style="text-align:center;">작성자</th>
 			               <th width="40%" style="text-align:center;">제목</th>
-			               <th width="15%" style="text-align:left;"></th>
+			               <th width="15%" style="text-align:left;">댓글</th>
 			            </tr>
 			         </thead>
 		         <!-- 목록 출력부분 -->
