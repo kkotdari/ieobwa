@@ -183,7 +183,7 @@
 				var replyHtml = "";
 				for (var i = 0; i < data.length; i++) {
 					if(data[i].replyStep == 1){
-						replyHtml += "<hr style='margin:10px;'>"
+						replyHtml += "<hr style='margin:10px 0px;'>"
 							+ "<div style='margin:0; padding:0'>"+data[i].replyWriter+" : "+data[i].replyContent+"<font size=1.5>&nbsp;&nbsp;("+data[i].replyDate+")</font><a href='javascript:doDisplay2("+data[i].replyNum+")'><font size=1.5>&nbsp;&nbsp;▼ 대댓글 쓰기</font></a></div>"
 							+ "<div id='reReply"+data[i].replyNum+"' style='display:none; flex-wrap:wrap; margin-bottom:10px;'>"
 								+ "<div class='col-md-6 col-sm-6 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
