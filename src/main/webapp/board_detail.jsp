@@ -98,7 +98,7 @@
 			<!-- 댓글 부분 -->
 			<div class="card-body">
 				<div class="showReply">
-					<div id="showReply">댓글</div>
+					<div id="showReply">댓글 [${board.replyCount}]</div>
 					<div id="reply">
 						<!-- 댓글 출력 부분 -->
 					</div>
@@ -139,8 +139,9 @@
 			            <tr>
 			               <th width="15%" style="text-align:center;">글번호</th>
 			               <th width="15%" style="text-align:center;">작성일</th>
-			               <th width="20%" style="text-align:center;">작성자</th>
-			               <th width="50%" style="text-align:center;">제목</th>
+			               <th width="15%" style="text-align:center;">작성자</th>
+			               <th width="40%" style="text-align:center;">제목</th>
+			               <th width="15%" style="text-align:left;"></th>
 			            </tr>
 			         </thead>
 		         <!-- 목록 출력부분 -->
