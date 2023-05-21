@@ -85,7 +85,7 @@
 						<div class="mb-3 row">
 							<label for="html5-number-input" class="col-md-2 col-sm-3 col-form-label">내용</label>
 							<div class="col-md-10 col-sm-9">
-								<textarea class="form-control" aria-label="With textarea" style="background-color:white; vertical-aligh:top; height:200px" id="boardContent" name="boardContent" readonly><c:out value="${board.boardContent}" /></textarea>
+								<textarea class="form-control" aria-label="With textarea" style="background-color:white; vertical-align:top; height:200px" id="boardContent" name="boardContent" readonly><c:out value="${board.boardContent}" /></textarea>
 							</div>
 						</div>
 				</div>
@@ -93,12 +93,7 @@
 		</div>
 	</div>
 	
-	<!-- 버튼 -->
-	<div class=" mb-4" align="center">
-		<input type="button" onclick="location.href='updateBoardView.do?boardNum='+${board.boardNum}+'&selectPage='+${board.selectPage}" class="button-purple" value="수정하기">
-		<input type="button" onclick="location.href='deleteBoard.do?boardNum='+${board.boardNum}+'&selectPage='+${board.selectPage}" class="button-purple" value="삭제하기">
-		<input type="button" onclick="location.href='boardView.do?selectPage='+${board.selectPage}" class="button-purple" value="목록으로">
-	</div>
+	<!-- 댓글 부분 -->
 	<div class="container-xxl flex-grow-1 container-p-y">
 		<div class="row">
 			<!-- HTML5 Inputs -->
@@ -106,21 +101,28 @@
 				<div class="card-body">
 					<div class="showReply">
 						<div id="showReply">댓글</div>
-						<div id="reply" style="padding-left:30px;">
+						<div id="reply">
 							<!-- 댓글 출력 부분 -->
 						</div>
 					</div>
-					<div class="mb-3 row" style="margin-left:20px;">
+					<div class="mb-3 row">
 						<div class="col-md-10 col-sm-12" style="padding-left:0; padding-right:0; margin-top:10px;">
-							<input id="replyContent" type="text" name="replyContent" style="width:100%; height:40px; border-radius: 5px; border: 1.7px solid #6667ab6b;" placeholder="댓글을 작성하세요" required />
+							<input id="replyContent" type="text" name="replyContent" style="padding:10px; width:100%; border-radius:5px; border:1.7px solid #6667ab;" placeholder="댓글을 작성하세요" required />
 						</div>
-						<div class="col-md-2 col-sm-12" align="center">
-							<input type="button" style="width:100%; height:40px;" onclick="insertReply()" class="button-purple" value="작성">
+						<div class="col-md-2 col-sm-12" style="padding-left:0; padding-right:0; margin-top:10px;" >
+							<input type="button" style="max-width: none; width:100%; border-radius:5px; border:1.7px solid #6667ab;" onclick="insertReply()" class="button-purple" value="작성">
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+	</div>
+	
+	<!-- 버튼 부분 -->
+	<div class=" mb-4" align="center">
+		<input type="button" onclick="location.href='updateBoardView.do?boardNum='+${board.boardNum}+'&selectPage='+${board.selectPage}" class="button-purple" value="수정하기">
+		<input type="button" onclick="location.href='deleteBoard.do?boardNum='+${board.boardNum}+'&selectPage='+${board.selectPage}" class="button-purple" value="삭제하기">
+		<input type="button" onclick="location.href='boardView.do?selectPage='+${board.selectPage}" class="button-purple" value="목록으로">
 	</div>
 	
 	<div class="container-xxl flex-grow-1 container-p-y">	
@@ -179,11 +181,10 @@
 				boardNum: '${board.boardNum}',
 			},
 			success : function(data) {
-				var replyHtml ="";
+				var replyHtml = "";
 				for (var i = 0; i < data.length; i++) {
-					replyHtml+="<div style='display=flex;'>"
-					+"<ul>"
-					+"<li><font size=3>"+data[i].replyContent+"</font> <font size=2>("+data[i].replyDate+")</font></li></ul></div>";
+					replyHtml += "<div style='vertical-align:middle; width:100%; margin-bottom:5px; padding:5px; border-radius: 5px; border: 1.7px solid #6667ab6b;'>"
+					+"<font size=3>"+data[i].replyContent+"</font> <font size=2>("+data[i].replyDate+")</font></div>";
 				}
 				$("#reply").html(replyHtml);
 			},
