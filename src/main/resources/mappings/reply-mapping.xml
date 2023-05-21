@@ -27,8 +27,8 @@
 	
 	<!-- 댓글/대댓글 삭제 -->
 	<insert id="deleteReply">
-		DELETE FROM BOARD
-		WHERE R_NO = #{replyNum}
+		DELETE FROM REPLY
+		WHERE B_NO = #{boardNum}
 	</insert>
 
 	<!-- 게시글 전체 댓글/대댓글 목록 -->
