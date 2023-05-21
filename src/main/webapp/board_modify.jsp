@@ -63,35 +63,28 @@
 					<div class="card-body">
 						<!-- 글번호 -->
 						<div class="mb-3 row">
-							<label for="html5-text-input" class="col-md-2 col-sm-3 col-form-label"><font size=3>글번호</font></label>
-							<div class="col-md-10 col-sm-9">
-								<input class="form-control" type="text" name="boardNum" style="color:#6667ab;" value="${board.boardNum}" readonly/>
-							</div>
+							<font color="#6667ab">글번호</font>
+							<input class="form-control" type="text" name="boardNum" style="color:#6667ab;" value="${board.boardNum}" readonly/>
 						</div>
-						<!-- 작성자 / 패스워드 -->
+						<!-- 작성자 -->
 						<div class="mb-3 row">
-							<label for="html5-text-input" class="col-md-2 col-sm-3 col-form-label"><font size=3>작성자</font></label>
-							<div class="col-md-4 col-sm-3">
-								<input class="form-control" type="text" name="boardWriter" style="color:#6667ab;" value="${board.boardWriter}" readonly/>
-							</div>
-							<label for="html5-text-input" class="col-md-2 col-sm-3 col-form-label"><font size=3>암호</font></label>
-							<div class="col-md-4 col-sm-3">
-								<input class="form-control" type="password" id="boardPassword" style="color:#6667ab;" required/>
-							</div>
+							<font color="#6667ab">작성자</font>
+							<input class="form-control" type="text" name="boardWriter" style="color:#6667ab;" value="${board.boardWriter}" readonly/>
+						</div>
+						<!-- 암호 -->
+						<div class="mb-3 row">
+							<font color="#6667ab">암호</font>
+							<input class="form-control" type="password" id="boardPassword" style="color:#6667ab;" required/>
 						</div>
 						<!-- 제목 -->
 						<div class="mb-3 row">
-							<label for="html5-text-input" class="col-md-2 col-sm-3 col-form-label"><font size=3>제목</font></label>
-							<div class="col-md-10 col-sm-9">
-								<input class="form-control" type="text" name="boardTitle" style="color:#6667ab;" value="${board.boardTitle}" required/>
-							</div>
+							<font color="#6667ab">제목</font>
+							<input class="form-control" type="text" name="boardTitle" style="color:#6667ab;" value="${board.boardTitle}" required/>
 						</div>
 						<!-- 내용 -->
 						<div class="mb-3 row">
-							<label for="html5-number-input" class="col-md-2 col-sm-3 col-form-label"><font size=3>내용</font></label>
-							<div class="col-md-10 col-sm-9">
-								<textarea class="form-control" aria-label="With textarea" style="color:#6667ab; background-color:white; vertical-aligh:top; height:200px" id="boardContent" name="boardContent" required>${board.boardContent}</textarea>
-							</div>
+							<font color="#6667ab">내용</font>
+							<textarea class="form-control" aria-label="With textarea" style="color:#6667ab; background-color:white; vertical-aligh:top; height:200px" id="boardContent" name="boardContent" required>${board.boardContent}</textarea>
 						</div>
 					</div>
 				</div>
