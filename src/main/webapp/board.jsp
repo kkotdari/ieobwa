@@ -75,11 +75,14 @@
 						</tbody>
 					</table>
 		      		<!-- 페이지네이션 부분 -->
-					<div class="product__pagination"><ul id="pagingul"></ul>
+					<div class="product__pagination">
+						<ul id="pagingul" 
+							style="align-items: center; justify-content: center; margin:0px 0px 10px 0px; padding:0px 0px 0px 18px;">
+						</ul>
 					</div>
 					<!-- 버튼 -->
-					<div class=" mb-4" align="right" style="margin:0px 10px 10px 0px;">
-						<input type="button" style="height:40px; padding:0;" onclick="location.href='insertBoardView.do?selectPage='+${board.selectPage}" class="button-purple" value="글쓰기">
+					<div class=" mb-4" align="right" style="margin:0px 10px 10px 10px;">
+						<input type="button" style="width:100%; max-width:100%;" onclick="location.href='insertBoardView.do?selectPage='+${board.selectPage}" class="button-purple" value="글쓰기">
 					</div>
 				</div>
 			</div>
