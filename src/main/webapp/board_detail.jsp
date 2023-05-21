@@ -110,11 +110,11 @@
 						<a href="javascript:doDisplay1()"><font size=2>▼ 댓글 쓰기</font></a>
 					</div>
 					<div id="replyInput" style="display:none; flex-wrap:wrap;">
-						<div class="col-md-6 col-sm-12 col-xs-12" style="flex:auto; padding-left:0; padding-right:0; margin-top:10px">
-							<input id="replyContent" type="text" name="replyContent" style="padding:10px; height:35px; width:100%; border-radius:5px; border:1.7px solid #6667ab;" placeholder="댓글 내용 입력" required />
-						</div>
 						<div class="col-md-2 col-sm-6 col-xs-12" style="flex:auto; padding-left:0; padding-right:0; margin-top:10px">
 							<input id="replyWriter" type="text" name="replyWriter" style="padding:10px; height:35px; width:100%; border-radius:5px; border:1.7px solid #6667ab;" placeholder="작성자 입력" required />
+						</div>
+						<div class="col-md-6 col-sm-12 col-xs-12" style="flex:auto; padding-left:0; padding-right:0; margin-top:10px">
+							<input id="replyContent" type="text" name="replyContent" style="padding:10px; height:35px; width:100%; border-radius:5px; border:1.7px solid #6667ab;" placeholder="댓글 내용 입력" required />
 						</div>
 						<div class="col-md-2 col-sm-6 col-xs-12" style="flex:auto; padding-left:0; padding-right:0; margin-top:10px">
 							<input id="replyPassword" type="password" name="replyPassword" style="padding:10px; height:35px; width:100%; border-radius:5px; border:1.7px solid #6667ab;" placeholder="암호 입력" required />
@@ -198,11 +198,11 @@
 						+ "<font size=3>["+data[i].replyWriter+"] "+data[i].replyContent+"</font><font size=1.5>	("+data[i].replyDate+")</font></div><div style='text-align:right;'><a href='javascript:doDisplay2("+data[i].replyNum+")'><font size=1.5>▼ 대댓글 쓰기</font></a>"
 						+ "</div>"
 						+ "<div id='reReply"+data[i].replyNum+"' style='display:none; flex-wrap:wrap;'>"
-							+ "<div class='col-md-6 col-sm-12 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
-								+ "<input id='reReplyContent"+data[i].replyNum+"' type='text' name='reReplyContent' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1.7px solid #6667ab;' placeholder='대댓글 내용 입력' required />"
-							+ "</div>"
 							+ "<div class='col-md-2 col-sm-6 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
 								+ "<input id='reReplyWriter"+data[i].replyNum+"' type='text' name='reReplyWirter' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1.7px solid #6667ab;' placeholder='작성자 입력' required />"
+							+ "</div>"
+							+ "<div class='col-md-6 col-sm-12 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
+								+ "<input id='reReplyContent"+data[i].replyNum+"' type='text' name='reReplyContent' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1.7px solid #6667ab;' placeholder='대댓글 내용 입력' required />"
 							+ "</div>"
 							+ "<div class='col-md-2 col-sm-6 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
 								+ "<input id='reReplyPassword"+data[i].replyNum+"' type='password' name='reReplyPassword' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1.7px solid #6667ab;' placeholder='암호 입력' required />"
@@ -252,11 +252,11 @@
 						+ "<font size=3>["+data[i].replyWriter+"] "+data[i].replyContent+"</font><font size=1.5>	("+data[i].replyDate+")</font></div><div style='text-align:right;'><a href='javascript:doDisplay2("+data[i].replyNum+")'><font size=1.5>▼ 대댓글 쓰기</font></a>"
 						+ "</div>"
 						+ "<div id='reReply"+data[i].replyNum+"' style='display:none; flex-wrap:wrap;'>"
-							+ "<div class='col-md-6 col-sm-12 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
-								+ "<input id='reReplyContent"+data[i].replyNum+"' type='text' name='reReplyContent' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1.7px solid #6667ab;' placeholder='대댓글 내용 입력' required />"
-							+ "</div>"
 							+ "<div class='col-md-2 col-sm-6 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
 								+ "<input id='reReplyWriter"+data[i].replyNum+"' type='text' name='reReplyWirter' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1.7px solid #6667ab;' placeholder='작성자 입력' required />"
+							+ "</div>"
+							+ "<div class='col-md-6 col-sm-12 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
+								+ "<input id='reReplyContent"+data[i].replyNum+"' type='text' name='reReplyContent' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1.7px solid #6667ab;' placeholder='대댓글 내용 입력' required />"
 							+ "</div>"
 							+ "<div class='col-md-2 col-sm-6 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
 								+ "<input id='reReplyPassword"+data[i].replyNum+"' type='password' name='reReplyPassword' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1.7px solid #6667ab;' placeholder='암호 입력' required />"
@@ -311,11 +311,11 @@
 						+ "<font size=3>["+data[i].replyWriter+"] "+data[i].replyContent+"</font><font size=1.5>	("+data[i].replyDate+")</font></div><div style='text-align:right;'><a href='javascript:doDisplay2("+data[i].replyNum+")'><font size=1.5>▼ 대댓글 쓰기</font></a>"
 						+ "</div>"
 						+ "<div id='reReply"+data[i].replyNum+"' style='display:none; flex-wrap:wrap;'>"
-							+ "<div class='col-md-6 col-sm-12 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
-								+ "<input id='reReplyContent"+data[i].replyNum+"' type='text' name='reReplyContent' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1.7px solid #6667ab;' placeholder='대댓글 내용 입력' required />"
-							+ "</div>"
 							+ "<div class='col-md-2 col-sm-6 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
 								+ "<input id='reReplyWriter"+data[i].replyNum+"' type='text' name='reReplyWirter' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1.7px solid #6667ab;' placeholder='작성자 입력' required />"
+							+ "</div>"
+							+ "<div class='col-md-6 col-sm-12 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
+								+ "<input id='reReplyContent"+data[i].replyNum+"' type='text' name='reReplyContent' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1.7px solid #6667ab;' placeholder='대댓글 내용 입력' required />"
 							+ "</div>"
 							+ "<div class='col-md-2 col-sm-6 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
 								+ "<input id='reReplyPassword"+data[i].replyNum+"' type='password' name='reReplyPassword' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1.7px solid #6667ab;' placeholder='암호 입력' required />"
