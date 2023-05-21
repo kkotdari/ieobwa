@@ -52,6 +52,7 @@
 *,
 *::before,
 *::after {
+  color: #6667ab;
   box-sizing: border-box;
 }
 
@@ -229,10 +230,11 @@ a {
 }
 a:hover {
   color: #6667ab6b;
+  
 }
 
 a:not([href]):not([class]), a:not([href]):not([class]):hover {
-  color: inherit;
+  color: #6667ab;
   text-decoration: none;
 }
 
