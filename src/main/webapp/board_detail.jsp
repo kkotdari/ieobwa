@@ -105,13 +105,11 @@
 							<!-- 댓글 출력 부분 -->
 						</div>
 					</div>
-					<div class="mb-3 row">
-						<div class="col-md-10 col-sm-12" style="padding-left:0; padding-right:0; margin-top:10px;">
-							<input id="replyContent" type="text" name="replyContent" style="padding:10px; width:100%; border-radius:5px; border:1.7px solid #6667ab;" placeholder="댓글을 작성하세요" required />
-						</div>
-						<div class="col-md-2 col-sm-12" style="padding-left:0; padding-right:0; margin-top:10px;" >
-							<input type="button" style="max-width: none; width:100%; border-radius:5px; border:1.7px solid #6667ab;" onclick="insertReply()" class="button-purple" value="작성">
-						</div>
+					<div class="col-md-12 col-sm-12" style="padding-left:0; padding-right:0;">
+						<input id="replyContent" type="text" name="replyContent" style="padding:10px; width:100%; border-radius:5px; border:1.7px solid #6667ab;" placeholder="댓글 내용을 입력하세요" required />
+					</div>
+					<div class="col-md-12 col-sm-12" style="padding-left:0; padding-right:0; margin-top:10px" >
+						<input type="button" style="max-width: none; width:100%; border-radius:5px; border:1.7px solid #6667ab;" onclick="insertReply()" class="button-purple" value="댓글 작성하기">
 					</div>
 				</div>
 			</div>
