@@ -56,7 +56,7 @@
 	<div class="container-xxl flex-grow-1 container-p-y">
 		<h4 class="fw-bold py-3 mb-4">게시글 삭제하기</h4>
 	
-			<div class="row" style="width:50%;">
+			<div class="row" style="width:80%;">
 				<!-- HTML5 Inputs -->
 				<div class="card mb-4">
 					<div class="card-body">
