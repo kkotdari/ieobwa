@@ -60,7 +60,6 @@
 		<div class="card mb-4">
 			<div class="card-body">
 				<!-- 제목 -->
-				<hr style="padding:0; margin:10px 0px;">
 				<table>
 					<b><font color="#6667ab">${board.boardTitle}</font></b>
 				</table>
