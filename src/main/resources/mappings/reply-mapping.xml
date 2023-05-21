@@ -11,21 +11,32 @@
 		<result property="replyContent" column="R_CONTENT" />
 	</resultMap>
 
-	<!-- 글 작성 -->
+	<!-- 댓글/대댓글 작성 -->
 	<insert id="insertReply">
 		INSERT INTO REPLY (B_NO, P_NO, R_STEP, R_CONTENT)
 		VALUES(#{boardNum}, #{parentNum}, #{replyStep}, #{replyContent})
 	</insert>
 	
-	<!-- 글 삭제 -->
+	<!-- 댓글 생성후 자신의 댓글 번호를 부모 번호에 입력 -->
+	<insert id="updateReply">
+		UPDATE REPLY SET P_NO = #{replyNum}
+		WHERE R_NO = #{replyNum}
+	</insert>
+	
+	<!-- 댓글/대댓글 삭제 -->
 	<insert id="deleteReply">
 		DELETE FROM BOARD
 		WHERE R_NO = #{replyNum}
 	</insert>
 
-	<!-- 게시글 전체 목록 -->
+	<!-- 게시글 전체 댓글/대댓글 목록 -->
 	<select id="selectAllReply" resultMap="replyResultSet">
-		SELECT * FROM REPLY WHERE B_NO = #{boardNum} ORDER BY R_NO ASC
+		SELECT * FROM REPLY WHERE B_NO = #{boardNum} ORDER BY P_NO ASC, R_NO ASC
+	</select>
+	
+	<!-- 마지막 글 번호 가져오기 -->
+	<select id="selectOneReply" resultMap="replyResultSet">
+		SELECT * FROM REPLY WHERE R_NO = (SELECT MAX(R_NO) FROM REPLY)
 	</select>
 
 </mapper>
