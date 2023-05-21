@@ -117,7 +117,7 @@
 							<input id="replyWriter" type="text" name="replyWriter" style="padding:10px; height:35px; width:100%; border-radius:5px; border:1.7px solid #6667ab;" placeholder="작성자 입력" required />
 						</div>
 						<div class="col-md-2 col-sm-6 col-xs-12" style="flex:auto; padding-left:0; padding-right:0; margin-top:10px">
-							<input id="replyPassword" type="text" name="replyPassword" style="padding:10px; height:35px; width:100%; border-radius:5px; border:1.7px solid #6667ab;" placeholder="암호 입력" required />
+							<input id="replyPassword" type="password" name="replyPassword" style="padding:10px; height:35px; width:100%; border-radius:5px; border:1.7px solid #6667ab;" placeholder="암호 입력" required />
 						</div>
 						<div class="col-md-2 col-sm-6 col-xs-12" style="flex:auto; padding-left:0; padding-right:0; margin-top:10px" >
 							<input type="button" style="max-width:100%; padding:0; height:35px; width:100%; border-radius:5px; border:1.7px solid #6667ab;" onclick="insertReply()" class="button-purple" value="확인" />
