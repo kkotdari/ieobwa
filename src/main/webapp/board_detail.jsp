@@ -105,11 +105,13 @@
 							<!-- 댓글 출력 부분 -->
 						</div>
 					</div>
-					<div class="col-md-12 col-sm-12" style="padding-left:0; padding-right:0;">
-						<input id="replyContent" type="text" name="replyContent" style="padding:10px; width:100%; border-radius:5px; border:1.7px solid #6667ab;" placeholder="댓글 내용을 입력하세요" required />
-					</div>
-					<div class="col-md-12 col-sm-12" style="padding-left:0; padding-right:0; margin-top:10px" >
-						<input type="button" style="max-width: none; width:100%; border-radius:5px; border:1.7px solid #6667ab;" onclick="insertReply()" class="button-purple" value="댓글 작성하기">
+					<div style="display:flex">
+						<div class="col-md-10 col-sm-6" style="padding-left:0; padding-right:0; margin-top:10px">
+							<input id="replyContent" type="text" name="replyContent" style="padding:10px; height:35px; width:100%; border-radius:5px; border:1.7px solid #6667ab;" placeholder="댓글 내용 입력" required />
+						</div>
+						<div class="col-md-2 col-sm-6" style="padding-left:0; padding-right:0; margin-top:10px" >
+							<input type="button" style="max-width: none; padding:0; height:35px; width:100%; border-radius:5px; border:1.7px solid #6667ab;" onclick="insertReply()" class="button-purple" value="확인">
+						</div>
 					</div>
 				</div>
 			</div>
@@ -119,7 +121,7 @@
 	<!-- 버튼 부분 -->
 	<div class=" mb-4" align="center">
 		<input type="button" onclick="location.href='updateBoardView.do?boardNum='+${board.boardNum}+'&selectPage='+${board.selectPage}" class="button-purple" value="수정하기">
-		<input type="button" onclick="location.href='deleteBoard.do?boardNum='+${board.boardNum}+'&selectPage='+${board.selectPage}" class="button-purple" value="삭제하기">
+		<input type="button" onclick="location.href='deleteBoardView.do?boardNum='+${board.boardNum}+'&selectPage='+${board.selectPage}" class="button-purple" value="삭제하기">
 		<input type="button" onclick="location.href='boardView.do?selectPage='+${board.selectPage}" class="button-purple" value="목록으로">
 	</div>
 	
@@ -181,8 +183,24 @@
 			success : function(data) {
 				var replyHtml = "";
 				for (var i = 0; i < data.length; i++) {
-					replyHtml += "<div style='vertical-align:middle; width:100%; margin-bottom:5px; padding:5px; border-radius: 5px; border: 1.7px solid #dfdfed;'>"
-					+"<font size=3>"+data[i].replyContent+"</font> <font size=2>("+data[i].replyDate+")</font></div>";
+					if(data[i].replyStep == 1){
+						replyHtml += "<hr><div id='reply"+data[i].replyNum+"' style='vertical-align:middle; width:100%; margin-bottom:5px; padding:5px; border-radius: 5px; border: 1.7px none #dfdfed;'>"
+								+ "<font size=3>"+data[i].replyContent+"</font><br><font size=2>   ("+data[i].replyDate+")</font><a href='javascript:doDisplay("+data[i].replyNum+")'><font size=2>   ▼ 대댓글 쓰기</font></a>"
+							+ "</div>"
+								+ "<div id='reReply"+data[i].replyNum+"' style='display:none;'>"
+								+ "<div class='col-md-10 col-sm-6' style='padding-left:0; padding-right:0; margin-top:10px'>"
+									+ "<input id='reReplyContent"+data[i].replyNum+"' type='text' name='reReplyContent' style='height:35px; margin-left:10%; padding:10px; width:90%; border-radius:5px; border:1.7px solid #6667ab;' placeholder='대댓글 내용 입력' required />"
+								+ "</div>"
+								+ "<div class='col-md-2 col-sm-6' style='padding-left:0; padding-right:0; margin-top:10px'>"
+									+ "<input type='button' style='max-width: none; padding:0; height:35px; width:100%; border-radius:5px; border:1.7px solid #6667ab;' onclick='insertReReply("+data[i].replyNum+")' class='button-purple' value='확인'>"
+								+ "</div>"
+							+ "</div>";
+					}
+					else if(data[i].replyStep == 2){
+						replyHtml += "<div id='reply"+data[i].replyNum+"' style='vertical-align:middle; width:100%; margin-bottom:5px; margin-left:25px; padding:5px; border-radius: 5px; border: 1.7px none #dfdfed;'>"
+						+ "<font size=3>"+data[i].replyContent+"</font><br><font size=2>   ("+data[i].replyDate+")</font>"
+					+ "</div>"
+					}
 				}
 				$("#reply").html(replyHtml);
 			},
@@ -203,14 +221,84 @@
 			url : 'insertReply.do',
 			data : {
 				boardNum: '${board.boardNum}',
+				replyStep: '1',
 				replyContent : replyContent,
 			},
 			success : function(data) {
-				var replyHtml ="";
+				var replyHtml = "";
 				for (var i = 0; i < data.length; i++) {
-					replyHtml+="<div style='display=flex;'>"
-					+"<ul>"
-					+"<li><font size=3>"+data[i].replyContent+"</font> <font size=2>("+data[i].replyDate+")</font></li></ul></div>";
+					if(data[i].replyStep == 1){
+						replyHtml += "<hr><div id='reply"+data[i].replyNum+"' style='vertical-align:middle; width:100%; margin-bottom:5px; padding:5px; border-radius: 5px; border: 1.7px none #dfdfed;'>"
+								+ "<font size=3>"+data[i].replyContent+"</font><br><font size=2>   ("+data[i].replyDate+")</font><a href='javascript:doDisplay("+data[i].replyNum+")'><font size=2>   ▼ 대댓글 쓰기</font></a>"
+							+ "</div>"
+								+ "<div id='reReply"+data[i].replyNum+"' style='display:none;'>"
+								+ "<div class='col-md-10 col-sm-6' style='padding-left:0; padding-right:0; margin-top:10px'>"
+									+ "<input id='reReplyContent"+data[i].replyNum+"' type='text' name='reReplyContent' style='height:35px; margin-left:10%; padding:10px; width:90%; border-radius:5px; border:1.7px solid #6667ab;' placeholder='대댓글 내용 입력' required />"
+								+ "</div>"
+								+ "<div class='col-md-2 col-sm-6' style='padding-left:0; padding-right:0; margin-top:10px'>"
+									+ "<input type='button' style='max-width: none; padding:0; height:35px; width:100%; border-radius:5px; border:1.7px solid #6667ab;' onclick='insertReReply("+data[i].replyNum+")' class='button-purple' value='확인'>"
+								+ "</div>"
+							+ "</div>";
+					}
+					else if(data[i].replyStep == 2){
+						replyHtml += "<div id='reply"+data[i].replyNum+"' style='vertical-align:middle; width:100%; margin-bottom:5px; margin-left:25px; padding:5px; border-radius: 5px; border: 1.7px none #dfdfed;'>"
+						+ "<font size=3>"+data[i].replyContent+"</font><br><font size=2>   ("+data[i].replyDate+")</font>"
+					+ "</div>"
+					}
+				}
+				$("#reply").html(replyHtml);
+			},
+			error : function() {
+				alert('error');
+			}
+		})
+	}
+	<!-- 대댓글 입력창 접고 펴기 -->
+	function doDisplay(replyNum){ 	
+	    var con = document.getElementById("reReply" + replyNum); 	
+	    if(con.style.display=='none'){ 		
+	    	con.style.display = 'flex'; 	
+	    }else{ 		
+	    	con.style.display = 'none'; 	
+	    } 
+	}
+	
+	<!-- 대댓글 입력 -->
+	function insertReReply(replyNum){
+		var reReplyContent = $("#reReplyContent" + replyNum).val();
+		document.getElementById('reReplyContent' + replyNum).value = null;
+		console.log('replyNum: ' + replyNum)
+		console.log('reReplyContent: ' + reReplyContent)
+		$.ajax({
+			type : 'POST',
+			url : 'insertReReply.do',
+			data : {
+				boardNum: '${board.boardNum}',
+				replyStep: '2',
+				parentNum: replyNum,
+				replyContent : reReplyContent,
+			},
+			success : function(data) {
+				var replyHtml = "";
+				for (var i = 0; i < data.length; i++) {
+					if(data[i].replyStep == 1){
+						replyHtml += "<hr><div id='reply"+data[i].replyNum+"' style='vertical-align:middle; width:100%; margin-bottom:5px; padding:5px; border-radius: 5px; border: 1.7px none #dfdfed;'>"
+								+ "<font size=3>"+data[i].replyContent+"</font><br><font size=2>   ("+data[i].replyDate+")</font><a href='javascript:doDisplay("+data[i].replyNum+")'><font size=2>   ▼ 대댓글 쓰기</font></a>"
+							+ "</div>"
+								+ "<div id='reReply"+data[i].replyNum+"' style='display:none;'>"
+								+ "<div class='col-md-10 col-sm-6' style='padding-left:0; padding-right:0; margin-top:10px'>"
+									+ "<input id='reReplyContent"+data[i].replyNum+"' type='text' name='reReplyContent' style='height:35px; margin-left:10%; padding:10px; width:90%; border-radius:5px; border:1.7px solid #6667ab;' placeholder='대댓글 내용 입력' required />"
+								+ "</div>"
+								+ "<div class='col-md-2 col-sm-6' style='padding-left:0; padding-right:0; margin-top:10px'>"
+									+ "<input type='button' style='max-width: none; padding:0; height:35px; width:100%; border-radius:5px; border:1.7px solid #6667ab;' onclick='insertReReply("+data[i].replyNum+")' class='button-purple' value='확인'>"
+								+ "</div>"
+							+ "</div>";
+					}
+					else if(data[i].replyStep == 2){
+						replyHtml += "<div id='reply"+data[i].replyNum+"' style='vertical-align:middle; width:100%; margin-bottom:5px; margin-left:25px; padding:5px; border-radius: 5px; border: 1.7px none #dfdfed;'>"
+						+ "<font size=3>"+data[i].replyContent+"</font><br><font size=2>   ("+data[i].replyDate+")</font>"
+					+ "</div>"
+					}
 				}
 				$("#reply").html(replyHtml);
 			},
