@@ -56,90 +56,80 @@
 <body>
 	<div class="container-xxl flex-grow-1 container-p-y">
 		<h4 class="fw-bold py-3 mb-4">게시글 상세 보기</h4>
-		<div class="row">
-			<!-- HTML5 Inputs -->
-			<div class="card mb-4">
-				<div class="card-body">
-						<!-- 글번호 -->
-						<div class="mb-3 row">
-							<label for="html5-text-input" class="col-md-2 col-sm-3 col-form-label"><font size=3>글번호</font></label>
-							<div class="col-md-10 col-sm-9">
-								<input class="form-control" type="text" style="background-color:white; color:#6667ab;" name="boardNum" value="${board.boardNum}" readonly/>
-							</div>
+		<!-- HTML5 Inputs -->
+		<div class="card mb-4">
+			<div class="card-body">
+					<!-- 글번호 -->
+					<div class="mb-3 row">
+						<label for="html5-text-input" class="col-md-2 col-sm-3 col-form-label"><font size=3>글번호</font></label>
+						<div class="col-md-10 col-sm-9">
+							<input class="form-control" type="text" style="background-color:white; color:#6667ab;" name="boardNum" value="${board.boardNum}" readonly/>
 						</div>
-						<!-- 작성일 -->
-						<div class="mb-3 row">
-							<label for="html5-text-input" class="col-md-2 col-sm-3 col-form-label"><font size=3>작성일</font></label>
-							<div class="col-md-10 col-sm-9">
-								<input class="form-control" type="text" style="background-color:white; color:#6667ab;" name="boardDate" value="${board.boardDate}" readonly/>
-							</div>
+					</div>
+					<!-- 작성일 -->
+					<div class="mb-3 row">
+						<label for="html5-text-input" class="col-md-2 col-sm-3 col-form-label"><font size=3>작성일</font></label>
+						<div class="col-md-10 col-sm-9">
+							<input class="form-control" type="text" style="background-color:white; color:#6667ab;" name="boardDate" value="${board.boardDate}" readonly/>
 						</div>
-						<!-- 작성자 / 패스워드 -->
-						<div class="mb-3 row">
-							<label for="html5-text-input" class="col-md-2 col-sm-3 col-form-label"><font size=3>작성자</font></label>
-							<div class="col-md-10 col-sm-9">
-								<input class="form-control" type="text" style="background-color:white; color:#6667ab;" name="boardWriter" value="${board.boardWriter}" readonly/>
-							</div>
+					</div>
+					<!-- 작성자 / 패스워드 -->
+					<div class="mb-3 row">
+						<label for="html5-text-input" class="col-md-2 col-sm-3 col-form-label"><font size=3>작성자</font></label>
+						<div class="col-md-10 col-sm-9">
+							<input class="form-control" type="text" style="background-color:white; color:#6667ab;" name="boardWriter" value="${board.boardWriter}" readonly/>
 						</div>
-						<!-- 제목 -->
-						<div class="mb-3 row">
-							<label for="html5-text-input" class="col-md-2 col-sm-3 col-form-label"><font size=3>제목</font></label>
-							<div class="col-md-10 col-sm-9">
-								<input class="form-control" type="text" style="background-color:white; color:#6667ab;" name="boardTitle" value="${board.boardTitle}" readonly/>
-							</div>
+					</div>
+					<!-- 제목 -->
+					<div class="mb-3 row">
+						<label for="html5-text-input" class="col-md-2 col-sm-3 col-form-label"><font size=3>제목</font></label>
+						<div class="col-md-10 col-sm-9">
+							<input class="form-control" type="text" style="background-color:white; color:#6667ab;" name="boardTitle" value="${board.boardTitle}" readonly/>
 						</div>
-						<!-- 내용 -->
-						<div class="mb-3 row">
-							<label for="html5-number-input" class="col-md-2 col-sm-3 col-form-label"><font size=3>내용</font></label>
-							<div class="col-md-10 col-sm-9">
-								<textarea class="form-control" aria-label="With textarea" style="background-color:white; color:#6667ab; vertical-align:top; height:200px" id="boardContent" name="boardContent" readonly><c:out value="${board.boardContent}" /></textarea>
-							</div>
+					</div>
+					<!-- 내용 -->
+					<div class="mb-3 row">
+						<label for="html5-number-input" class="col-md-2 col-sm-3 col-form-label"><font size=3>내용</font></label>
+						<div class="col-md-10 col-sm-9">
+							<textarea class="form-control" aria-label="With textarea" style="background-color:white; color:#6667ab; vertical-align:top; height:200px" id="boardContent" name="boardContent" readonly><c:out value="${board.boardContent}" /></textarea>
 						</div>
+					</div>
+			</div>
+			<!-- 댓글 부분 -->
+			<div class="card-body">
+				<div class="showReply">
+					<div id="showReply">댓글</div>
+					<div id="reply">
+						<!-- 댓글 출력 부분 -->
+					</div>
+				</div>
+				<hr>
+				<div style='vertical-align:middle; text-align:right; width:100%; margin-bottom:5px; padding:5px; border-radius: 5px; border: 1.7px none #dfdfed;'>
+					<a href="javascript:doDisplay1()"><font size=2>▼ 댓글 쓰기</font></a>
+				</div>
+				<div id="replyInput" style="display:none; flex-wrap:wrap;">
+					<div class="col-md-2 col-sm-6 col-xs-12" style="flex:auto; padding-left:0; padding-right:0; margin-top:10px">
+						<input id="replyWriter" type="text" name="replyWriter" style="padding:10px; height:35px; width:100%; border-radius:5px; border:1px solid #6667ab6b;" placeholder="작성자 입력" required />
+					</div>
+					<div class="col-md-6 col-sm-12 col-xs-12" style="flex:auto; padding-left:0; padding-right:0; margin-top:10px">
+						<input id="replyContent" type="text" name="replyContent" style="padding:10px; height:35px; width:100%; border-radius:5px; border:1px solid #6667ab6b;" placeholder="댓글 내용 입력" required />
+					</div>
+					<div class="col-md-2 col-sm-6 col-xs-12" style="flex:auto; padding-left:0; padding-right:0; margin-top:10px">
+						<input id="replyPassword" type="password" name="replyPassword" style="padding:10px; height:35px; width:100%; border-radius:5px; border:1px solid #6667ab6b;" placeholder="암호 입력" required />
+					</div>
+					<div class="col-md-2 col-sm-6 col-xs-12" style="flex:auto; padding-left:0; padding-right:0; margin-top:10px" >
+						<input type="button" style="max-width:100%; padding:0; height:35px; width:100%; border-radius:5px; border:1px solid #6667ab;" onclick="insertReply()" class="button-purple" value="확인" />
+					</div>
+				</div>
+				<!-- 버튼 부분 -->
+				<hr>
+				<div class=" mb-4" align="center">
+					<input type="button" onclick="location.href='updateBoardView.do?boardNum='+${board.boardNum}+'&selectPage='+${board.selectPage}" class="button-purple" value="수정하기">
+					<input type="button" onclick="location.href='deleteBoardView.do?boardNum='+${board.boardNum}+'&selectPage='+${board.selectPage}" class="button-purple" value="삭제하기">
+					<input type="button" onclick="location.href='boardView.do?selectPage='+${board.selectPage}" class="button-purple" value="목록으로">
 				</div>
 			</div>
 		</div>
-	</div>
-	
-	<!-- 댓글 부분 -->
-	<div class="container-xxl flex-grow-1 container-p-y">
-		<div class="row">
-			<!-- HTML5 Inputs -->
-			<div class="card mb-4">
-				<div class="card-body">
-					<div class="showReply">
-						<div id="showReply">댓글</div>
-						<div id="reply">
-							<!-- 댓글 출력 부분 -->
-						</div>
-					</div>
-					<hr>
-					<div style='vertical-align:middle; text-align:right; width:100%; margin-bottom:5px; padding:5px; border-radius: 5px; border: 1.7px none #dfdfed;'>
-						<a href="javascript:doDisplay1()"><font size=2>▼ 댓글 쓰기</font></a>
-					</div>
-					<div id="replyInput" style="display:none; flex-wrap:wrap;">
-						<div class="col-md-2 col-sm-6 col-xs-12" style="flex:auto; padding-left:0; padding-right:0; margin-top:10px">
-							<input id="replyWriter" type="text" name="replyWriter" style="padding:10px; height:35px; width:100%; border-radius:5px; border:1px solid #6667ab6b;" placeholder="작성자 입력" required />
-						</div>
-						<div class="col-md-6 col-sm-12 col-xs-12" style="flex:auto; padding-left:0; padding-right:0; margin-top:10px">
-							<input id="replyContent" type="text" name="replyContent" style="padding:10px; height:35px; width:100%; border-radius:5px; border:1px solid #6667ab6b;" placeholder="댓글 내용 입력" required />
-						</div>
-						<div class="col-md-2 col-sm-6 col-xs-12" style="flex:auto; padding-left:0; padding-right:0; margin-top:10px">
-							<input id="replyPassword" type="password" name="replyPassword" style="padding:10px; height:35px; width:100%; border-radius:5px; border:1px solid #6667ab6b;" placeholder="암호 입력" required />
-						</div>
-						<div class="col-md-2 col-sm-6 col-xs-12" style="flex:auto; padding-left:0; padding-right:0; margin-top:10px" >
-							<input type="button" style="max-width:100%; padding:0; height:35px; width:100%; border-radius:5px; border:1px solid #6667ab;" onclick="insertReply()" class="button-purple" value="확인" />
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<!-- 버튼 부분 -->
-	<div class=" mb-4" align="center">
-		<input type="button" onclick="location.href='updateBoardView.do?boardNum='+${board.boardNum}+'&selectPage='+${board.selectPage}" class="button-purple" value="수정하기">
-		<input type="button" onclick="location.href='deleteBoardView.do?boardNum='+${board.boardNum}+'&selectPage='+${board.selectPage}" class="button-purple" value="삭제하기">
-		<input type="button" onclick="location.href='boardView.do?selectPage='+${board.selectPage}" class="button-purple" value="목록으로">
 	</div>
 	
 	<div class="container-xxl flex-grow-1 container-p-y">	
@@ -163,6 +153,7 @@
 		      <!-- 페이지네이션 부분 -->
 		      <div class="product__pagination"><ul id="pagingul"></ul>
 			</div>
+		</div>
 		</div>
 	</div>
 
@@ -202,7 +193,7 @@
 				for (var i = 0; i < data.length; i++) {
 					if(data[i].replyStep == 1){
 						replyHtml += "<hr>"
-						+ "<font size=3>"+data[i].replyWriter+" : "+data[i].replyContent+"</font><font size=1.5>&nbsp;&nbsp;("+data[i].replyDate+")</font><a href='javascript:doDisplay2("+data[i].replyNum+")'><font size=1.5>&nbsp;&nbsp;▼ 대댓글 쓰기</font></a>"
+						+ "<font size=3>&nbsp;"+data[i].replyWriter+" : "+data[i].replyContent+"</font><font size=1.5>&nbsp;&nbsp;("+data[i].replyDate+")</font><a href='javascript:doDisplay2("+data[i].replyNum+")'><font size=1.5>&nbsp;&nbsp;▼ 대댓글 쓰기</font></a>"
 						+ "<div id='reReply"+data[i].replyNum+"' style='display:none; flex-wrap:wrap;'>"
 							+ "<div class='col-md-2 col-sm-6 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
 								+ "<input id='reReplyWriter"+data[i].replyNum+"' type='text' name='reReplyWirter' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1px solid #6667ab6b;' placeholder='작성자 입력' required />"
@@ -219,7 +210,7 @@
 						+ "</div><br>";
 					}
 					else if(data[i].replyStep == 2){
-						replyHtml += "<font size=2.5>&nbsp;&nbsp;&nbsp;&nbsp;"+data[i].replyWriter+" : "+data[i].replyContent+"</font><font size=1.5>&nbsp;&nbsp;("+data[i].replyDate+")</font>"
+						replyHtml += "<font size=3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+data[i].replyWriter+" : "+data[i].replyContent+"</font><font size=1.5>&nbsp;&nbsp;("+data[i].replyDate+")</font>"
 						+ "<br>"
 					}
 				}
