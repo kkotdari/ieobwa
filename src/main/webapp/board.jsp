@@ -20,7 +20,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-<title>종로 방앗간</title>
+<title>우리집 게시판</title>
 
 <meta name="description" content="" />
 
@@ -52,8 +52,7 @@
 	<!-- Content wrapper -->
 	<div class="content-wrapper">
 	
-		<div class="container-xxl flex-grow-1 container-p-y">
-			<h4 class="fw-bold py-3 mb-4"> <a href="boardView.do?selectPage=1"">종로 방앗간</a></h4>
+		<div class="container-xxl flex-grow-1 container-p-y">우리집 게시판</a></h4>
 	      	
 			<!-- 전체 게시글 목록 -->
 			<div class="card">
