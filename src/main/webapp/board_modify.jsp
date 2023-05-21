@@ -56,7 +56,7 @@
 	<div class="container-xxl flex-grow-1 container-p-y">
 		<h4 class="fw-bold py-3 mb-4">게시글 수정하기</h4>
 	
-		<form action="updateBoard.do?selectPage=${board.selectPage}" method="POST">
+		<form action="updateBoard.do?selectPage=${board.selectPage}" method="POST" onsubmit="return boardPasswordCheck();">
 			<div class="row">
 				<!-- HTML5 Inputs -->
 				<div class="card mb-4">
@@ -76,7 +76,7 @@
 							</div>
 							<label for="html5-text-input" class="col-md-2 col-sm-3 col-form-label">암호</label>
 							<div class="col-md-4 col-sm-3">
-								<input class="form-control" type="password" name="boardPassword" required/>
+								<input class="form-control" type="password" id="boardPassword" required/>
 							</div>
 						</div>
 						<!-- 제목 -->
@@ -100,7 +100,7 @@
 			<!-- 버튼 -->
 			<div class=" mb-4" align="center">
 				<input type="submit" class="button-purple" value="수정">
-				<input type="button" onclick="location.href='boardDetailView.do?boardNum=' + ${board.boardNum}" class="button-purple" value="취소">
+				<input type="button" onclick="location.href='boardDetailView.do?boardNum=' + ${board.boardNum} + '&selectPage=' + ${board.selectPage}" class="button-purple" value="취소">
 			</div>
 
 		</form>
@@ -125,5 +125,17 @@
 
 	<!--  Place this tag in your head or just before your close body tag.  -->
 	<script async defer src="https://buttons.github.io/buttons.js"></script>
+		<script>
+		function boardPasswordCheck(){
+			var boardPassword = $("#boardPassword").val();
+			if(boardPassword == '${board.boardPassword}'){
+				return true;
+			}
+			else{
+				alert('비밀번호가 일치하지 않습니다.');
+				return false;
+			}
+		}
+	</script>
 </body>
 </html>
