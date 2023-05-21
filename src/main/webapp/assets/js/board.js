@@ -1,5 +1,5 @@
 // 전역변수
-let dataPerPage=5; // 한 페이지에 나타낼 글 수
+let dataPerPage=10; // 한 페이지에 나타낼 글 수
 let pageCount=5; // 페이징에 나타낼 페이지 수
 let currentPage=1; // 현재 표시중인 페이지
 let first=1; // 페이징 첫 페이지
