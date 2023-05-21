@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -158,11 +156,15 @@ public class BoardController {
 	@RequestMapping(value = "/deleteBoard.do")
 	public String deleteBoard(BoardVO bvo, Model model) {
 		System.out.println("deleteBoard.do 진입");
-		// WORD 테이블 DELETE 수행
+		// WORD 테이블 DELETE
 		WordVO wvo = new WordVO();
 		wvo.setBoardNum(bvo.getBoardNum());
 		wordService.delete(wvo);
-		// BORAD 테이블의 데이터 삭제
+		// REPLY 테이블 DELETE
+		ReplyVO rvo = new ReplyVO();
+		rvo.setBoardNum(bvo.getBoardNum());
+		replyService.delete(rvo);
+		// BORAD 테이블 DELETE
 		boardService.delete(bvo);
 		return "boardView.do?selectPage=" + bvo.getSelectPage();
 	}
