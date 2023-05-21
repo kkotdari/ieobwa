@@ -1943,6 +1943,7 @@ ol {
   display: inline-block;
   width: 30px;
   height: 30px;
+  border-radius: 3px;
   border: 1px solid #b2b2b2;
   font-size: 14px;
   color: #6667ab;
@@ -1966,6 +1967,7 @@ ol {
 
 .product__pagination .on{
 	text-align: center;
+	border-radius: 3px;
     background: #6667ab;
   	border-color: #6667ab;
   	color: #ffffff;
@@ -1973,6 +1975,7 @@ ol {
 
 .product__pagination ul a li:hover,
 .blog__pagination a:hover {
+	border-radius: 3px;
   background: #6667ab;
   border-color: #6667ab;
   color: #ffffff;
@@ -1980,6 +1983,7 @@ ol {
 
 .product__pagination ul a li:last-child,
 .blog__pagination a:last-child {
+	border-radius: 2px;
   margin-right: 0;
 }
 
