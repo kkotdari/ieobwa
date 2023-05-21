@@ -183,7 +183,7 @@
 			success : function(data) {
 				var replyHtml = "";
 				for (var i = 0; i < data.length; i++) {
-					replyHtml += "<div style='vertical-align:middle; width:100%; margin-bottom:5px; padding:5px; border-radius: 5px; border: 1.7px solid #6667ab6b;'>"
+					replyHtml += "<div style='vertical-align:middle; width:100%; margin-bottom:5px; padding:5px; border-radius: 5px; border: 1.7px solid #dfdfed;'>"
 					+"<font size=3>"+data[i].replyContent+"</font> <font size=2>("+data[i].replyDate+")</font></div>";
 				}
 				$("#reply").html(replyHtml);
