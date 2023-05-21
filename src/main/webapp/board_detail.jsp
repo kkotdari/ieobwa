@@ -142,7 +142,7 @@
 	      		<!-- 페이지네이션 부분 -->
 				<div class="product__pagination">
 					<ul id="pagingul" 
-						style="align-items: center; justify-content: center; margin:0px 0px 10px 0px; padding:0px 0px 0px 18px;">
+						style="align-items: center; justify-content: center; margin:5px 0px 15px 0px; padding:0px 0px 0px 18px;">
 					</ul>
 				</div>
 			</div>
