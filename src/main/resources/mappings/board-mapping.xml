@@ -9,6 +9,7 @@
 		<result property="boardPassword" column="B_PASSWORD" />
 		<result property="boardTitle" column="B_TITLE" />
 		<result property="boardContent" column="B_CONTENT" />
+		<result property="replyCount" column="replyCount" />
 	</resultMap>
 
 	<!-- 글 작성 -->
@@ -31,7 +32,11 @@
 
 	<!-- 게시글 전체 목록 -->
 	<select id="selectAllBoard" resultMap="boardResultSet">
-		SELECT * FROM BOARD ORDER BY B_NO DESC
+		SELECT b.*, COUNT(r.B_NO) AS replyCount
+		FROM BOARD b
+		LEFT JOIN REPLY r ON b.B_NO = r.B_NO
+		GROUP BY b.B_NO
+		ORDER BY b.B_NO DESC
 	</select>
 	
 	<!-- 게시글 상세 보기 -->
