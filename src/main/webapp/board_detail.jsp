@@ -59,41 +59,32 @@
 		<!-- HTML5 Inputs -->
 		<div class="card mb-4">
 			<div class="card-body">
-					<!-- 글번호 -->
-					<div class="mb-3 row">
-						<label for="html5-text-input" class="col-md-2 col-sm-3 col-form-label"><font size=3>글번호</font></label>
-						<div class="col-md-10 col-sm-9">
-							<input class="form-control" type="text" style="background-color:white; color:#6667ab;" name="boardNum" value="${board.boardNum}" readonly/>
-						</div>
-					</div>
-					<!-- 작성일 -->
-					<div class="mb-3 row">
-						<label for="html5-text-input" class="col-md-2 col-sm-3 col-form-label"><font size=3>작성일</font></label>
-						<div class="col-md-10 col-sm-9">
-							<input class="form-control" type="text" style="background-color:white; color:#6667ab;" name="boardDate" value="${board.boardDate}" readonly/>
-						</div>
-					</div>
-					<!-- 작성자 / 패스워드 -->
-					<div class="mb-3 row">
-						<label for="html5-text-input" class="col-md-2 col-sm-3 col-form-label"><font size=3>작성자</font></label>
-						<div class="col-md-10 col-sm-9">
-							<input class="form-control" type="text" style="background-color:white; color:#6667ab;" name="boardWriter" value="${board.boardWriter}" readonly/>
-						</div>
-					</div>
-					<!-- 제목 -->
-					<div class="mb-3 row">
-						<label for="html5-text-input" class="col-md-2 col-sm-3 col-form-label"><font size=3>제목</font></label>
-						<div class="col-md-10 col-sm-9">
-							<input class="form-control" type="text" style="background-color:white; color:#6667ab;" name="boardTitle" value="${board.boardTitle}" readonly/>
-						</div>
-					</div>
-					<!-- 내용 -->
-					<div class="mb-3 row">
-						<label for="html5-number-input" class="col-md-2 col-sm-3 col-form-label"><font size=3>내용</font></label>
-						<div class="col-md-10 col-sm-9">
-							<textarea class="form-control" aria-label="With textarea" style="background-color:white; color:#6667ab; vertical-align:top; height:200px" id="boardContent" name="boardContent" readonly><c:out value="${board.boardContent}" /></textarea>
-						</div>
-					</div>
+				<!-- 제목 -->
+				<hr style="padding:0; margin:10px 0px;">
+				<table>
+					<b><font color="#6667ab">${board.boardTitle}</font></b>
+				</table>
+				<!-- 글번호 -->
+				<hr style="padding:0; margin:10px 0px;">
+				<font color="#6667ab">글번호 : </font>
+				<table>
+					<font color="#6667ab">${board.boardNum}</font>
+				</table>
+				<!-- 작성일 -->
+				<font color="#6667ab">작성일 : </font>
+				<table>
+					<font color="#6667ab">${board.boardDate}</font>
+				</table>
+				<!-- 작성자 -->
+				<font color="#6667ab">작성자 : </font>
+				<table>
+					<font color="#6667ab">${board.boardWriter}</font>
+				</table>
+				<!-- 내용 -->
+				<hr style="padding:0; margin:10px 0px;">
+				<table>
+					<tr><font style="white-space:pre-line; color:#6667ab">${board.boardContent}</font></tr>
+				</table>
 			</div>
 			<!-- 댓글 부분 -->
 			<div class="card-body">
@@ -103,7 +94,7 @@
 						<!-- 댓글 출력 부분 -->
 					</div>
 				</div>
-				<hr style="margin:5px;">
+				<hr style="margin:10px 0px 0px 0px;">
 				<div style='vertical-align:middle; text-align:right; width:100%; padding:5px; border-radius: 5px; border: 1.7px none #dfdfed;'>
 					<a href="javascript:doDisplay1()"><font size=2>▼ 댓글 쓰기</font></a>
 				</div>
