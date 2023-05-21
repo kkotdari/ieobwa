@@ -114,6 +114,7 @@ public class BoardController {
 		return "board_modify.jsp";
 	}
 	
+	// 게시글 수정하기
 	@RequestMapping(value = "/updateBoard.do")
 	public String updateBoard(BoardVO bvo, Model model) {
 		System.out.println("updateBoard.do 진입");
@@ -141,6 +142,19 @@ public class BoardController {
 		return "boardDetailView.do?boardNum=" + preNum +"&selectPage=" + bvo.getSelectPage();
 	}
 	
+	// 게시글 삭제하기 페이지 진입
+	@RequestMapping(value = "/deleteBoardView.do")
+	public String deleteBoardView(BoardVO bvo, Model model) {
+		System.out.println("deleteBoardView.do 진입");
+		System.out.println("bvo.boardNum: " + bvo.getBoardNum());
+		BoardVO preBvo = boardService.findPreBoard(bvo);
+		preBvo.setSelectPage(bvo.getSelectPage());
+		System.out.println("preBvo: " + preBvo);
+		model.addAttribute("board", preBvo);
+		return "board_delete.jsp";
+	}
+	
+	// 게시글 삭제하기
 	@RequestMapping(value = "/deleteBoard.do")
 	public String deleteBoard(BoardVO bvo, Model model) {
 		System.out.println("deleteBoard.do 진입");
@@ -184,6 +198,18 @@ public class BoardController {
 	@RequestMapping(value = "/insertReply.do")
 	public JsonArray insertReply(ReplyVO rvo) {
 		System.out.println("insertReply.do 진입");
+		replyService.insert(rvo);
+		replyService.update(replyService.selectOne(rvo));
+		List replyList = null;
+		replyList = replyService.selectAll(rvo);
+		JsonArray data = new Gson().toJsonTree(replyList).getAsJsonArray();
+		return data;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/insertReReply.do")
+	public JsonArray insertReReply(ReplyVO rvo) {
+		System.out.println("insertReReply.do 진입");
 		replyService.insert(rvo);
 		List replyList = null;
 		replyList = replyService.selectAll(rvo);
