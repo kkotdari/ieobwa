@@ -41,7 +41,9 @@
 	
 	<!-- 게시글 상세 보기 -->
 	<select id="selectOneBoard" resultMap="boardResultSet">
-		SELECT * FROM BOARD WHERE B_NO = #{boardNum}
+		SELECT b.*, (SELECT COUNT(*) FROM REPLY WHERE B_NO = 1) AS replyCount
+		FROM BOARD b
+		WHERE b.B_NO = #{boardNum}
 	</select>
 	
 	<!-- 마지막 게시글 조회 -->
