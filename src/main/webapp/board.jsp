@@ -53,42 +53,43 @@
 	<div class="content-wrapper">
 	
 		<div class="container-xxl flex-grow-1 container-p-y">
-			<h4 class="fw-bold py-3 mb-4"> <a href="boardView.do?selectPage=1"">참새방앗간</a></h4>
+			<div style="display:flex; justify-content:space-between; align-items:center;">
+				<h4 class="fw-bold py-3 mb-4"> <a href="boardView.do?selectPage=1"">참새방앗간</a></h4>
+				<!-- 버튼 -->
+				<div class=" mb-4" align="right" style="margin:0px 0px 0px 0px;">
+					<input type="button" style="height:40px; padding:0;" onclick="location.href='insertBoardView.do?selectPage='+${board.selectPage}" class="button-purple" value="글쓰기">
+				</div>
+			</div>
 	      	
 			<!-- 전체 게시글 목록 -->
 			<div class="card">
-			   <h5 class="card-header">글 목록</h5>
-			   <div class="table-responsive text-nowrap">
-			      <table class="table table-hover" style="table-layout:fixed; overflow:hidden; white-space:nowrap;">
-			         <thead>
-			            <tr>
-			               <th width="15%" style="text-align:center;">글번호</th>
-			               <th width="15%" style="text-align:center;">작성일</th>
-			               <th width="15%" style="text-align:center;">작성자</th>
-			               <th width="40%" style="text-align:center;">제목</th>
-			               <th width="15%" style="text-align:center;">댓글</th>
-			            </tr>
-			         </thead>
-			         <!-- 목록 출력부분 -->
-			         <tbody class="table-border-bottom-0" id="dataTableBody">
-			         </tbody>
-			      </table>
-			      <!-- 페이지네이션 부분 -->
-			      <div class="product__pagination"><ul id="pagingul"></ul>
+				<div class="table-responsive text-nowrap">
+					<table class="table table-hover" style="table-layout:fixed; overflow:hidden; white-space:nowrap;">
+						<thead>
+							<tr>
+								<th width="15%" style="text-align:center;">글번호</th>
+								<th width="15%" style="text-align:center;">작성일</th>
+								<th width="15%" style="text-align:center;">작성자</th>
+								<th width="40%" style="text-align:center;">제목</th>
+								<th width="15%" style="text-align:center;">댓글</th>
+							</tr>
+						</thead>
+						<!-- 목록 출력부분 -->
+						<tbody class="table-border-bottom-0" id="dataTableBody">
+						</tbody>
+					</table>
+		      		<!-- 페이지네이션 부분 -->
+					<div class="product__pagination"><ul id="pagingul"></ul>
 					</div>
-					<!-- 버튼 -->
-					<div class=" mb-4" align="right">
-						<input type="button" onclick="location.href='insertBoardView.do?selectPage='+${board.selectPage}" class="button-purple" value="글쓰기">
-						&nbsp;&nbsp;
-					</div></div>
+				</div>
 			</div>
-		
-	   </div>
+	
+		</div>
 	   <!-- / Content -->
 
        <!-- Overlay -->
-      <div class="layout-overlay layout-menu-toggle"></div>
-   </div>
+		<div class="layout-overlay layout-menu-toggle"></div>
+	</div>
    <!-- / Layout wrapper -->
 
 
