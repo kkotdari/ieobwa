@@ -8,13 +8,15 @@
 		<result property="parentNum" column="P_NO" />
 		<result property="replyStep" column="R_STEP" />
 		<result property="replyDate" column="R_DATE" />
+		<result property="replyWriter" column="R_WRITER" />
+		<result property="replyPassword" column="R_PASSWORD" />
 		<result property="replyContent" column="R_CONTENT" />
 	</resultMap>
 
 	<!-- 댓글/대댓글 작성 -->
 	<insert id="insertReply">
-		INSERT INTO REPLY (B_NO, P_NO, R_STEP, R_CONTENT)
-		VALUES(#{boardNum}, #{parentNum}, #{replyStep}, #{replyContent})
+		INSERT INTO REPLY (B_NO, P_NO, R_STEP, R_WRITER, R_PASSWORD, R_CONTENT)
+		VALUES(#{boardNum}, #{parentNum}, #{replyStep}, #{replyWriter}, #{replyPassword}, #{replyContent})
 	</insert>
 	
 	<!-- 댓글 생성후 자신의 댓글 번호를 부모 번호에 입력 -->
