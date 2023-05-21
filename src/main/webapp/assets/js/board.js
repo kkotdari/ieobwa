@@ -116,8 +116,6 @@ function paging(currentPage) {
 	    pageHtml += "<a href='javascript:list("+(last+1)+")' id='next'><li> ▶ </li></a>";
 	  }
 	  
-	  pageHtml+="<br><br>";
-	  
 	  $("#pagingul").html(pageHtml);
 	  
 /*	  let displayCount = "";
