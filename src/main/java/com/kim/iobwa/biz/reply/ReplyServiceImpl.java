@@ -17,6 +17,11 @@ public class ReplyServiceImpl implements ReplyService {
 	}
 	
 	@Override
+	public boolean update(ReplyVO vo) {
+		return replyDAO.update(vo);
+	}
+	
+	@Override
 	public boolean delete(ReplyVO vo) {
 		return replyDAO.delete(vo);
 	}
@@ -24,5 +29,10 @@ public class ReplyServiceImpl implements ReplyService {
 	@Override
 	public List<ReplyVO> selectAll(ReplyVO vo) {
 		return replyDAO.selectAll(vo);
+	}
+
+	@Override
+	public ReplyVO selectOne(ReplyVO vo) {
+		return replyDAO.selectOne(vo);
 	}
 }
