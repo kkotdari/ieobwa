@@ -106,7 +106,9 @@
 						</div>
 					</div>
 					<hr>
-					<a href="javascript:doDisplay1()"><font size=2>[댓글을 쓰려면 클릭]</font></a>
+					<div id='reply"+data[i].replyNum+"' style='vertical-align:middle; width:100%; margin-bottom:5px; padding:5px; border-radius: 5px; border: 1.7px none #dfdfed;'>
+						<a href="javascript:doDisplay1()"><font size=2>▼ 댓글 쓰기</font></a>
+					</div>
 					<div id="replyInput" style="display:none; flex-wrap:wrap;">
 						<div class="col-md-6 col-sm-12 col-xs-12" style="flex:auto; padding-left:0; padding-right:0; margin-top:10px">
 							<input id="replyContent" type="text" name="replyContent" style="padding:10px; height:35px; width:100%; border-radius:5px; border:1.7px solid #6667ab;" placeholder="댓글 내용 입력" required />
@@ -193,7 +195,7 @@
 				for (var i = 0; i < data.length; i++) {
 					if(data[i].replyStep == 1){
 						replyHtml += "<hr><div id='reply"+data[i].replyNum+"' style='vertical-align:middle; width:100%; margin-bottom:5px; padding:5px; border-radius: 5px; border: 1.7px none #dfdfed;'>"
-							+ "<font size=3>"+data[i].replyContent+"</font><br><font size=2>   ("+data[i].replyDate+")</font><a href='javascript:doDisplay2("+data[i].replyNum+")'><font size=2>    [대댓글을 쓰려면 클릭]</font></a>"
+							+ "<font size=3>"+data[i].replyContent+"</font><font size=2>   ("+data[i].replyDate+")</font><br><a href='javascript:doDisplay2("+data[i].replyNum+")'><font size=2>▼ 대댓글 쓰기</font></a>"
 						+ "</div>"
 						+ "<div id='reReply"+data[i].replyNum+"' style='display:none; flex-wrap:wrap;'>"
 							+ "<div class='col-md-6 col-sm-12 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
@@ -247,7 +249,7 @@
 				for (var i = 0; i < data.length; i++) {
 					if(data[i].replyStep == 1){
 						replyHtml += "<hr><div id='reply"+data[i].replyNum+"' style='vertical-align:middle; width:100%; margin-bottom:5px; padding:5px; border-radius: 5px; border: 1.7px none #dfdfed;'>"
-							+ "<font size=3>"+data[i].replyContent+"</font><br><font size=2>   ("+data[i].replyDate+")</font><a href='javascript:doDisplay2("+data[i].replyNum+")'><font size=2>    [대댓글을 쓰려면 클릭]</font></a>"
+							+ "<font size=3>"+data[i].replyContent+"</font><font size=2>   ("+data[i].replyDate+")</font><br><a href='javascript:doDisplay2("+data[i].replyNum+")'><font size=2>▼ 대댓글 쓰기</font></a>"
 						+ "</div>"
 						+ "<div id='reReply"+data[i].replyNum+"' style='display:none; flex-wrap:wrap;'>"
 							+ "<div class='col-md-6 col-sm-12 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
@@ -303,7 +305,7 @@
 				for (var i = 0; i < data.length; i++) {
 					if(data[i].replyStep == 1){
 						replyHtml += "<hr><div id='reply"+data[i].replyNum+"' style='vertical-align:middle; width:100%; margin-bottom:5px; padding:5px; border-radius: 5px; border: 1.7px none #dfdfed;'>"
-							+ "<font size=3>"+data[i].replyContent+"</font><br><font size=2>   ("+data[i].replyDate+")</font><a href='javascript:doDisplay2("+data[i].replyNum+")'><font size=2>    [대댓글을 쓰려면 클릭]</font></a>"
+							+ "<font size=3>"+data[i].replyContent+"</font><font size=2>   ("+data[i].replyDate+")</font><br><a href='javascript:doDisplay2("+data[i].replyNum+")'><font size=2>▼ 대댓글 쓰기</font></a>"
 						+ "</div>"
 						+ "<div id='reReply"+data[i].replyNum+"' style='display:none; flex-wrap:wrap;'>"
 							+ "<div class='col-md-6 col-sm-12 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
