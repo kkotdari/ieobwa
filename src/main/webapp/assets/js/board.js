@@ -69,7 +69,7 @@ function displayData(selectPage) {
 		  	for (var i = (selectPage - 1) * dataPerPage ; i < (totalData < (selectPage * dataPerPage) ? totalData : (selectPage * dataPerPage)) ; i++) {
 				chartHtml+="<tr>"
                          +"<td style='text-align:center; overflow:hidden; white-space:nowrap;'>"+dataList[i].boardNum+"</td>"
-                         +"<td style='text-align:center; overflow:hidden; white-space:nowrap;'>"+dataList[i].boardDate.substr(0, 10)+"</td>"
+                         +"<td style='text-align:center; overflow:hidden; white-space:nowrap;'>"+(dataList[i].boardDate.substr(0, 10)).substr(5,10)+"</td>"
                          +"<td style='text-align:center; overflow:hidden; white-space:nowrap;'>"+dataList[i].boardWriter+"</td>"
                          +"<td style='text-align:center; overflow:hidden; white-space:nowrap; text-overflow:ellipsis;'><a href='boardDetailView.do?boardNum="+dataList[i].boardNum+"&selectPage="+selectPage+"'>["+dataList[i].replyCount+"]"+dataList[i].boardTitle+"</a></td>"
 						 +"</tr>";
