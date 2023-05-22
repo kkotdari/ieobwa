@@ -54,7 +54,7 @@
 	
 		<div class="container-xxl flex-grow-1 container-p-y">
 			<div style="display:flex; justify-content:space-between; align-items:center;">
-				<h4 class="fw-bold py-3 mb-4"> <a href="boardView.do?selectPage=1"">참새방앗간</a></h4>
+				<h4 class="fw-bold py-3 mb-4"> <a style="color:#00997b;" href="boardView.do?selectPage=1"">참새방앗간</a></h4>
 			</div>
 	      	
 			<!-- 전체 게시글 목록 -->
