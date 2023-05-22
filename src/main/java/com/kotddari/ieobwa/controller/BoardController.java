@@ -43,8 +43,9 @@ public class BoardController {
 		if (datas.size() < 5) { // 현재 게시글이 5개 미만이면
 			datas = crawling.sample(request); // 크롤링
 			if(datas != null) {
-				for(BoardVO v: datas) {
-					insertBoard(v, model);
+				for(int i=0; i<datas.size(); i++) {
+					System.out.println("	로그: [" + (i + 1) + "]번 게시글 INSERT INTO BOARD");
+					insertBoard(datas.get(i), model);
 				}
 			}
 		}
