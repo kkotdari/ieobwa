@@ -50,4 +50,4 @@ dependency-reduced-pom.xml
 
 # Spring
 .springBeans
-applicationContext.xml
+# applicationContext.xml
