@@ -1962,7 +1962,7 @@ ol {
 
 .product__pagination ul a li{
 	text-align: center;
-    color: #28282D;
+    color: #00997b;
 }
 
 .product__pagination .on{
@@ -1978,7 +1978,7 @@ ol {
 	border-radius: 2px;
   background: #00997b;
   border-color: #00997b;
-  color: #28282D;
+  color: #ffffff;
 }
 
 .product__pagination ul a li:last-child,
