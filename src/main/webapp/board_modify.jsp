@@ -63,28 +63,28 @@
 					<div class="card-body">
 						<!-- 글번호 -->
 						<div class="mb-3 row">
-							<font color="#6667ab">글번호</font>
-							<input class="form-control" type="text" name="boardNum" style="color:#6667ab;" value="${board.boardNum}" readonly/>
+							<font color="#28282D">글번호</font>
+							<input class="form-control" type="text" name="boardNum" style="color:#28282D;" value="${board.boardNum}" readonly/>
 						</div>
 						<!-- 작성자 -->
 						<div class="mb-3 row">
-							<font color="#6667ab">작성자</font>
-							<input class="form-control" type="text" name="boardWriter" style="color:#6667ab;" value="${board.boardWriter}" readonly/>
+							<font color="#28282D">작성자</font>
+							<input class="form-control" type="text" name="boardWriter" style="color:#28282D;" value="${board.boardWriter}" readonly/>
 						</div>
 						<!-- 암호 -->
 						<div class="mb-3 row">
-							<font color="#6667ab">암호</font>
-							<input class="form-control" type="password" id="boardPassword" style="color:#6667ab;" required/>
+							<font color="#28282D">암호</font>
+							<input class="form-control" type="password" id="boardPassword" style="color:#28282D;" required/>
 						</div>
 						<!-- 제목 -->
 						<div class="mb-3 row">
-							<font color="#6667ab">제목</font>
-							<input class="form-control" type="text" name="boardTitle" style="color:#6667ab;" value="${board.boardTitle}" required/>
+							<font color="#28282D">제목</font>
+							<input class="form-control" type="text" name="boardTitle" style="color:#28282D;" value="${board.boardTitle}" required/>
 						</div>
 						<!-- 내용 -->
 						<div class="mb-3 row">
-							<font color="#6667ab">내용</font>
-							<textarea class="form-control" aria-label="With textarea" style="color:#6667ab; background-color:white; vertical-aligh:top; height:200px" id="boardContent" name="boardContent" required>${board.boardContent}</textarea>
+							<font color="#28282D">내용</font>
+							<textarea class="form-control" aria-label="With textarea" style="color:#28282D; background-color:white; vertical-aligh:top; height:200px" id="boardContent" name="boardContent" required>${board.boardContent}</textarea>
 						</div>
 					</div>
 				</div>
