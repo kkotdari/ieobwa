@@ -1,4 +1,4 @@
-package com.kim.iobwa.biz.reply;
+package com.kotddari.ieobwa.biz.reply;
 
 import java.util.List;
 

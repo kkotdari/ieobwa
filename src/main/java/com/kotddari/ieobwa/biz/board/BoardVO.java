@@ -1,4 +1,4 @@
-package com.kim.iobwa.biz.board;
+package com.kotddari.ieobwa.biz.board;
 
 public class BoardVO {
 	// 멤버변수(DB 테이블에 존재)

@@ -1,11 +1,11 @@
-package com.kim.iobwa.biz.word;
+package com.kotddari.ieobwa.biz.word;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kim.iobwa.biz.board.BoardVO;
+import com.kotddari.ieobwa.biz.board.BoardVO;
 
 @Service("wordService")
 public class WordServiceImpl implements WordService {

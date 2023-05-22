@@ -1,4 +1,4 @@
-package com.kim.iobwa.biz.common;
+package com.kotddari.ieobwa.biz.common;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;

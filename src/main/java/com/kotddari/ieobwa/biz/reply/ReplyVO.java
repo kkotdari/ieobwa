@@ -1,4 +1,4 @@
-package com.kim.iobwa.biz.reply;
+package com.kotddari.ieobwa.biz.reply;
 
 public class ReplyVO {
 	// 멤버변수(DB 테이블에 존재)

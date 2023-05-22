@@ -1,4 +1,4 @@
-package com.kim.iobwa.biz.word;
+package com.kotddari.ieobwa.biz.word;
 
 public class WordVO {
 	// 멤버변수(DB 테이블에 존재)
