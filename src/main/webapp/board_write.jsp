@@ -63,23 +63,23 @@
 					<div class="card-body">
 						<!-- 작성자 -->
 						<div class="mb-3 row">
-							<font color="#6667ab">작성자</font>
-							<input class="form-control" type="text" name="boardWriter" style="color:#6667ab;" placeholder="작성자" required/>
+							<font color="#28282D">작성자</font>
+							<input class="form-control" type="text" name="boardWriter" style="color:#28282D;" placeholder="작성자" required/>
 						</div>
 						<!-- 패스워드 -->
 						<div class="mb-3 row">
-							<font color="#6667ab">암호</font>
-							<input class="form-control" type="password" name="boardPassword" style="color:#6667ab;" placeholder="암호" required/>
+							<font color="#28282D">암호</font>
+							<input class="form-control" type="password" name="boardPassword" style="color:#28282D;" placeholder="암호" required/>
 						</div>
 						<!-- 제목 -->
 						<div class="mb-3 row">
-							<font color="#6667ab">제목</font>
-								<input class="form-control" type="text" name="boardTitle" style="color:#6667ab;" placeholder="제목을 입력하세요" required/>
+							<font color="#28282D">제목</font>
+								<input class="form-control" type="text" name="boardTitle" style="color:#28282D;" placeholder="제목을 입력하세요" required/>
 						</div>
 						<!-- 내용 -->
 						<div class="mb-3 row">
-							<font color="#6667ab">내용</font>
-								<textarea class="form-control" aria-label="With textarea"  style="color:#6667ab; background-color:white; vertical-aligh:top; height:200px" id="boardContent" name="boardContent" placeholder="내용을 입력하세요" required></textarea>
+							<font color="#28282D">내용</font>
+								<textarea class="form-control" aria-label="With textarea"  style="color:#28282D; background-color:white; vertical-aligh:top; height:200px" id="boardContent" name="boardContent" placeholder="내용을 입력하세요" required></textarea>
 						</div>
 					</div>
 				</div>
