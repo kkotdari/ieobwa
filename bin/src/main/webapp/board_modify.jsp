@@ -56,31 +56,35 @@
 	<div class="container-xxl flex-grow-1 container-p-y">
 		<h4 class="fw-bold py-3 mb-4">게시글 수정하기</h4>
 	
-		<form action="updateBoard.do" method="POST">
+		<form action="updateBoard.do?selectPage=${board.selectPage}" method="POST" onsubmit="return boardPasswordCheck();">
 			<div class="row">
 				<!-- HTML5 Inputs -->
 				<div class="card mb-4">
 					<div class="card-body">
 						<!-- 글번호 -->
 						<div class="mb-3 row">
-							<label for="html5-text-input" class="col-md-1 col-form-label">글번호</label>
-							<div class="col-md-11">
-								<input class="form-control" type="text" name="boardNum" value="${board.boardNum}" id="html5-text-input" readonly/>
-							</div>
+							<font color="#28282D">글번호</font>
+							<input class="form-control" type="text" name="boardNum" style="color:#28282D;" value="${board.boardNum}" readonly/>
+						</div>
+						<!-- 작성자 -->
+						<div class="mb-3 row">
+							<font color="#28282D">작성자</font>
+							<input class="form-control" type="text" name="boardWriter" style="color:#28282D;" value="${board.boardWriter}" readonly/>
+						</div>
+						<!-- 암호 -->
+						<div class="mb-3 row">
+							<font color="#28282D">암호</font>
+							<input class="form-control" type="password" id="boardPassword" style="color:#28282D;" required/>
 						</div>
 						<!-- 제목 -->
 						<div class="mb-3 row">
-							<label for="html5-text-input" class="col-md-12 col-form-label">제목</label>
-							<div class="col-md-12">
-								<input class="form-control" type="text" name="boardTitle" value="${board.boardTitle}" id="html5-text-input" required/>
-							</div>
+							<font color="#28282D">제목</font>
+							<input class="form-control" type="text" name="boardTitle" style="color:#28282D;" value="${board.boardTitle}" required/>
 						</div>
 						<!-- 내용 -->
 						<div class="mb-3 row">
-							<label for="html5-number-input" class="col-md-12 col-form-label">내용</label>
-							<div class="col-md-12">
-								<textarea class="form-control" aria-label="With textarea" name="boardContent" style="height: 200px; resize: none;" required>${board.boardContent}</textarea>
-							</div>
+							<font color="#28282D">내용</font>
+							<textarea class="form-control" aria-label="With textarea" style="color:#28282D; background-color:white; vertical-aligh:top; height:200px" id="boardContent" name="boardContent" required>${board.boardContent}</textarea>
 						</div>
 					</div>
 				</div>
@@ -89,7 +93,7 @@
 			<!-- 버튼 -->
 			<div class=" mb-4" align="center">
 				<input type="submit" class="button-purple" value="수정">
-				<input type="button" onclick="location.href='boardDetailView.do?boardNum=' + ${board.boardNum}" class="button-purple" value="취소">
+				<input type="button" onclick="location.href='boardDetailView.do?boardNum=' + ${board.boardNum} + '&selectPage=' + ${board.selectPage}" class="button-purple" value="취소">
 			</div>
 
 		</form>
@@ -114,6 +118,17 @@
 
 	<!--  Place this tag in your head or just before your close body tag.  -->
 	<script async defer src="https://buttons.github.io/buttons.js"></script>
-
+		<script>
+		function boardPasswordCheck(){
+			var boardPassword = $("#boardPassword").val();
+			if(boardPassword == '${board.boardPassword}'){
+				return true;
+			}
+			else{
+				alert('비밀번호가 일치하지 않습니다.');
+				return false;
+			}
+		}
+	</script>
 </body>
 </html>

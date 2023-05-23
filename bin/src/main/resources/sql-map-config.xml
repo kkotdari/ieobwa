@@ -3,12 +3,14 @@
 <configuration>
 	<!-- 1. 별칭 설정 -->
 	<typeAliases>
-		<typeAlias type="com.kim.iobwa.biz.board.BoardVO" alias="board"/>
-		<typeAlias type="com.kim.iobwa.biz.word.WordVO" alias="word"/>
+		<typeAlias type="com.kotddari.ieobwa.biz.board.BoardVO" alias="board"/>
+		<typeAlias type="com.kotddari.ieobwa.biz.word.WordVO" alias="word"/>
+		<typeAlias type="com.kotddari.ieobwa.biz.reply.ReplyVO" alias="reply"/>
 	</typeAliases>
 	<!-- 2. SQL Mapper 설정 -->
 	<mappers>
 		<mapper resource="mappings/board-mapping.xml"/>
 		<mapper resource="mappings/word-mapping.xml"/>
+		<mapper resource="mappings/reply-mapping.xml"/>
 	</mappers>
 </configuration>

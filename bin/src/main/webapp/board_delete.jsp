@@ -19,7 +19,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-<title>게시글 작성하기</title>
+<title>게시글 삭제하기</title>
 
 <meta name="description" content="" />
 
@@ -54,32 +54,18 @@
 
 <body>
 	<div class="container-xxl flex-grow-1 container-p-y">
-		<h4 class="fw-bold py-3 mb-4">게시글 작성하기</h4>
+		<h4 class="fw-bold py-3 mb-4">게시글 삭제하기</h4>
 	
-		<form action="insertBoard.do?selectPage=${board.selectPage}" method="POST">
-			<div class="row">
+			<div class="row" style="width:80%;">
 				<!-- HTML5 Inputs -->
 				<div class="card mb-4">
 					<div class="card-body">
-						<!-- 작성자 -->
+						<!-- 글번호 -->
 						<div class="mb-3 row">
-							<font color="#28282D">작성자</font>
-							<input class="form-control" type="text" name="boardWriter" style="color:#28282D;" placeholder="작성자" required/>
-						</div>
-						<!-- 패스워드 -->
-						<div class="mb-3 row">
-							<font color="#28282D">암호</font>
-							<input class="form-control" type="password" name="boardPassword" style="color:#28282D;" placeholder="암호" required/>
-						</div>
-						<!-- 제목 -->
-						<div class="mb-3 row">
-							<font color="#28282D">제목</font>
-								<input class="form-control" type="text" name="boardTitle" style="color:#28282D;" placeholder="제목을 입력하세요" required/>
-						</div>
-						<!-- 내용 -->
-						<div class="mb-3 row">
-							<font color="#28282D">내용</font>
-								<textarea class="form-control" aria-label="With textarea"  style="color:#28282D; background-color:white; vertical-aligh:top; height:200px" id="boardContent" name="boardContent" placeholder="내용을 입력하세요" required></textarea>
+							<label for="html5-text-input" class="col-md-6 col-sm-6 col-form-label">${board.boardNum}번 글을 삭제하시려면 암호를 입력하세요!</label>
+							<div class="col-md-6 col-sm-6">
+								<input class="form-control" type="password" id="boardPassword" required/>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -87,11 +73,10 @@
 			
 			<!-- 버튼 -->
 			<div class=" mb-4" align="center">
-				<input type="submit" class="button-purple" value="확인">
-				<input type="button" onclick="location.href='boardView.do?selectPage='+${board.selectPage}" class="button-purple" value="취소">
+				<input type="button" onclick="boardPasswordCheck()" class="button-purple" value="삭제">
+				<input type="button" onclick="location.href='boardDetailView.do?boardNum=' + ${board.boardNum} + '&selectPage=' + ${board.selectPage}" class="button-purple" value="취소">
 			</div>
 
-		</form>
 	</div>
 
 	<!— Core JS —>
@@ -113,5 +98,16 @@
 
 	<!--  Place this tag in your head or just before your close body tag.  -->
 	<script async defer src="https://buttons.github.io/buttons.js"></script>
+	<script>
+		function boardPasswordCheck(){
+			var boardPassword = $("#boardPassword").val();
+			if(boardPassword == '${board.boardPassword}'){
+				location.href='deleteBoard.do?boardNum=' + ${board.boardNum} + '&selectPage=' + ${board.selectPage};
+			}
+			else{
+				alert('비밀번호가 일치하지 않습니다.');
+			}
+		}
+	</script>
 </body>
 </html>

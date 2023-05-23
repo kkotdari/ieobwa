@@ -20,7 +20,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-<title>이어봐 게시판</title>
+<title>이어봐</title>
 
 <meta name="description" content="" />
 
@@ -53,40 +53,46 @@
 	<div class="content-wrapper">
 	
 		<div class="container-xxl flex-grow-1 container-p-y">
-			<h4 class="fw-bold py-3 mb-4">이어봐 게시판</h4>
+			<div style="display:flex; justify-content:space-between; align-items:center;">
+				<h4 class="fw-bold py-3 mb-4"> <a style="color:#00997b;" href="boardView.do?selectPage=1"">이어봐</a></h4>
+			</div>
 	      	
 			<!-- 전체 게시글 목록 -->
 			<div class="card">
-			   <h5 class="card-header">글 목록</h5>
-			   <div class="table-responsive text-nowrap">
-			      <table class="table table-hover" style="table-layout:fixed; overflow:hidden; white-space:nowrap;">
-			         <thead>
-			            <tr>
-			               <th width="15%" style="text-align:center;">글번호</th>
-			               <th width="25%" style="text-align:center;">작성일</th>
-			               <th width="40%" style="text-align:center;">제목</th>
-			            </tr>
-			         </thead>
-			         <!-- 목록 출력부분 -->
-			         <tbody class="table-border-bottom-0" id="dataTableBody">
-			         </tbody>
-			      </table>
-			      <!-- 페이지네이션 부분 -->
-			      <div class="product__pagination"><ul id="pagingul"></ul>
+				<div class="table-responsive text-nowrap">
+					<table class="table table-hover" style="table-layout:fixed; overflow:hidden; white-space:nowrap;">
+						<thead>
+							<tr>
+								<th width="15%" style="text-align:center;">글번호</th>
+								<th width="15%" style="text-align:center;">작성일</th>
+								<th width="15%" style="text-align:center;">작성자</th>
+								<th width="40%" style="text-align:center;">제목</th>
+								<th width="15%" style="text-align:center;">댓글</th>
+							</tr>
+						</thead>
+						<!-- 목록 출력부분 -->
+						<tbody class="table-border-bottom-0" id="dataTableBody">
+						</tbody>
+					</table>
+		      		<!-- 페이지네이션 부분 -->
+					<div class="product__pagination">
+						<ul id="pagingul" 
+							style="align-items: center; justify-content: center; margin:5px 0px 15px 0px; padding:0px 0px 0px 18px;">
+						</ul>
 					</div>
 					<!-- 버튼 -->
-					<div class=" mb-4" align="right">
-						<input type="button" onclick="location.href='insertBoardView.do'" class="button-purple" value="글쓰기">
-						&nbsp;&nbsp;
-					</div></div>
+					<div class=" mb-4" align="right" style="margin:0px 10px 10px 10px;">
+						<input type="button" style="width:100%; max-width:100%;" onclick="location.href='insertBoardView.do?selectPage='+${board.selectPage}" class="button-purple" value="글쓰기">
+					</div>
+				</div>
 			</div>
-		
-	   </div>
+	
+		</div>
 	   <!-- / Content -->
 
        <!-- Overlay -->
-      <div class="layout-overlay layout-menu-toggle"></div>
-   </div>
+		<div class="layout-overlay layout-menu-toggle"></div>
+	</div>
    <!-- / Layout wrapper -->
 
 
@@ -113,9 +119,10 @@
    
 	<!-- 리스트세팅 -->
     <script>
-      $(document).ready(function() {
-        list(1);
-      });
+		$(document).ready(function() {
+			var selectPage = "${board.selectPage}";
+			list(selectPage);
+		});
     </script>
     
 </body>

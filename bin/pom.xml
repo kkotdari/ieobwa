@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.kim</groupId>
-	<artifactId>iobwa</artifactId>
-	<name>iobwa</name>
+	<groupId>com.kotddari</groupId>
+	<artifactId>ieobwa</artifactId>
+	<name>ieobwa</name>
 	<packaging>war</packaging>
 	<version>1.0.0</version>
 	<properties>
@@ -58,7 +58,7 @@
 		<dependency>
 		    <groupId>org.seleniumhq.selenium</groupId>
 		    <artifactId>selenium-java</artifactId>
-		    <version>4.9.0</version>
+		    <version>4.9.1</version>
 		</dependency>
 		
 		<!-- JSON 관련, SMS 관련 -->

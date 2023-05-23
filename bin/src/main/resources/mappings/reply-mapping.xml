@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ReplyDAO">
+
+	<resultMap type="reply" id="replyResultSet">
+		<id property="replyNum" column="R_NO" />
+		<result property="boardNum" column="B_NO" />
+		<result property="parentNum" column="P_NO" />
+		<result property="replyStep" column="R_STEP" />
+		<result property="replyDate" column="R_DATE" />
+		<result property="replyWriter" column="R_WRITER" />
+		<result property="replyPassword" column="R_PASSWORD" />
+		<result property="replyContent" column="R_CONTENT" />
+	</resultMap>
+
+	<!-- 댓글/대댓글 작성 -->
+	<insert id="insertReply">
+		INSERT INTO REPLY (B_NO, P_NO, R_STEP, R_WRITER, R_PASSWORD, R_CONTENT)
+		VALUES(#{boardNum}, #{parentNum}, #{replyStep}, #{replyWriter}, #{replyPassword}, #{replyContent})
+	</insert>
+	
+	<!-- 댓글 생성후 자신의 댓글 번호를 부모 번호에 입력 -->
+	<insert id="updateReply">
+		UPDATE REPLY SET P_NO = #{replyNum}
+		WHERE R_NO = #{replyNum}
+	</insert>
+	
+	<!-- 댓글/대댓글 삭제 -->
+	<insert id="deleteReply">
+		DELETE FROM REPLY
+		WHERE B_NO = #{boardNum}
+	</insert>
+
+	<!-- 게시글 전체 댓글/대댓글 목록 -->
+	<select id="selectAllReply" resultMap="replyResultSet">
+		SELECT * FROM REPLY WHERE B_NO = #{boardNum} ORDER BY P_NO ASC, R_NO ASC
+	</select>
+	
+	<!-- 마지막 글 번호 가져오기 -->
+	<select id="selectOneReply" resultMap="replyResultSet">
+		SELECT * FROM REPLY WHERE R_NO = (SELECT MAX(R_NO) FROM REPLY)
+	</select>
+
+</mapper>

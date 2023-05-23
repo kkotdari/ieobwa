@@ -16,9 +16,9 @@ import com.kotddari.ieobwa.biz.board.BoardVO;
 
 @Component
 public class Crawling {
-	final String SWITCH = "N"; // ※ 크롤링 여부 (Y/N)
+	final String SWITCH = "Y"; // ※ 크롤링 여부 (Y/N)
 	final String WEB_DRIVER_ID = "webdriver.chrome.driver"; // 드라이버 ID
-	final String WEB_DRIVER_PATH = "F:/Dev/kotddari/workspace/iobwa/src/main/webapp/Source/chromedriver.exe"; // 드라이버
+	final String WEB_DRIVER_PATH = "F:/Dev/kotddari/workspace/ieobwa/src/main/webapp/Source/chromedriver.exe"; // 드라이버
 	final int BOARD = 100; // ※ 크롤링할 게시물 개수 (범위는 5~100이며 클수록 시간이 늘어나므로 30이하로 하는 것을 추천!)
 	
 	private int max = BOARD / 5 * 2;
@@ -62,7 +62,10 @@ public class Crawling {
 			System.out.println("▶ " + (i + 1) + "번 sampleStep02 시작!");
 
 			driver.get(datas.get(i).getBoardSearchCondition()); // 크롤링할 상세 페이지 링크 연결;
-
+			
+			datas.get(i).setBoardWriter("TEST");
+			datas.get(i).setBoardPassword("1234");
+			
 			// 제목 용도 데이터 크롤링
 			String info;
 			try {
