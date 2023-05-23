@@ -88,7 +88,7 @@
 			<!-- 댓글 부분 -->
 			<div class="card-body">
 				<div class="showReply">
-					<div id="showReply">댓글 [${board.replyCount}]</div>
+					<div id="showReply" style="font-weight:bold; color:#00997b;">댓글 [${board.replyCount}]</div>
 					<div id="reply">
 						<!-- 댓글 출력 부분 -->
 					</div>
@@ -122,7 +122,7 @@
 	<div class="container-xxl flex-grow-1 container-p-y">	
 		<!-- 연관 게시물 목록 -->
 		<div class="card">
-		   <h5 class="card-header">연관 게시글 목록</h5>
+		   <h5 class="card-header" style="font-weight:bold;">연관 게시글 목록</h5>
 		   <div class="table-responsive text-nowrap">
 				<table class="table table-hover" style="table-layout:fixed; overflow:hidden; white-space:nowrap;">
 					<thead>
@@ -184,7 +184,7 @@
 				for (var i = 0; i < data.length; i++) {
 					if(data[i].replyStep == 1){
 						replyHtml += "<hr style='margin:10px 0px;'>"
-							+ "<div style='margin:0; padding:0'>"+data[i].replyWriter+" : "+data[i].replyContent+"<font size=1.5>&nbsp;&nbsp;("+data[i].replyDate+")</font><a href='javascript:doDisplay2("+data[i].replyNum+")'><font style='color:#00997b;' size=1.5>&nbsp;&nbsp;▼ 대댓글 쓰기</font></a></div>"
+							+ "<div style='margin:10px 0px; padding:0;'><font style='font-weight:bold; color:#00997b;'>"+data[i].replyWriter+"</font> : "+data[i].replyContent+"<font size=1.5>&nbsp;&nbsp;("+data[i].replyDate+")</font><a href='javascript:doDisplay2("+data[i].replyNum+")'><font style='color:#00997b;' size=1.5>&nbsp;&nbsp;▼ 대댓글 쓰기</font></a></div>"
 							+ "<div id='reReply"+data[i].replyNum+"' style='display:none; flex-wrap:wrap; margin-bottom:10px;'>"
 								+ "<div class='col-md-6 col-sm-6 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
 									+ "<input id='reReplyWriter"+data[i].replyNum+"' type='text' name='reReplyWirter' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1px solid #7F7F7F;' placeholder='작성자 입력' required />"
@@ -198,7 +198,7 @@
 							+ "</div>";
 					}
 					else if(data[i].replyStep == 2){
-						replyHtml += "<div style='margin:0px 0px 0px 20px; padding:0'>"+data[i].replyWriter+" : "+data[i].replyContent+"<font size=1.5>&nbsp;&nbsp;("+data[i].replyDate+")</font>"
+						replyHtml += "<div style='margin:10px 0px 10px 25px; padding:0;'><font style='font-weight:bold; color:#00997b;'>"+data[i].replyWriter+"</font> : "+data[i].replyContent+"<font size=1.5>&nbsp;&nbsp;("+data[i].replyDate+")</font>"
 						+ "</div>"
 					}
 				}
@@ -230,8 +230,8 @@
 				var replyHtml = "";
 				for (var i = 0; i < data.length; i++) {
 					if(data[i].replyStep == 1){
-						replyHtml += "<hr style='margin:10px;'>"
-							+ "<div style='margin:0; padding:0'>"+data[i].replyWriter+" : "+data[i].replyContent+"<font size=1.5>&nbsp;&nbsp;("+data[i].replyDate+")</font><a href='javascript:doDisplay2("+data[i].replyNum+")'><font style='color:#00997b;' size=1.5>&nbsp;&nbsp;▼ 대댓글 쓰기</font></a></div>"
+						replyHtml += "<hr style='margin:10px 0px;'>"
+							+ "<div style='margin:15px 0px 15px 20px;  padding:0'>"+data[i].replyWriter+" : "+data[i].replyContent+"<font size=1.5>&nbsp;&nbsp;("+data[i].replyDate+")</font><a href='javascript:doDisplay2("+data[i].replyNum+")'><font style='color:#00997b;' size=1.5>&nbsp;&nbsp;▼ 대댓글 쓰기</font></a></div>"
 							+ "<div id='reReply"+data[i].replyNum+"' style='display:none; flex-wrap:wrap; margin-bottom:10px;'>"
 								+ "<div class='col-md-6 col-sm-6 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
 									+ "<input id='reReplyWriter"+data[i].replyNum+"' type='text' name='reReplyWirter' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1px solid #7F7F7F;' placeholder='작성자 입력' required />"
@@ -245,7 +245,7 @@
 							+ "</div>";
 					}
 					else if(data[i].replyStep == 2){
-						replyHtml += "<div style='margin:0px 0px 0px 20px; padding:0'>"+data[i].replyWriter+" : "+data[i].replyContent+"<font size=1.5>&nbsp;&nbsp;("+data[i].replyDate+")</font>"
+						replyHtml += "<div style='margin:10px 0px 10px 40px; padding:0'>"+data[i].replyWriter+" : "+data[i].replyContent+"<font size=1.5>&nbsp;&nbsp;("+data[i].replyDate+")</font>"
 						+ "</div>"
 					}
 				}
@@ -279,8 +279,8 @@
 				var replyHtml = "";
 				for (var i = 0; i < data.length; i++) {
 					if(data[i].replyStep == 1){
-						replyHtml += "<hr style='margin:10px;'>"
-							+ "<div style='margin:0; padding:0'>"+data[i].replyWriter+" : "+data[i].replyContent+"<font size=1.5>&nbsp;&nbsp;("+data[i].replyDate+")</font><a href='javascript:doDisplay2("+data[i].replyNum+")'><font style='color:#00997b;' size=1.5>&nbsp;&nbsp;▼ 대댓글 쓰기</font></a></div>"
+						replyHtml += "<hr style='margin:10px 0px;'>"
+							+ "<div style='margin:15px 0px 15px 20px;  padding:0'>"+data[i].replyWriter+" : "+data[i].replyContent+"<font size=1.5>&nbsp;&nbsp;("+data[i].replyDate+")</font><a href='javascript:doDisplay2("+data[i].replyNum+")'><font style='color:#00997b;' size=1.5>&nbsp;&nbsp;▼ 대댓글 쓰기</font></a></div>"
 							+ "<div id='reReply"+data[i].replyNum+"' style='display:none; flex-wrap:wrap; margin-bottom:10px;'>"
 								+ "<div class='col-md-6 col-sm-6 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
 									+ "<input id='reReplyWriter"+data[i].replyNum+"' type='text' name='reReplyWirter' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1px solid #7F7F7F;' placeholder='작성자 입력' required />"
@@ -294,7 +294,7 @@
 							+ "</div>";
 					}
 					else if(data[i].replyStep == 2){
-						replyHtml += "<div style='margin:0px 0px 0px 20px; padding:0'>"+data[i].replyWriter+" : "+data[i].replyContent+"<font size=1.5>&nbsp;&nbsp;("+data[i].replyDate+")</font>"
+						replyHtml += "<div style='margin:10px 0px 10px 40px; padding:0'>"+data[i].replyWriter+" : "+data[i].replyContent+"<font size=1.5>&nbsp;&nbsp;("+data[i].replyDate+")</font>"
 						+ "</div>"
 					}
 				}
