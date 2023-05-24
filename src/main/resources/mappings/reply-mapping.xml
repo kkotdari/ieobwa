@@ -26,10 +26,20 @@
 	</insert>
 	
 	<!-- 댓글/대댓글 삭제 -->
-	<insert id="deleteReply">
-		DELETE FROM REPLY
-		WHERE B_NO = #{boardNum}
-	</insert>
+	<delete id="deleteReply" parameterType="int">
+	  <choose>
+	    <when test="replyNum != 0">
+	      <!-- replyNum이 0이 아닐 때 -->
+	      DELETE FROM REPLY
+	      WHERE R_NO = #{replyNum} OR P_NO = #{replyNum}
+	    </when>
+	    <otherwise>
+	      <!-- replyNum이 0일 때 -->
+	      DELETE FROM REPLY
+	      WHERE B_NO = #{boardNum}
+	    </otherwise>
+	  </choose>
+	</delete>
 
 	<!-- 게시글 전체 댓글/대댓글 목록 -->
 	<select id="selectAllReply" resultMap="replyResultSet">

@@ -223,9 +223,13 @@ public class BoardController {
 	// 댓글 삭제
 	@ResponseBody
 	@RequestMapping(value = "/deleteReply.do")
-	public void deleteReply(ReplyVO rvo) {
+	public JsonArray deleteReply(ReplyVO rvo) {
 		System.out.println("deleteReply.do 진입");
 		replyService.delete(rvo);
+		List replyList = null;
+		replyList = replyService.selectAll(rvo);
+		JsonArray data = new Gson().toJsonTree(replyList).getAsJsonArray();
+		return data;
 	}
 	
 	// 댓글 목록 불러오기

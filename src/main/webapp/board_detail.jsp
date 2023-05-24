@@ -104,8 +104,11 @@
 					<div class="col-md-6 col-sm-6 col-xs-12" style="flex:auto; padding-left:0; padding-right:0; margin-top:10px">
 						<input id="replyContent" type="text" name="replyContent" style="padding:10px; height:35px; width:100%; border-radius:5px; border:1px solid #7F7F7F;" placeholder="댓글 내용 입력" required />
 					</div>
+					<div class="col-md-6 col-sm-6 col-xs-12" style="flex:auto; padding-left:0; padding-right:0; margin-top:10px">
+						<input id="replyPassword" type="password" name="replyPassword" style="padding:10px; height:35px; width:100%; border-radius:5px; border:1px solid #7F7F7F;" placeholder="암호 입력" required />
+					</div>
 					<div class="col-md-3 col-sm-3 col-xs-12" style="flex:auto; padding-left:0; padding-right:0; margin-top:10px" >
-						<input type="button" style="max-width:100%; padding:0; height:35px; width:100%; border-radius:5px; border:none solid #28282D;" onclick="insertReply()" class="button-purple" value="확인" />
+						<input type="button" style="max-width:100%; padding:0; height:35px; width:100%; border-radius:5px; border:none solid #28282D;" onclick="insertReply()" class="button-purple" value="작성" />
 					</div>
 				</div>
 				<!-- 버튼 부분 -->
@@ -169,8 +172,68 @@
 	<!--  Place this tag in your head or just before your close body tag.  -->
 	<script async defer src="https://buttons.github.io/buttons.js"></script>
 
-	<!-- 리스트세팅 -->
     <script>
+	<!-- 댓글 리스트 세팅 함수 -->
+	function setReply(data){
+		var replyHtml = "";
+		for (var i = 0; i < data.length; i++) {
+			if(data[i].replyStep == 1){
+				replyHtml += "<hr style='margin:10px 0px;'>"
+					+ "<div style='margin:10px 0px; padding:0;'><font style='font-weight:bold; color:#00997b;'>"
+					+ data[i].replyWriter+"</font> : "+data[i].replyContent+"<font size=1.5>&nbsp;&nbsp;("+data[i].replyDate+")</font>"
+					+ "<a href='javascript:doDisplay2("+data[i].replyNum+")'><font style='color:#00997b;' size=1.5>&nbsp;&nbsp;▼ 대댓글 쓰기</font></a>"
+					+ "<a href='javascript:doDisplay3("+data[i].replyNum+")'><font style='color:#00997b;' size=1.5>&nbsp;&nbsp;▼ 삭제하기</font></a>"
+					+ "</div>"
+					
+					+ "<div id='deleteReply"+data[i].replyNum+"' style='display:none; flex-wrap:wrap; margin-bottom:10px;'>"
+						+ "<div>"
+							+ "<input id='originalReplyPassword"+data[i].replyNum+"' type='hidden' name='originalReplyPassword' value='"+data[i].replyPassword+"' />"
+						+ "</div>"
+						+ "<div class='col-md-3 col-sm-3 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
+							+ "<input id='checkReplyPassword"+data[i].replyNum+"' type='text' name='checkReplyPassword' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1px solid #7F7F7F;' placeholder='암호 입력' required />"
+						+ "</div>"
+						+ "<div class='col-md-3 col-sm-3 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
+							+ "<input type='button' style='padding:0; height:35px; width:100%; max-width:100%; border-radius:5px; border:none solid #28282D;' onclick='deleteReply("+data[i].replyNum+")' class='button-purple' value='댓글 삭제'>"
+						+ "</div>"
+					+ "</div>"
+					
+					+ "<div id='reReply"+data[i].replyNum+"' style='display:none; flex-wrap:wrap; margin-bottom:10px;'>"
+						+ "<div class='col-md-6 col-sm-6 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
+							+ "<input id='reReplyWriter"+data[i].replyNum+"' type='text' name='reReplyWirter' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1px solid #7F7F7F;' placeholder='작성자 입력' required />"
+						+ "</div>"
+						+ "<div class='col-md-3 col-sm-3 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
+							+ "<input id='reReplyContent"+data[i].replyNum+"' type='text' name='reReplyContent' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1px solid #7F7F7F;' placeholder='대댓글 내용 입력' required />"
+						+ "</div>"
+						+ "<div class='col-md-3 col-sm-3 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
+							+ "<input id='reReplyPassword"+data[i].replyNum+"' type='password' name='reReplyPassword' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1px solid #7F7F7F;' placeholder='암호 입력' required />"
+						+ "</div>"
+						+ "<div class='col-md-3 col-sm-3 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
+							+ "<input type='button' style='padding:0; height:35px; width:100%; max-width:100%; border-radius:5px; border:none solid #28282D;' onclick='insertReReply("+data[i].replyNum+")' class='button-purple' value='대댓글 작성'>"
+						+ "</div>"
+					+ "</div>";
+			}
+			else if(data[i].replyStep == 2){
+				replyHtml += "<div style='margin:10px 0px 10px 25px; padding:0;'><font style='font-weight:bold; color:#00997b;'>"+data[i].replyWriter+"</font> : "+data[i].replyContent+"<font size=1.5>&nbsp;&nbsp;("+data[i].replyDate+")</font>"
+				+ "<a href='javascript:doDisplay3("+data[i].replyNum+")'><font style='color:#00997b;' size=1.5>&nbsp;&nbsp;▼ 삭제하기</font></a>"
+				+ "</div>"
+				
+				+ "<div id='deleteReply"+data[i].replyNum+"' style='display:none; flex-wrap:wrap; margin-bottom:10px;'>"
+					+ "<div>"
+						+ "<input id='originalReplyPassword"+data[i].replyNum+"' type='hidden' name='originalReplyPassword' value='"+data[i].replyPassword+"' />"
+					+ "</div>"
+					+ "<div class='col-md-3 col-sm-3 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
+						+ "<input id='checkReplyPassword"+data[i].replyNum+"' type='text' name='checkReplyPassword' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1px solid #7F7F7F;' placeholder='암호 입력' required />"
+					+ "</div>"
+					+ "<div class='col-md-3 col-sm-3 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
+						+ "<input type='button' style='padding:0; height:35px; width:100%; max-width:100%; border-radius:5px; border:none solid #28282D;' onclick='deleteReply("+data[i].replyNum+")' class='button-purple' value='대댓글 삭제'>"
+					+ "</div>"
+				+ "</div>";
+			}
+		}
+		$("#reply").html(replyHtml);
+	}
+
+	<!-- 페이지 로딩시 댓글 리스트 세팅 -->
       $(document).ready(function() {
         list(1, ${board.boardNum});
         $.ajax({
@@ -180,29 +243,7 @@
 				boardNum: '${board.boardNum}',
 			},
 			success : function(data) {
-				var replyHtml = "";
-				for (var i = 0; i < data.length; i++) {
-					if(data[i].replyStep == 1){
-						replyHtml += "<hr style='margin:10px 0px;'>"
-							+ "<div style='margin:10px 0px; padding:0;'><font style='font-weight:bold; color:#00997b;'>"+data[i].replyWriter+"</font> : "+data[i].replyContent+"<font size=1.5>&nbsp;&nbsp;("+data[i].replyDate+")</font><a href='javascript:doDisplay2("+data[i].replyNum+")'><font style='color:#00997b;' size=1.5>&nbsp;&nbsp;▼ 대댓글 쓰기</font></a></div>"
-							+ "<div id='reReply"+data[i].replyNum+"' style='display:none; flex-wrap:wrap; margin-bottom:10px;'>"
-								+ "<div class='col-md-6 col-sm-6 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
-									+ "<input id='reReplyWriter"+data[i].replyNum+"' type='text' name='reReplyWirter' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1px solid #7F7F7F;' placeholder='작성자 입력' required />"
-								+ "</div>"
-								+ "<div class='col-md-3 col-sm-3 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
-									+ "<input id='reReplyContent"+data[i].replyNum+"' type='text' name='reReplyContent' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1px solid #7F7F7F;' placeholder='대댓글 내용 입력' required />"
-								+ "</div>"
-								+ "<div class='col-md-3 col-sm-3 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
-									+ "<input type='button' style='padding:0; height:35px; width:100%; max-width:100%; border-radius:5px; border:none solid #28282D;' onclick='insertReReply("+data[i].replyNum+")' class='button-purple' value='확인'>"
-								+ "</div>"
-							+ "</div>";
-					}
-					else if(data[i].replyStep == 2){
-						replyHtml += "<div style='margin:10px 0px 10px 25px; padding:0;'><font style='font-weight:bold; color:#00997b;'>"+data[i].replyWriter+"</font> : "+data[i].replyContent+"<font size=1.5>&nbsp;&nbsp;("+data[i].replyDate+")</font>"
-						+ "</div>"
-					}
-				}
-				$("#reply").html(replyHtml);
+				setReply(data);
 			},
 			error : function() {
 				alert('error');
@@ -216,6 +257,8 @@
 		document.getElementById('replyContent').value = null;
 		var replyWriter = $("#replyWriter").val();
 		document.getElementById('replyWriter').value = null;
+		var replyPassword = $("#replyPassword").val();
+		document.getElementById('replyPassword').value = null;
 		$.ajax({
 			type : 'POST',
 			url : 'insertReply.do',
@@ -223,33 +266,11 @@
 				boardNum: '${board.boardNum}',
 				replyStep: '1',
 				replyWriter : replyWriter,
-				replyPassword : '0000',
+				replyPassword : replyPassword,
 				replyContent : replyContent,
 			},
 			success : function(data) {
-				var replyHtml = "";
-				for (var i = 0; i < data.length; i++) {
-					if(data[i].replyStep == 1){
-						replyHtml += "<hr style='margin:10px 0px;'>"
-							+ "<div style='margin:15px 0px 15px 20px;  padding:0'>"+data[i].replyWriter+" : "+data[i].replyContent+"<font size=1.5>&nbsp;&nbsp;("+data[i].replyDate+")</font><a href='javascript:doDisplay2("+data[i].replyNum+")'><font style='color:#00997b;' size=1.5>&nbsp;&nbsp;▼ 대댓글 쓰기</font></a></div>"
-							+ "<div id='reReply"+data[i].replyNum+"' style='display:none; flex-wrap:wrap; margin-bottom:10px;'>"
-								+ "<div class='col-md-6 col-sm-6 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
-									+ "<input id='reReplyWriter"+data[i].replyNum+"' type='text' name='reReplyWirter' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1px solid #7F7F7F;' placeholder='작성자 입력' required />"
-								+ "</div>"
-								+ "<div class='col-md-3 col-sm-3 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
-									+ "<input id='reReplyContent"+data[i].replyNum+"' type='text' name='reReplyContent' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1px solid #7F7F7F;' placeholder='대댓글 내용 입력' required />"
-								+ "</div>"
-								+ "<div class='col-md-3 col-sm-3 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
-									+ "<input type='button' style='padding:0; height:35px; width:100%; max-width:100%; border-radius:5px; border:none solid #28282D;' onclick='insertReReply("+data[i].replyNum+")' class='button-purple' value='확인'>"
-								+ "</div>"
-							+ "</div>";
-					}
-					else if(data[i].replyStep == 2){
-						replyHtml += "<div style='margin:10px 0px 10px 40px; padding:0'>"+data[i].replyWriter+" : "+data[i].replyContent+"<font size=1.5>&nbsp;&nbsp;("+data[i].replyDate+")</font>"
-						+ "</div>"
-					}
-				}
-				$("#reply").html(replyHtml);
+				setReply(data);
 			},
 			error : function() {
 				alert('error');
@@ -257,13 +278,14 @@
 		})
 	}
 	
-	
 	<!-- 대댓글 입력 -->
 	function insertReReply(replyNum){
 		var reReplyContent = $("#reReplyContent" + replyNum).val();
 		document.getElementById('reReplyContent' + replyNum).value = null;
 		var reReplyWriter = $("#reReplyWriter" + replyNum).val();
 		document.getElementById('reReplyWriter' + replyNum).value = null;
+		var reReplyPassword = $("#reReplyPassword" + replyNum).val();
+		document.getElementById('reReplyPassword' + replyNum).value = null;
 		$.ajax({
 			type : 'POST',
 			url : 'insertReReply.do',
@@ -272,33 +294,11 @@
 				replyStep: '2',
 				parentNum: replyNum,
 				replyWriter : reReplyWriter,
-				replyPassword : '0000',
+				replyPassword : reReplyPassword,
 				replyContent : reReplyContent,
 			},
 			success : function(data) {
-				var replyHtml = "";
-				for (var i = 0; i < data.length; i++) {
-					if(data[i].replyStep == 1){
-						replyHtml += "<hr style='margin:10px 0px;'>"
-							+ "<div style='margin:15px 0px 15px 20px;  padding:0'>"+data[i].replyWriter+" : "+data[i].replyContent+"<font size=1.5>&nbsp;&nbsp;("+data[i].replyDate+")</font><a href='javascript:doDisplay2("+data[i].replyNum+")'><font style='color:#00997b;' size=1.5>&nbsp;&nbsp;▼ 대댓글 쓰기</font></a></div>"
-							+ "<div id='reReply"+data[i].replyNum+"' style='display:none; flex-wrap:wrap; margin-bottom:10px;'>"
-								+ "<div class='col-md-6 col-sm-6 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
-									+ "<input id='reReplyWriter"+data[i].replyNum+"' type='text' name='reReplyWirter' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1px solid #7F7F7F;' placeholder='작성자 입력' required />"
-								+ "</div>"
-								+ "<div class='col-md-3 col-sm-3 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
-									+ "<input id='reReplyContent"+data[i].replyNum+"' type='text' name='reReplyContent' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1px solid #7F7F7F;' placeholder='대댓글 내용 입력' required />"
-								+ "</div>"
-								+ "<div class='col-md-3 col-sm-3 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
-									+ "<input type='button' style='padding:0; height:35px; width:100%; max-width:100%; border-radius:5px; border:none solid #28282D;' onclick='insertReReply("+data[i].replyNum+")' class='button-purple' value='확인'>"
-								+ "</div>"
-							+ "</div>";
-					}
-					else if(data[i].replyStep == 2){
-						replyHtml += "<div style='margin:10px 0px 10px 40px; padding:0'>"+data[i].replyWriter+" : "+data[i].replyContent+"<font size=1.5>&nbsp;&nbsp;("+data[i].replyDate+")</font>"
-						+ "</div>"
-					}
-				}
-				$("#reply").html(replyHtml);
+				setReply(data);
 			},
 			error : function() {
 				alert('error');
@@ -306,24 +306,66 @@
 		})
 	}
 	
+	<!-- 댓글 / 대댓글 삭제 -->
+	function deleteReply(replyNum){
+		var originalReplyPassword = $("#originalReplyPassword" + replyNum).val();
+		var checkReplyPassword = $("#checkReplyPassword" + replyNum).val();
+		console.log('originalReplyPassword: ' + originalReplyPassword);
+		console.log('checkReplyPassword: ' + checkReplyPassword);
+		if(originalReplyPassword == checkReplyPassword){
+			$.ajax({
+				type : 'POST',
+				url : 'deleteReply.do',
+				data : {
+					boardNum: '${board.boardNum}',
+					replyNum: replyNum,
+				},
+				success : function(data) {
+					console.log('data: ' + data);
+					setReply(data);
+				},
+				error : function() {
+					alert('error');
+				}
+			})
+		}
+		else{
+			alert('암호가 일치하지 않습니다.')
+		}
+	}
+	
 	<!-- 댓글 입력창 접고 펴기 -->
 	function doDisplay1(){ 	
-	    var con = document.getElementById("replyInput"); 	
+	    var con = document.getElementById("replyInput");
 	    if(con.style.display == 'none'){ 		
 	    	con.style.display = 'flex';
 	    }else{ 		
 	    	con.style.display = 'none'; 	
-	    } 
+	    }
 	}
 	
 	<!-- 대댓글 입력창 접고 펴기 -->
 	function doDisplay2(replyNum){ 	
-	    var con = document.getElementById("reReply" + replyNum); 	
+	    var con = document.getElementById("reReply" + replyNum);
+	    var con2 = document.getElementById("deleteReply" + replyNum);
+	    if(con.style.display == 'none'){ 		
+	    	con.style.display = 'flex';
+		    con2.style.display = 'none';
+	    }else{ 		
+	    	con.style.display = 'none'; 	
+	    }
+	}
+	
+	<!-- 대댓글 삭제창 접고 펴기 -->
+	function doDisplay3(replyNum){ 	
+	    var con = document.getElementById("deleteReply" + replyNum);
+	    var con2 = document.getElementById("reReply" + replyNum);
 	    if(con.style.display == 'none'){ 		
 	    	con.style.display = 'flex';
 	    }else{ 		
 	    	con.style.display = 'none'; 	
-	    } 
+	    }
+	    con2.style.display = 'none';
 	}
     </script>
     
