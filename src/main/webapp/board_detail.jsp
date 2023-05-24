@@ -102,10 +102,10 @@
 						<input id="replyWriter" type="text" name="replyWriter" style="padding:10px; height:35px; width:100%; border-radius:5px; border:1px solid #7F7F7F;" placeholder="작성자 입력" required />
 					</div>
 					<div class="col-md-6 col-sm-6 col-xs-12" style="flex:auto; padding-left:0; padding-right:0; margin-top:10px">
-						<input id="replyContent" type="text" name="replyContent" style="padding:10px; height:35px; width:100%; border-radius:5px; border:1px solid #7F7F7F;" placeholder="댓글 내용 입력" required />
+						<input id="replyPassword" type="password" name="replyPassword" style="padding:10px; height:35px; width:100%; border-radius:5px; border:1px solid #7F7F7F;" placeholder="암호 입력" required />
 					</div>
 					<div class="col-md-6 col-sm-6 col-xs-12" style="flex:auto; padding-left:0; padding-right:0; margin-top:10px">
-						<input id="replyPassword" type="password" name="replyPassword" style="padding:10px; height:35px; width:100%; border-radius:5px; border:1px solid #7F7F7F;" placeholder="암호 입력" required />
+						<input id="replyContent" type="text" name="replyContent" style="padding:10px; height:35px; width:100%; border-radius:5px; border:1px solid #7F7F7F;" placeholder="댓글 내용 입력" required />
 					</div>
 					<div class="col-md-3 col-sm-3 col-xs-12" style="flex:auto; padding-left:0; padding-right:0; margin-top:10px" >
 						<input type="button" style="max-width:100%; padding:0; height:35px; width:100%; border-radius:5px; border:none solid #28282D;" onclick="insertReply()" class="button-purple" value="작성" />
@@ -202,10 +202,10 @@
 							+ "<input id='reReplyWriter"+data[i].replyNum+"' type='text' name='reReplyWirter' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1px solid #7F7F7F;' placeholder='작성자 입력' required />"
 						+ "</div>"
 						+ "<div class='col-md-3 col-sm-3 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
-							+ "<input id='reReplyContent"+data[i].replyNum+"' type='text' name='reReplyContent' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1px solid #7F7F7F;' placeholder='대댓글 내용 입력' required />"
+							+ "<input id='reReplyPassword"+data[i].replyNum+"' type='password' name='reReplyPassword' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1px solid #7F7F7F;' placeholder='암호 입력' required />"
 						+ "</div>"
 						+ "<div class='col-md-3 col-sm-3 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
-							+ "<input id='reReplyPassword"+data[i].replyNum+"' type='password' name='reReplyPassword' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1px solid #7F7F7F;' placeholder='암호 입력' required />"
+							+ "<input id='reReplyContent"+data[i].replyNum+"' type='text' name='reReplyContent' style='width:100%; height:35px; padding:10px; width:100%; border-radius:5px; border:1px solid #7F7F7F;' placeholder='대댓글 내용 입력' required />"
 						+ "</div>"
 						+ "<div class='col-md-3 col-sm-3 col-xs-12' style='flex:auto; padding-left:0; padding-right:0; margin-top:10px'>"
 							+ "<input type='button' style='padding:0; height:35px; width:100%; max-width:100%; border-radius:5px; border:none solid #28282D;' onclick='insertReReply("+data[i].replyNum+")' class='button-purple' value='대댓글 작성'>"
