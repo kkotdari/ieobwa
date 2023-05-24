@@ -1,7 +1,7 @@
 # 이어봐 게시판
 1. 프로젝트명 : Spring Framework를 적용한 연관 게시글이 있는 게시판 만들기
 2. 프로젝트 웹 주소 : http://43.202.22.163:8080/
-3. 프로젝트 Notion 페이지 : https://t.ly/ZxQk
+3. 프로젝트 Notion 페이지 : https://kotddari.notion.site/Project-4fb0aa6564e4465c9b919a19d7a183b2
 4. 개발기간 : 2023-05-11~
 5. 개발 환경
   - 운영체제 : Windows 11
